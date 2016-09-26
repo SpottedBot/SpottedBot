@@ -1,0 +1,21 @@
+<!--Template para a página de moderação-->
+<!--Deve ter:
+    -Lista com posts que foram marcados como spam, para serem avaliados. Adicionar opçao de unspam
+
+        (OBS: Não acho que vale a pena deletar os spams. melhor deixar eles de boa lá para podermos usar como
+        dataset de treino para um algorítimo de ML no futuro. Assim que o grosso do site estiver funcionando,
+        colocaremos 3 opções aqui: Unspam, Spam(vai funcionar como o dismiss do target, escondendo sem apagar) e Apagar
+        que vai apagar definitivamente. Vamos apagar definitivamente quando o post não tiver nenhum sentido ie: SQL injections
+
+
+        -Posts que cabem nessa descrição estão disponíveis em {{ vars.spots }} <Object List>
+         mais informações, refira a helpers/template_vars.py
+        -Para unspam um spotted, crie um formulário POST para /unspam_spotted/ usando o botão de unspam como submit
+         e adicione um hidden input com o name=id e o value={{ var.post_id }}
+    -(?) alguma outra ferramenta de moderação-->
+
+<!--Faça esse template como uma extensão de base.html para melhorar a performance-->
+
+<!--Não esqueça de usar template tags e template language-->
+
+<!--Nem esqueça de importar staticfiles-->
