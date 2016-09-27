@@ -34,7 +34,7 @@
 			</p>
 		</form>
 
-		{% for spotted in spots %}
+		{% for spotted in vars.spots %}
 			<article class="message is-primary">
 				<div class="message-header">{{spotted.post_id}}</div>
 				<div class="message-body">{{spotted.message}}</div>

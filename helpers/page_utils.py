@@ -11,7 +11,10 @@ graph = GraphAPI(os.environ.get('FACEBOOK_PAGE_TOKEN'))
 def post(message, author, target, attachment):
     # escape text
 
-    new_id = Spotted.objects.all().order_by("-id")[0].id + 1
+    try:
+        new_id = Spotted.objects.all().order_by("-id")[0].id + 1
+    except (IndexError):
+        new_id = 0
     f_message = "#" + str(new_id) + "\n\n" + message
     resp = graph.put_wall_post(f_message, {'link': attachment})
     s = Spotted(message=message, author=author, target=target, attachment=attachment, post_id=resp['id'])

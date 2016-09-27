@@ -10,7 +10,7 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^logout/$', views.logout),
 
-    url(r'^post_spotted/$', views.post_spotted),
+    url(r'^post_spotted/$', views.post_spotted, name='post_spotted'),
     url(r'^delete_spotted/$', views.delete_spotted),
     url(r'^dismiss_spotted/$', views.dismiss_spotted),
     url(r'^report_spotted/$', views.report_spotted),
