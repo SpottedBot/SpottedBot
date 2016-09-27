@@ -1,44 +1,59 @@
-{% load static %}
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.1.2/css/bulma.min.css">
-<script src='https://www.google.com/recaptcha/api.js'></script>
+<!DOCTYPE html>
+<html>
 
-<section class="hero is-danger is-bold">
-	<div class="control">
-		<a class="button is-primary" href="/login/facebook/">
-		<span class="icon is-small">
-			<i class="fa fa-facebook"></i>
-		</span>
-		<span>Login</span>
-		</a>
-	</div>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Spotted CAASO</title>
+	{% load staticfiles %}
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.1.2/css/bulma.min.css">
+</head>
 
-	<div class="hero-body">
-		<div class="container">
-			<h1 class="title">
-			Spotted CAASO
-			</h1>
-			<h2 class="subtitle">
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam, asperiores.
-			</h2>
-		</div>
-	</div>
-</section>
-{% block content %}
-
-{% endblock content %}
-
-<footer class="footer">
-	<div class="container">
-		<div class="content has-text-centered">
-			<p>
-			<strong>Spotted CAASO</strong> by <a href="https://github.com/maronato">Maronato</a>. The source code is licensed
-			<a href="http://opensource.org/licenses/mit-license.php">MIT</a>.
-			<p>
-			<a class="icon" href="https://github.com/maronato">
-				<i class="fa fa-github"></i>
+<body>
+	<section class="hero is-danger is-bold">
+		<div class="control">
+			<a class="button is-primary" href="/login/facebook/">
+			<span class="icon is-small">
+				<i class="fa fa-facebook"></i>
+			</span>
+			<span>Login</span>
 			</a>
-			</p>
 		</div>
-	</div>
-</footer>
+
+		<div class="hero-body">
+			<div class="container">
+				<h1 class="title">
+				Spotted CAASO
+				</h1>
+				<h2 class="subtitle">
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam, asperiores.
+				</h2>
+			</div>
+		</div>
+	</section>
+	{% block content %}
+
+	{% endblock content %}
+
+	<footer class="footer">
+		<div class="container">
+			<div class="content has-text-centered">
+				<p>
+				<strong>Spotted CAASO</strong> by <a href="https://github.com/maronato">Maronato</a>. The source code is licensed
+				<a href="http://opensource.org/licenses/mit-license.php">MIT</a>.
+				<p>
+				<a class="icon" href="https://github.com/maronato">
+					<i class="fa fa-github"></i>
+				</a>
+				</p>
+			</div>
+		</div>
+	</footer>
+
+	<script src='https://www.google.com/recaptcha/api.js'></script>
+	<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+	<script src='{% static "js/main.js" %}'></script>
+</body>
+
+</html>

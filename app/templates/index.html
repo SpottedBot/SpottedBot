@@ -3,6 +3,22 @@
 {% block content %}
 <section class="section">
 	<div class="is-vertical tile">
+		{% if messages %}
+			{% for message in messages %}
+				{% if message.tags == 'success' %}
+				<div class="notification is-success">
+					<button class="delete"></button>
+					{{message |safe}}
+				</div>
+				{% else %}
+				<div class="notification is-warning">
+					<button class="delete"></button>
+					{{message |safe}}
+				</div>
+				{% endif %}
+			{% endfor %}
+		{% endif %}
+
 		<form action="{% url 'post_spotted' %}" method="POST" accept-charset="utf-8">
 			{% csrf_token %}
 			<label class="label">Mensagem</label>

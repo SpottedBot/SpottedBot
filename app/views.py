@@ -62,7 +62,7 @@ def post_spotted(request):
     posted = page_utils.post(f_fields['message'], f_fields['author'], f_fields['target'], f_fields['attachment'])
 
     messages.add_message(request, messages.SUCCESS,
-                         'Spotted enviado!<b><a target="_blank" href="http://facebook.com/%s">Me mostre!</a>'
+               '<b><a class="is-link button" target="_blank" href="http://facebook.com/%s">Spotted enviado!!</a></b>'
                          % posted.post_id)
     return redirect('/')
 
