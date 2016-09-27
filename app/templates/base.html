@@ -1,19 +1,29 @@
+{% load static %}
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.1.2/css/bulma.min.css">
+<script src='https://www.google.com/recaptcha/api.js'></script>
 
 <section class="hero is-danger is-bold">
-	<div class="hero-body">
-	<div class="container">
-		<h1 class="title">
-		Spotted CAASO
-		</h1>
-		<h2 class="subtitle">
-		Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam, asperiores.
-		</h2>
+	<div class="control">
+		<a class="button is-primary" href="/login/facebook/">
+		<span class="icon is-small">
+			<i class="fa fa-facebook"></i>
+		</span>
+		<span>Login</span>
+		</a>
 	</div>
+
+	<div class="hero-body">
+		<div class="container">
+			<h1 class="title">
+			Spotted CAASO
+			</h1>
+			<h2 class="subtitle">
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam, asperiores.
+			</h2>
+		</div>
 	</div>
 </section>
-
 {% block content %}
 
 {% endblock content %}
