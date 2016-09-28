@@ -19,26 +19,34 @@
 			{% endfor %}
 		{% endif %}
 
+
+		<!--Atenção! aos valores vars.placeholder.<var> pois eles servem para promover form persistence. I.e. o usuário
+		 preencheu o formulário inteiro mas esqueceu de checar o captcha. Ele não deve ter que fazer tudo de novo-->
 		<form action="{% url 'post_spotted' %}" method="POST" accept-charset="utf-8">
 			{% csrf_token %}
 			<label class="label">Mensagem</label>
 			<p class="control">
-				<textarea name="message" class="textarea" placeholder="Manda aquele spotted aqui" required></textarea>
+				<textarea name="message" class="textarea" placeholder="Manda aquele spotted aqui" required>{{ vars.placeholder.message }}</textarea>
 			</p>
 
 			<label class="label">Alvo</label>
 			<p class="control">
-				<input name="target" class="input" type="text" placeholder="Nome da pessoa em questao">
+				<input name="target" class="input" value="{{ vars.placeholder.target }}" type="text" placeholder="Nome da pessoa em questao">
 			</p>
 
 			<label class="label">Anexo</label>
 			<p class="control">
-				<input name="attachment" class="input" type="url" placeholder="Links para mandar junto">
+				<input name="attachment" class="input" value="{{ vars.placeholder.attachment }}" type="url" placeholder="Links para mandar junto">
 			</p>
 
 			<p class="control">
+				<!--No caso do checkbox é um pouco diferente. Use o exemplo a seguir-->
 				<label class="checkbox">
+					{% if vars.placeholder.anonymous %}
+					<input name="anonymous" checked type="checkbox">
+					{% else %}
 					<input name="anonymous" type="checkbox">
+					{% endif %}
 					Anonimo?
 				</label>
 			</p>
@@ -53,7 +61,7 @@
 		{% for spotted in vars.spots %}
 			<article class="message is-primary">
 				<div class="message-header">{{spotted.post_id}}</div>
-				<div class="message-body">{{spotted.message}}</div>
+				<div class="message-body">{{spotted.message | linebreaks}}</div>
 			</article>
 		{% endfor %}
 	</div>
