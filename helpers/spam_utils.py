@@ -47,6 +47,6 @@ def clean_spam():
 def un_spam(id):
     s = Spotted.objects.get(id=id)
     s.spam = False
-    post_id = re_post(s.message, s.attachment)
+    post_id = re_post(s.message, s.attachment, id)
     s.post_id = post_id
     s.save()

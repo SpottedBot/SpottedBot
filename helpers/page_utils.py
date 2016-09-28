@@ -40,6 +40,7 @@ def delete(id, db_remove):
 
 
 # re post a Spotted and return its new post_id
-def re_post(message, attachment):
-    resp = graph.put_wall_post(message, {'link': attachment})
+def re_post(message, attachment, id):
+    f_message = "#" + str(id) + "\n\n" + message
+    resp = graph.put_wall_post(f_message, {'link': attachment})
     return resp['id']
