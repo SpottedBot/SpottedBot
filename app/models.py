@@ -56,6 +56,9 @@ class Profile(models.Model):
     )
     global_id = models.CharField(max_length=100)
 
+    def __str__(self):
+        return str(self.user.username) + "'s profile"
+
 
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
