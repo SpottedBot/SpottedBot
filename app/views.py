@@ -5,7 +5,7 @@ from django.shortcuts import render_to_response, redirect, render
 from social.apps.django_app.default.models import UserSocialAuth
 
 from app.models import Spotted
-from helpers import get_target, page_utils, template_vars, publishing, spam_utils
+from helpers import facebook_utils, page_utils, template_vars, publishing, spam_utils
 
 
 # display the index page
@@ -107,7 +107,7 @@ def report_spotted(request):    # from target
 
     usa = UserSocialAuth.objects.get(user=request.user)
     s = Spotted.objects.get(id=request.POST['id'])
-    if usa.uid != s.target:
+    if request.user.profile.global_id != s.target:
         messages.add_message(request, messages.ERROR,
                              'Você não tem permissão para isso!')
         return redirect('/')

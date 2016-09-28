@@ -9,7 +9,7 @@ def load_index(user):
     return_vars = {}
 
     if user.is_authenticated():
-        uid = UserSocialAuth.objects.get(user=user).uid
+        uid = user.profile.global_id
         spots = Spotted.objects.filter(target=uid).filter(spam=False).filter(dismissed=False)
         return_vars['spots'] = spots
 

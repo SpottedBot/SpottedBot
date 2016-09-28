@@ -1,13 +1,17 @@
 from django.db import models
 from django.contrib.auth.models import User
-# from social.apps.django_app.default.models import UserSocialAuth
+from django.db.models.signals import post_save
+from social.apps.django_app.default.models import UserSocialAuth
+from helpers.facebook_utils import global_id, profile_from_scope
 
 '''
 The model relationship is as follows:
 
-<-- == ForeignKey
+<--  == ForeignKey
+<--> == OneToOne
 
 Spotted --> User <-- UserSocialAuth
+Profile <--> User
 
 From User you can get:
 User.first_name
@@ -19,7 +23,6 @@ UserSocialAuth.user
 UserSocialAuth.uid
 UserSocialAuth.provider
 UserSocialAuth.extra_data (dict with keys 'id', 'access_token' and 'expires')
-
 
 Examples:
 Retrieve a User from an UID:
@@ -44,3 +47,28 @@ class Spotted(models.Model):
 
     def __str__(self):
         return "Spotted #" + str(self.id)
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE
+    )
+    global_id = models.CharField(max_length=100)
+
+
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        u = Profile(user=instance)
+        u.save()
+
+
+def update_user_profile(sender, instance, created, **kwargs):
+    if created:
+        u = instance.user
+        u.profile.global_id = global_id(profile_from_scope(instance.uid))
+        u.profile.save()
+
+
+post_save.connect(create_user_profile, sender=User)
+post_save.connect(update_user_profile, sender=UserSocialAuth)

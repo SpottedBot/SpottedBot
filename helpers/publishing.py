@@ -2,7 +2,9 @@
 
 import requests
 import os
-from helpers import template_vars, get_target
+
+import helpers.facebook_utils
+from helpers import template_vars
 
 
 # check google's response
@@ -26,7 +28,7 @@ def cap_check(grs):
 def get_values(request):
     message = request.POST['message']
     attachment = request.POST['attachment']
-    target = get_target.uid(request.POST['target'].strip())
+    target = helpers.facebook_utils.global_id(request.POST['target'].strip())
     author = None
     try:
         request.POST['anonymous']

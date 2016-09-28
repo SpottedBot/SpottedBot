@@ -6,3 +6,4 @@ whitenoise==2.0.6
 python-social-auth==0.2.19
 facebook-sdk==1.0.0
 unidecode==0.4.19
+mechanicalsoup==0.5.0
