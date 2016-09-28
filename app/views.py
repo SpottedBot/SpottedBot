@@ -67,16 +67,22 @@ def post_spotted(request):
     return redirect('/')
 
 
-# if the author so desires, delete a given spotted(from page and DB)
+# if the author so desires, delete a given spotted(from page and DB) / Staff can delete too
 def delete_spotted(request):  # from author
     if request.method == 'GET' or not request.user.is_authenticated():
         return redirect('/')
 
-    s = Spotted.objects.get(author=request.user)
-    if request.POST['id'] != s.id:
-        messages.add_message(request, messages.ERROR,
-                             'Você não tem permissão para isso!')
-        return redirect('/')
+    c = Spotted.objects.get(id=request.POST['id'])
+    if not request.user.is_staff:
+        try:
+            if c.author.id != request.user.id:
+                messages.add_message(request, messages.ERROR,
+                                     'Você não tem permissão para isso!')
+                return redirect('/')
+        except AttributeError:
+            messages.add_message(request, messages.ERROR,
+                                 'Você não tem permissão para isso!')
+            return redirect('/')
 
     page_utils.delete(request.POST['id'], True)
 
@@ -105,14 +111,13 @@ def report_spotted(request):    # from target
     if request.method == 'GET' or not request.user.is_authenticated():
         return redirect('/')
 
-    usa = UserSocialAuth.objects.get(user=request.user)
     s = Spotted.objects.get(id=request.POST['id'])
     if request.user.profile.global_id != s.target:
         messages.add_message(request, messages.ERROR,
                              'Você não tem permissão para isso!')
         return redirect('/')
 
-    page_utils.delete(spotted_id, False)
+    page_utils.delete(s.id, False)
 
     messages.add_message(request, messages.SUCCESS,
                          'Spotted reportado!<b>Sentimos muito pela inconveniência.')
@@ -145,7 +150,7 @@ def unspam_spotted(request):
 
 # load profile page
 def profile(request):
-    if request.method == 'GET' or not request.user.is_authenticated():
+    if not request.user.is_authenticated():
         return redirect('/')
     temp_vars = template_vars.load_profile(request.user)
     return render(request, 'profile.html', {'vars': temp_vars})
