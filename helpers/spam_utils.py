@@ -21,7 +21,7 @@ def get_spam_list():
     spam_list = []
 
     for post in data['data']:
-        if post['reactions']['summary']['total_count'] >= 0:
+        if post['reactions']['summary']['total_count'] >= 3:
             spam_list.append(post['id'])
     return spam_list
 
