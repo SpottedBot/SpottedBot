@@ -59,6 +59,9 @@ class Profile(models.Model):
     def __str__(self):
         return str(self.user.username) + "'s profile"
 
+    def get_uid(self):
+        return UserSocialAuth.objects.get(user=self.user).uid
+
 
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
