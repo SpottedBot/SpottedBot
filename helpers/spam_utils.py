@@ -34,7 +34,7 @@ def set_spam(spam_list):
         except:
             continue
         if obj.spam is False:
-            delete(obj.post_id, False)
+            delete(obj.id, False)
 
 
 # execute the above functions in a single call
