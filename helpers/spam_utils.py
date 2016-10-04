@@ -21,7 +21,7 @@ def get_spam_list():
     spam_list = []
 
     for post in data['data']:
-        if post['reactions']['summary']['total_count'] >= 1 and post['status_type'] == 'mobile_status_update':
+        if post['reactions']['summary']['total_count'] >= 3 and post['status_type'] == 'mobile_status_update':
             spam_list.append(post['id'])
 
     for spam in spam_list:
