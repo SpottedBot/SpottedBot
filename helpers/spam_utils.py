@@ -16,13 +16,16 @@ page_id = os.environ.get('PAGE_ID')
 # get a list of possible spams
 def get_spam_list():
     graph = GraphAPI(token)
-    obj = page_id + '/feed?fields=reactions.type(ANGRY).limit(0).summary(total_count)&limit=100'
+    obj = page_id + '/feed?fields=reactions.type(ANGRY).limit(0).summary(total_count),status_type&limit=100'
     data = (graph.get_object(obj))
     spam_list = []
 
     for post in data['data']:
-        if post['reactions']['summary']['total_count'] >= 2:
+        if post['reactions']['summary']['total_count'] >= 1 and post['status_type'] == 'mobile_status_update':
             spam_list.append(post['id'])
+
+    for spam in spam_list:
+        print(spam)
     return spam_list
 
 
