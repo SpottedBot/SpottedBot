@@ -1,18 +1,14 @@
-UniCaronas
+SpottedBot
 ==========
 
-Objetivo
+O que é?
 --------
-O Objetivo desse app é oferecer um meio mais fácil e rápido para oferecer e procurar caronas na Unicamp.
+É uma plataforma de spotteds que almeja funcionar de forma 100% automatizada
 
 Funcionamento
 -------------
-O app usa o Graph API do Facebook para pesquisar e filtrar caronas de acordo com a entrada de um usuário logado.
+O app usa o Graph API do Facebook para postar os Spotteds e usa uma REST API feita por nós, ainda a ser postada, para filtrar posts que são spam.
 
 ## <a name="privacy"></a> Privacidade
 
-O app não salva nem utiliza informações dos usuários.
-
-Ele requer que o usuário faça o login com o Facebook apenas para obter um Token de Acesso, [necessário][1] para a leitura do grupo de Caronas do Facebook.
-
-[1]: https://developers.facebook.com/docs/graph-api/reference/v2.6/group
+O app nunca divulga a autoria de quem posta, apenas divulga para o alvo, caso este seja marcado. Moderadores não têm acesso aos autores dos posts, apenas ao conteúdo de posts reportados.
