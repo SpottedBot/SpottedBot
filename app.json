@@ -10,7 +10,7 @@
   "success_url": "/",
   "env": {
     "SECRET_KEY": {
-      "description": "String longa e aleatória usada como chave de encriptação das comunicações do site. Use um gerador de senhas.",
+      "description": "String longa e aleatória usada como chave de encriptação das comunicações do site.",
       "generator": "secret"
     },
     "EMAIL_ACCOUNT": {
