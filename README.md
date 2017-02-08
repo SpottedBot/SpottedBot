@@ -14,7 +14,7 @@ If it is posted, notifications are sent through Facebook's Notification API to e
 If it is sent to human evaluation, moderators will then analyze the spotted's contents and either approve it for publication or reject it. The decision is again sent to the SpottedAPI to be incorporated into it.
 
 
-#Setting up
+#Setup
 
 ##APIs e mais APIs
 
