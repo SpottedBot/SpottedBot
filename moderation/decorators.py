@@ -3,4 +3,7 @@
 
 def is_moderator(user):
     # Checks whether the user is a moderator
-    return user.is_moderator
+    try:
+        return user.is_moderator
+    except:
+        return False
