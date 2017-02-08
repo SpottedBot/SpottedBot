@@ -32,8 +32,6 @@ class FacebookUser(models.Model):
     @staticmethod
     def create_or_update(social_id, access_token, expires, first_name, name, link):
 
-        print(social_id, access_token, expires, first_name, name, link)
-
         if FacebookUser.objects.filter(social_id=social_id):
             obj = FacebookUser.objects.get(social_id=social_id)
             obj.access_token = access_token
