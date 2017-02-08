@@ -1,0 +1,80 @@
+{% extends "main/base.html" %}
+{% load staticfiles %}
+
+{% block extend_scripts %}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.js"></script>
+<script type="text/javascript" src="{% static 'main/js/initializeCalendar.js' %}"></script>
+<script type="text/javascript" src="{% static 'main/js/calendarFunctions.js' %}"></script>
+{% endblock %}
+
+{% block extend_style %}
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css">
+<link rel="stylesheet" type="text/css" href="{% static 'main/css/calendar.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="ui vertical stripe segment">
+    <div class="ui middle aligned stackable grid container">
+        <div class="row">
+            <a href="{% url 'dashboard' %}"><button class="ui button large primary"><i class="icon arrow left"></i>Voltar</button></a>
+            <div class="center aligned twelve wide column">
+                <h1>Seus Turnos</h1>
+            </div>
+        </div>
+        <div class="ui divider"></div>
+<!--         <div class="row">
+            <div id="calendar"></div>
+        </div>
+        <div class="ui divider"></div> -->
+    </div>
+    <div class="ui middle center aligned grid container">
+        <form action="{% url 'mod:shifts' %}" method="post" class="ui form">
+            {% csrf_token %}
+            {{ formset.management_form }}
+            <div id="form_set">
+                {% for form in formset.forms %}
+                <div class="fields">
+                    {% for field in form.visible_fields %}
+                    <div class="field">
+                        <label>{{ field.label }}<span class="small red">{{ field.errors.as_text }}</span></label>
+                        {{ field }}
+                    </div>
+                    {% endfor %}
+                    {% for hidden in form.hidden_fields %}
+                    {{ hidden }}
+                    {% endfor %}
+
+                </div>
+                <div class="ui divider"></div>
+                {% endfor %}
+            </div>
+            <button class="ui button green" type="button" id="add_more">Adicionar mais</button>
+            <div id="empty_form" style="display:none">
+                <div class="fields">
+                    {% for field in formset.empty_form.visible_fields %}
+                    <div class="field">
+                        <label>{{ field.label }}<span class="small red">{{ field.errors.as_text }}</span></label>
+                        {{ field }}
+                    </div>
+                    {% endfor %}
+                    {% for hidden in formset.empty_form.hidden_fields %}
+                    {{ hidden }}
+                    {% endfor %}
+                    <div class="ui divider"></div>
+                </div>
+            </div>
+            <button class="ui button primary" type="submit">Salvar alterações</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    $('#add_more').click(function() {
+        var form_idx = $('#id_workhours-TOTAL_FORMS').val();
+        $('#form_set').append($('#empty_form').html().replace(/__prefix__/g, form_idx));
+        $('#id_workhours-TOTAL_FORMS').val(parseInt(form_idx) + 1);
+    });
+</script>
+{% endblock %}

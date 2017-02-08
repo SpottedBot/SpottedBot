@@ -1,0 +1,27 @@
+{% extends "main/base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+
+<div class="ui vertical stripe segment">
+    <div class="ui middle aligned stackable grid container">
+        <div class="row">
+            <a href="{% url 'dashboard' %}"><button class="ui button large primary"><i class="icon arrow left"></i>Voltar</button></a>
+            <div class="center aligned twelve wide column">
+                <h1>Seus Spotteds</h1>
+                <p><strong>Atenção:</strong> Apagar spotteds os removerá do Facebook também!</p>
+                <div class="ui divider"></div>
+                {% if not user.authored.all %}
+                <div class="ui center aligned">
+                <h3>Parece que você ainda não mandou nenhum Spotted :(</h3>
+                    <p>Que tal <a href="{% url 'index' %}#submit">enviar um agora</a>?</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+    {% include "main/users/spotteds/my.html" %}
+</div>
+{% endblock %}

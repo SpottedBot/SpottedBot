@@ -1,0 +1,26 @@
+{% extends "main/base.html" %}
+{% load staticfiles %}
+
+{% block extend_scripts %}
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+{% endblock %}
+
+{% block extend_style %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
+{% endblock %}
+
+{% block content %}
+
+<div class="ui vertical stripe segment">
+    <div class="ui middle aligned stackable grid container">
+        <div class="row">
+            <a href="{% url 'dashboard' %}"><button class="ui button large primary"><i class="icon arrow left"></i>Voltar</button></a>
+            <div class="center aligned twelve wide column">
+                <h1>Histórico de Spotteds</h1>
+            </div>
+        </div>
+        <div class="ui divider"></div>
+    </div>
+        {% include "moderation/spotteds/history.html" %}
+</div>
+{% endblock %}

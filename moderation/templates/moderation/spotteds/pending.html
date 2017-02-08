@@ -1,0 +1,273 @@
+
+<div class="ui stackable three column page grid">
+    {% for spotted in spotteds %}
+    <div class="column">
+        <div id="card_{{ spotted.id }}" class="ui blurring fluid card">
+            <div id="card_dimmer_{{ spotted.id }}" class="ui dimmer">
+                <div id="loader_{{ spotted.id }}" style="display: none;" class="ui loader"></div>
+                <div class="content">
+                    <div class="center">
+                        <h2 id="header_{{ spotted.id }}" class="ui inverted header">
+                            Tem certeza?
+                        </h2>
+                        <p>
+                            <div id="link1_{{ spotted.id }}" class="ui inverted button"></div>
+                            <div id="link2_{{ spotted.id }}" class="ui inverted button"></div>
+                        </p>
+                        <p>
+                            <div id="link3_{{ spotted.id }}" class="ui inverted button"></div>
+                            <div id="link4_{{ spotted.id }}" class="ui inverted button"></div>
+                        </p>
+                        <span id="cancel_{{ spotted.id }}"> <button class="ui button red" onclick="$('#card_{{ spotted.id }}').dimmer('hide')">Cancelar</button></span>
+                    </div>
+                </div>
+            </div>
+            <div class="content">
+                <div class="header">
+                    Spotted #{{ spotted.id }}
+                </div>
+                <div class="meta">
+                    {% if spotted.author %}
+                    <i class="privacy icon"></i>Assinado
+                    {% else %}
+                    <i class="spy icon"></i>Anônimo
+                    {% endif %}
+                    {% if spotted.target %}
+                    <i class="heart icon"></i>Com Crush
+                    {% else %}
+                    <i class="help icon"></i>Sem Crush
+                    {% endif %}
+                    {% if spotted.public %}
+                    <i class="announcement icon"></i>Público
+                    {% else %}
+                    <i class="ban icon"></i>Privado
+                    {% endif %}
+                </div>
+                <div class="ui divider"></div>
+                <div class="description">
+                    {{ spotted.message | linebreaksbr }}
+                    {% if spotted.attachment %}
+                    <div class="ui horizontal divider" style="margin: 20px">
+                        Anexo
+                    </div>
+                    {% if spotted.is_attachment_safe %}
+                    <small>Sempre tome cuidado ao entrar em links suspeitos</small>
+                    <a target="_blank" href="{{ spotted.attachment }}">{{ spotted.attachment }}</a>
+                    {% else %}
+                    <h4 class="ui red header">Anexo bloqueado para sua segurança</h4>
+                    {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="extra content">
+                {% if spotted.suggestion %}
+                <p><small>Sugestão: {{ spotted.suggestion }}</small></p>
+                {% endif %}
+                <span class="left floated">
+                    <a onclick="polemic('{{ spotted.id }}')" class="ui button yellow">
+                        Polêmico
+                    </a>
+                </span>
+                <span class="right floated star">
+                    <a onclick="reject('{{ spotted.id }}')" class="ui button red">
+                        Rejeitar
+                    </a>
+                </span>
+            </div>
+            <div onclick="approve('{{ spotted.id }}')" class="ui bottom attached green button">
+                Postar Spotted
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<script type="text/javascript">
+
+    var reject_options = {}
+    var more_reject_options = {}
+
+    $.ajax({
+            url: '{% url "mod:reject_options" %}',
+            success: function(data) {
+                    if (data['opt_1']) {
+                        reject_options[1] =  data['opt_1']
+                    }
+                    if (data['opt_2']) {
+                        reject_options[2] =  data['opt_2']
+                    }
+                    if (data['opt_3']) {
+                        reject_options[3] =  data['opt_3']
+                    }
+                    if (data['opt_4']) {
+                        reject_options[4] =  data['opt_4']
+                    }
+                    if (data['opt_5']) {
+                        more_reject_options[1] =  data['opt_5']
+                    }
+                    if (data['opt_6']) {
+                        more_reject_options[2] =  data['opt_6']
+                    }
+                    if (data['opt_7']) {
+                        more_reject_options[3] =  data['opt_7']
+                    }
+                    if (data['opt_8']) {
+                        more_reject_options[4] =  data['opt_8']
+                    }
+                },
+            });
+
+
+    function polemic(id) {
+        $('#header_' + id).text("É polêmico mesmo?");
+        $('#link1_' + id).text("Sim!");
+        $('#link1_' + id).attr("onclick", "polemic_submit(" + id + ")");
+        $('#link2_' + id).hide();
+        $('#link3_' + id).hide();
+        $('#link4_' + id).hide();
+        $("#card_" + id).dimmer('show');
+    }
+    function polemic_submit(id) {
+        show_loader(id);
+        $.ajax({
+            url: '{% url "mod:polemic_submit" %}',
+            type: 'post',
+            data: {
+                'id': id,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function(data) {
+                $("#card_" + id).dimmer({
+                    closable: false
+                });
+                $("#card_" + id).dimmer('set active');
+                $('#header_' + id).text("Polêmico!");
+                $('#link1_' + id).hide();
+                $('#cancel_' + id).hide();
+                hide_loader(id);
+            },
+            error: function(data) {
+                $('#header_' + id).text("Erro 500. Oops!");
+                $('#link1_' + id).hide();
+                $('#cancel_' + id).hide();
+                hide_loader(id);
+            }
+        });
+    }
+    function approve(id) {
+        $('#header_' + id).text("Aprovar?");
+        $('#link1_' + id).text("Sim!");
+        $('#link1_' + id).attr("onclick", "approve_submit(" + id + ")");
+        $('#link2_' + id).hide();
+        $('#link3_' + id).hide();
+        $('#link4_' + id).hide();
+        $("#card_" + id).dimmer('show');
+    }
+    function approve_submit(id) {
+        show_loader(id);
+        $.ajax({
+            url: '{% url "mod:approve_submit" %}',
+            type: 'post',
+            data: {
+                'id': id,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function(data) {
+                $("#card_" + id).dimmer({
+                    closable: false
+                });
+                $("#card_" + id).dimmer('set active');
+                $('#header_' + id).text("Aprovado!");
+                $('#link1_' + id).hide();
+                $('#cancel_' + id).hide();
+                hide_loader(id);
+            },
+            error: function(data) {
+                $('#header_' + id).text("Erro 500. Oops!");
+                $('#link1_' + id).hide();
+                $('#cancel_' + id).hide();
+                hide_loader(id);
+            }
+        });
+    }
+    function reject(id) {
+        $('#link1_' + id).hide();
+        $('#link2_' + id).hide();
+        $('#link3_' + id).hide();
+        $('#link4_' + id).hide();
+
+        for (k in reject_options) {
+            $('#link' + k + '_' + id).show();
+            $('#link' + k + '_' + id).text(reject_options[k]);
+            $('#link' + k + '_' + id).attr("onclick", "reject_submit(" + id + ", '" + reject_options[k] + "')");
+        }
+        $('#link' + k + '_' + id).attr("onclick", "more_reject(" + id + ")");
+
+
+        $('#header_' + id).text("Por quê?");
+        $("#card_" + id).dimmer('show');
+    }
+    function more_reject(id) {
+        $('#link1_' + id).hide();
+        $('#link2_' + id).hide();
+        $('#link3_' + id).hide();
+        $('#link4_' + id).hide();
+
+        for (k in more_reject_options) {
+            $('#link' + k + '_' + id).show();
+            $('#link' + k + '_' + id).text(more_reject_options[k]);
+            $('#link' + k + '_' + id).attr("onclick", "reject_submit(" + id + ", '" + more_reject_options[k] + "')");
+        }
+
+    }
+    function reject_submit(id, option) {
+        show_loader(id);
+        $.ajax({
+            url: '{% url "mod:reject_submit" %}',
+            type: 'post',
+            data: {
+                'id': id,
+                'option': option,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function(data) {
+                $("#card_" + id).dimmer({
+                    closable: false
+                });
+                $("#card_" + id).dimmer('set active');
+                $('#header_' + id).text("Rejeitado!");
+                for (k in reject_options) {
+                    $('#link' + k + '_' + id).hide();
+                }
+                $('#cancel_' + id).hide();
+                hide_loader(id);
+            },
+            error: function(data) {
+                $('#header_' + id).text("Erro 500. Oops!");
+                for (k in reject_options) {
+                    $('#link' + k + '_' + id).hide();
+                }
+                $('#cancel_' + id).hide();
+                hide_loader(id);
+            }
+        });
+    }
+
+    function show_loader(id) {
+        $("#card_" + id).dimmer({
+            closable: false
+        });
+        $("#card_" + id).dimmer('set active');
+        $('#header_' + id).hide();
+        $('#link1_' + id).hide();
+        $('#link2_' + id).hide();
+        $('#link3_' + id).hide();
+        $('#link4_' + id).hide();
+        $('#cancel_' + id).hide();
+        $('#loader_' + id).show();
+    }
+    function hide_loader(id) {
+        $('#header_' + id).show();
+        $('#loader_' + id).hide();
+    }
+</script>

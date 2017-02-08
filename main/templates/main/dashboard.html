@@ -1,0 +1,160 @@
+
+{% extends "main/base.html" %}
+{% load staticfiles %}
+{% block content %}
+<div class="ui vertical stripe segment">
+    <div class="ui middle aligned stackable grid container">
+        <div class="row">
+            <div class="sixteen wide column center aligned">
+                <h3>
+                    Olá, {{ user.facebookuser.first_name }}, como vai você?
+                </h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="ui vertical stripe segment">
+    <div class="ui middle aligned stackable grid container">
+        <div class="row">
+            <div class="eight wide center aligned left floated column">
+                <h2 class="ui icon header">
+                    <a href="{% url 'my_spotteds' %}">
+                        <i class="send outline icon">
+                        </i>
+                    </a>
+                    <div class="content">
+                        Seus Spotteds
+                        <div class="sub header">Veja todos os Spotteds que você já enviou!</div>
+                    </div>
+                </h2>
+            </div>
+            <div class="eight wide column center aligned">
+                <h2 class="ui icon header">
+                    <a href="{% url 'forme_spotteds' %}">
+                        <i class="heart icon">
+                            <div style="font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif" class="ui green circular label">
+                                {{ formespotteds | length }}
+                            </div>
+                        </i>
+                    </a>
+                    <div class="content">
+                        Spotteds para você
+                        <div class="sub header">Veja todos os Spotteds enviados pra você!</div>
+                    </div>
+                </h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if user.is_moderator %}
+<div class="ui vertical stripe segment">
+    <div class="ui middle aligned stackable grid container">
+        <div class="row">
+            <div class="six wide left floated column">
+                <h3>
+                    Moderação
+                </h3>
+                <p>
+                    Modere Away
+                    <br>
+                    Clique no ícone para acessar!
+                </p>
+            </div>
+            <div class="four wide column center aligned">
+                <h2 class="ui icon header">
+                    <a href="{% url 'mod:pending' %}">
+                        <i class="heartbeat icon">
+                            <div style="font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif" class="ui green circular label">
+                                {{ pendingspotteds | length }}
+                            </div>
+                        </i>
+                    </a>
+                    <div class="content">
+                        Spotteds Pendentes
+                        <div class="sub header">Aprove ou reprove Spotteds</div>
+                    </div>
+                </h2>
+                <h2 class="ui icon header">
+                    <a href="{% url 'mod:polemic' %}">
+                        <i class="comments icon">
+                            <div style="font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif" class="ui green circular label">
+                                {{ polemicspotteds | length }}
+                            </div>
+                        </i>
+                    </a>
+                    <div class="content">
+                        Spotteds Polêmicos
+                        <div class="sub header">
+                            Spotteds que outros moderadores consideram polêmicos
+                        </div>
+                    </div>
+                </h2>
+            </div>
+            <div class="four wide column center aligned">
+                <h2 class="ui icon header">
+                    <a href="{% url 'mod:reported' %}">
+                        <i class="warning sign icon">
+                            <div style="font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif" class="ui green circular label">
+                                {{ reportedspotteds | length }}
+                            </div>
+                        </i>
+                    </a>
+                    <div class="content">
+                        Spotteds Reportados
+                        <div class="sub header">
+                            Spotteds reportados por usuários como inadequados
+                        </div>
+                    </div>
+                </h2>
+                <h2 class="ui icon header">
+                    <a href="{% url 'mod:history' %}">
+                        <i class="history icon">
+                            <div style="font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif" class="ui green circular label">
+                                {{ regularspotteds | length }}
+                            </div>
+                        </i>
+                    </a>
+                    <div class="content">
+                        Histórico de Spotteds
+                        <div class="sub header">Todos os Spotteds já enviados. Ever.
+                        </div>
+                    </div>
+                </h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="eight wide column center aligned">
+            </div>
+            <div class="four wide column center aligned">
+                <h2 class="ui icon header">
+                    <a href="{% url 'mod:shifts' %}">
+                        <i class="calendar icon">
+                        </i>
+                    </a>
+                    <div class="content">
+                        Meus turnos
+                        <div class="sub header">Escolha, edite e apague seus turnos
+                        </div>
+                    </div>
+                </h2>
+            </div>
+            <div class="four wide column center aligned">
+                <h2 class="ui icon header">
+                    <a href="{% url 'mod:show_shifts' %}">
+                        <i class="checked calendar icon">
+                        </i>
+                    </a>
+                    <div class="content">
+                        Outros moderadores
+                        <div class="sub header">Acompanhe a atividade de toda a equipe
+                        </div>
+                    </div>
+                </h2>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

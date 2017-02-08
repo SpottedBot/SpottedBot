@@ -1,0 +1,18 @@
+{% extends "main/base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+
+<div class="ui vertical stripe segment">
+    <div class="ui middle aligned stackable grid container">
+        <div class="row">
+            <a href="{% url 'dashboard' %}"><button class="ui button large primary"><i class="icon arrow left"></i>Voltar</button></a>
+            <div class="center aligned twelve wide column">
+                <h1>Spotteds Pendentes</h1>
+            </div>
+        </div>
+        <div class="ui divider"></div>
+    </div>
+        {% include "moderation/spotteds/pending.html" %}
+</div>
+{% endblock %}

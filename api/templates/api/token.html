@@ -1,0 +1,30 @@
+{% extends "main/base.html" %}
+{% load staticfiles %}
+{% block content %}
+<div class="ui vertical stripe segment">
+    <div class="ui text container center aligned">
+        <h3 class="ui header">Pegue seu token</h3>
+    </div>
+    <br>
+    <div class="ui text center aligned container">
+        <form action="{% url 'api:get_token' %}" method="post" class="ui form">
+            {% csrf_token %}
+            <div class="row">
+                <div class="fields">
+                    <div class="field {% if form.username.errors.as_text %}error{% endif %}">
+                        <label>{{ form.username.label}}</label>
+                        <span style="color: red" class="small">{{ form.username.errors.as_text }}</span>
+                        {{ form.username }}
+                    </div>
+                    <div class="field {% if form.password.category.as_text %}error{% endif %}">
+                        <label>{{ form.password.label}}</label>
+                        <span style="color: red" class="small">{{ form.password.errors.as_text }}</span>
+                        {{ form.password }}
+                    </div>
+                </div>
+            </div>
+            <button class="ui button primary" type="submit">Pegar token</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

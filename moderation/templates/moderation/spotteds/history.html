@@ -1,0 +1,59 @@
+<div class="ui vertical stripe segment container">
+    <table id="example" class="ui celled table cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Moderador</th>
+                <th>Data</th>
+                <th>Mensagem</th>
+                <th>Anexo</th>
+                <th>Facebook</th>
+                <!-- <th>Recall</th> -->
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th>Moderador</th>
+                <th>Data</th>
+                <th>Mensagem</th>
+                <th>Anexo</th>
+                <th>Facebook</th>
+                <!-- <th>Recall</th> -->
+            </tr>
+        </tfoot>
+        <tbody>
+            {% for spotted in spotteds %}
+            <tr>
+                <td>{% if spotted.approver %}{{ spotted.approver.user.facebookuser.name }}{% else %}SpottedBot - API{% endif %}</td>
+                <td>{{ spotted.created }}</td>
+                <td>#{{ spotted.spotted_count }}<br><br>{{ spotted.message | linebreaksbr }}</td>
+                <td>{{ spotted.attachment }}</td>
+                <td><a href="https://facebook.com/{{spotted.post_id}}" target="_blank" class="ui button blue">Abrir</td>
+<!--                 <td><button class="ui button red">
+                    Recall
+                </button></td> -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#example').DataTable({
+            "order": [[ 1, "desc" ]],
+            "language": {
+                "lengthMenu": "Mostrar _MENU_ Spotteds por página",
+                "zeroRecords": "Sem spotteds nessa pesquisa :(",
+                "info": "Mostrando página _PAGE_ de _PAGES_",
+                "infoEmpty": "Sem Spotteds por enquanto",
+                "infoFiltered": "(Filtrado de _MAX_ Spotteds totais)",
+                "oPaginate": {
+                    "sFirst":    "Primeiro",
+                    "sPrevious": "Anterior",
+                    "sNext":     "Seguinte",
+                    "sLast":     "Último"
+                },
+                "sSearch":       "Procurar:",
+            }
+        });
+    } );
+</script>

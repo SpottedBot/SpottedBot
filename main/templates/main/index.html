@@ -1,0 +1,223 @@
+{% extends "main/base.html" %}
+{% load staticfiles %}
+
+{% block extend_scripts %}
+<script type="text/javascript" src="{% static 'main/js/typeahead.js/typeahead.bundle.js' %}"></script>
+{% endblock %}
+
+{% block extend_style %}
+<link rel="stylesheet" type="text/css" href="{% static 'main/css/typeahead.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="ui divider"></div>
+<div id="details" class="ui vertical stripe quote segment">
+    <div class="ui middle equal width aligned stackable grid container">
+        <div class="center aligned row">
+            <div class="center aligned column">
+                <h1>
+                    O que é isso?
+                </h1>
+            </div>
+        </div>
+        <div class="column">
+            <h2>Spotteds mais inteligentes do que nunca</h2>
+            <p>Spotteds como antes, só que melhores</p>
+        </div>
+        <div class="column">
+            <h2>Seguros, mas versáteis</h2>
+            <p>
+                Quer permanecer no anonimato?<br>
+                Quer fazer seu nome conhecido por todxs xs crushes?<br>
+            </p>
+            <h4>Aqui você pode ambos</h4>
+        </div>
+    </div>
+</div>
+
+<div id="stats" class="ui vertical inverted blue stripe segment">
+    <div class="ui three column centered grid stackable container">
+        <div class="ui column aligned center">
+            <h3>
+                A maior comunidade de crushes da Internet
+            </h3>
+            <p>
+                À sua disposição!
+            </p>
+        </div>
+        <div class="ui column aligned center">
+            <div class="ui inverted huge statistic">
+                <div class="value">
+                    {{ users | length }}
+                </div>
+                <div class="label">
+                    <i class="icon heart"></i>Crushes Ativos
+                </div>
+            </div>
+            <div class="ui inverted huge statistic">
+                <div class="value">
+                    {{ spotteds | length }}<br>
+                </div>
+                <div class="label">
+                    <i class="icon send"></i> Spotteds Enviados
+                </div>
+            </div>
+        </div>
+        <div class="ui column aligned center">
+            <h3>
+                Copiosas quantidades de amor
+            </h3>
+            <p>
+                Compartilhadas diariamente!
+            </p>
+        </div>
+    </div>
+</div>
+
+<div id='submit' class="ui vertical stripe segment">
+    <div class="ui middle aligned stackable grid container">
+        <div class="row">
+            <div class="sixteen wide column center aligned">
+                <h1>Envie um Spotted agora!</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="eight wide column">
+                <h3 class="ui header">Instruções</h3>
+                {% if user.is_authenticated %}
+                <p>Vai marcar um crush, mas não quer que elx saiba quem é você? Marque a opção "anônimo" para <strong>não</strong> associar seu spotted à sua conta!<br><small>Spotteds anônimos não estarão disponíveis em seu histórico.</small></p>
+
+                {% else %}
+                <p>Entre em sua conta para obter benefícios como:<ul><li>Histórico de Spotteds</li><li>Ser marcado pelxs crushes</li><li>Marcar crushes e ser encontradx por elxs</li></ul></p>
+                <p>
+                    <a class="button is-info" href="{% url 'custom_auth:facebook_login' %}">
+                        <span class="icon">
+                            <img style="max-height: 35px;" src="{% static 'img/login.png' %}">
+                        </span>
+                    </a><br>
+                    <small>Nós nunca divulgamos suas informações sem seu consentimento!</small>
+                </p>
+                {% endif %}
+                <p>Marque seu crush! Digite o nome delx e, se elx já tiver usado nosso Spotted, receberá uma notificação do seu <i>amor</i> imediatamente! {% if user.is_authenticated %}<small> Crushes marcados(e apenas eles) saberão que foi você que enviou, caso o Spotted não seja anônimo.</small>{% endif %}</p>
+                <p>Acha que apenas palavras não são suficientes para demonstrar seu afeto? Envie GIFs e outros links em anexo! <br><small>Links serão analisados pela moderação</small></p>
+            </div>
+            <div class="six wide right floated column">
+                <h2>
+                    {% include 'spotteds/forms/submit.html' %}
+                </h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id='contact' class="ui vertical inverted blue stripe segment">
+    <div class="ui text container center aligned">
+        <h3 class="ui inverted header">Contato</h3><p style="font-size: smaller; color: black">{{ contactemail }}</p>
+    </div>
+    <br>
+    <div class="ui text container">
+        <form action="{% url 'contact' %}" method="post">
+            {% csrf_token %}
+            <div class="ui equal width form">
+                <div class="fields">
+                    <div id="name" class="field {% if contactform.name.errors.as_text %}error{% endif %}">
+                        <label {% if not contactform.name.errors.as_text %}style="color: white;"{% endif %} >{{ contactform.name.label}}</label>
+                        <span style="color: red" class="small">{{ contactform.name.errors.as_text }}</span>
+                        {{ contactform.name }}
+                    </div>
+                    <div id="email" class="field {% if contactform.email.errors.as_text %}error{% endif %}">
+                        <label {% if not contactform.email.errors.as_text %}style="color: white;"{% endif %} >{{ contactform.email.label}}</label>
+                        <span style="color: red" class="small">{{ contactform.email.errors.as_text }}</span>
+                        {{ contactform.email }}
+                    </div>
+                    <div id="subject" class="field {% if contactform.subject.errors.as_text %}error{% endif %}">
+                        <label {% if not contactform.subject.errors.as_text %}style="color: white;"{% endif %} >{{ contactform.subject.label}}</label>
+                        <span style="color: red" class="small">{{ contactform.subject.errors.as_text }}</span>
+                        {{ contactform.subject }}
+                    </div>
+                </div>
+            </div>
+            <div class="ui form">
+                <div id="text" class="field {% if contactform.text.errors.as_text %}error{% endif %}">
+                    <label {% if not contactform.text.errors.as_text %}style="color: white;"{% endif %} >{{ contactform.text.label}}</label>
+                    <span style="color: red" class="small">{{ contactform.text.errors.as_text }}</span>
+                    {{ contactform.text }}
+                </div>
+            </div>
+
+            <div style="text-align: center;">
+                <br>
+                <button class="ui big button black" type="submit">Enviar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id='report' class="ui vertical inverted black stripe segment">
+    <div class="ui text container center aligned">
+        <h3 class="ui inverted header">Reportar</h3>
+        <small>Não gostou de algum spotted?<br> Acha que ele deveria ser removido? Nos fale o número dele e nós faremos algo a respeito.</small>
+    </div>
+    <br>
+    <div class="ui text center aligned container">
+        <form action="{% url 'report' %}" method="post">
+            {% csrf_token %}
+            <div class="column four wide">
+                <div class="fields">
+                    <div id="number" class="field {% if reportform.number.errors.as_text %}error{% endif %}">
+                        <span style="color: red" class="small">{{ reportform.number.errors.as_text }}</span>
+                        <div class="ui labeled input">
+                            <div class="ui label">
+                                Spotted #
+                            </div>
+                            {{ reportform.number }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui form">
+                <div id="text" class="field {% if reportform.text.errors.as_text %}error{% endif %}">
+                    <label style="text-align: left; {% if not reportform.text.errors.as_text %}color: white;{% endif %}" >{{ reportform.text.label}}</label>
+                    <span style="color: red" class="small">{{ reportform.text.errors.as_text }}</span>
+                    {{ reportform.text }}
+                </div>
+            </div>
+
+            <div style="text-align: center;">
+                <br>
+                <button class="ui big button blue" type="submit">Enviar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="ui inverted vertical footer segment">
+    <div class="ui container">
+        <div class="ui stackable center aligned inverted divided equal height stackable grid">
+            <div class="row">
+                <div class="six wide column">
+                    <div class="right aligned">
+                        <h4 class="ui inverted header">Sobre</h4>
+                        <div class="ui inverted link horizontal list">
+                            <a href="/#submit" class="right item">Envie Spotteds</a>
+                            <a href="/#details" class="item">Como funciona?</a>
+                            <a href="/#contact" class="item">Contato</a>
+                            <a class="item" href="https://github.com/Maronato/SpottedBot">Código fonte <i class="icon github"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="seven wide column">
+                    <h4 class="ui left aligned inverted header">Projeto SpottedBot</h4>
+                    <p style="text-align: left">Simplificando e automatizando a distribuição de mensagens amorosas pela Interweb.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    // Clear localstorage so crush list is updated
+    localStorage.clear();
+</script>
+{% endblock %}

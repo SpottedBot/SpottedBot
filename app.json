@@ -1,8 +1,65 @@
 {
-  "name": "Python on Heroku example",
-  "description": "A barebones Python app, which can easily be deployed to Heroku.",
-  "image": "heroku/python",
-  "repository": "https://github.com/heroku/python-getting-started",
-  "keywords": ["python", "django" ],
-  "addons": [ "heroku-postgresql" ]
+  "name": "SpottedBot",
+  "description": "WebApp para postagem de spotteds, automaticamente.",
+  "keywords": [
+    "Bot",
+    "AI",
+    "Spotted"
+  ],
+  "repository": "https://github.com/Maronato/SpottedBot",
+  "success_url": "/",
+  "env": {
+    "SECRET_KEY": {
+      "description": "String longa e aleatória usada como chave de encriptação das comunicações do site. Use um gerador de senhas.",
+      "generator": "secret"
+    },
+    "EMAIL_ACCOUNT": {
+      "description": "Conta de email de onde serão enviados os emails do site. Use uma existente.",
+      "value": ""
+    },
+    "EMAIL_PASSWORD": {
+      "description": "Senha do email ai de cima, pra ser possível enviar emails.",
+      "value": ""
+    },
+    "ADMIN_ACCOUNT": {
+      "description": "Email do admnistrador que vai receber os error reports. Use o meu email",
+      "value": ""
+    },
+    "FACEBOOK_KEY": {
+      "description": "App ID do seu App no Facebook",
+      "value": ""
+    },
+    "FACEBOOK_SECRET": {
+      "description": "App Secret do seu App no Facebook",
+      "value": ""
+    },
+    "FACEBOOK_PAGE_TOKEN": {
+      "description": "Token permanente de acesso da sua página",
+      "value": ""
+    },
+    "INITIAL_COUNT": {
+      "description": "Número de postagens atualmente na sua página. Usado pra autoincrementação do número dos spotteds",
+      "value": ""
+    },
+    "RECAPTCHA_PUBLIC_KEY": {
+      "description": "Public Key do seu reCaptcha",
+      "value": ""
+    },
+    "RECAPTCHA_PRIVATE_KEY": {
+      "description": "Private Key do seu reCaptcha",
+      "value": ""
+    },
+    "WOT_SECRET": {
+      "description": "Token do seu WoT",
+      "value": ""
+    },
+    "GSB_SECRET": {
+      "description": "Token do seu Google Safe Browsing",
+      "value": ""
+    },
+    "SPOTTED_API_SECRET": {
+      "description": "Token da sua conta na SpottedAPI",
+      "value": ""
+    },
+  },
 }
