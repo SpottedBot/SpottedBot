@@ -1,0 +1,24 @@
+/* TEAM */
+
+
+Developer: Gustavo Maronato
+
+GitHub: https://github.com/Maronato
+
+
+Keybase: https://keybase.io/maronato
+
+
+Location: São Paulo, Brazil.
+
+
+/* SITE */
+
+
+Standards: HTML5, CSS3, Python, Javascript
+
+
+Components: Django, jQuery
+
+
+Source: https://github.com/Maronato/SpottedBot
