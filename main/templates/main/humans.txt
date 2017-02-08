@@ -19,3 +19,6 @@ Standards: HTML5, CSS3, Python, Javascript
 
 
 Components: Django, jQuery
+
+
+Source: https://github.com/Maronato/SpottedBot
