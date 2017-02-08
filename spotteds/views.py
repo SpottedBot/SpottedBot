@@ -31,11 +31,9 @@ def submit_spotted(request):
 @xframe_options_exempt
 @csrf_exempt
 def view_spotted(request, spottedid):
-    print("started")
     try:
         count = int(spottedid) - int(settings.INITIAL_COUNT)
         spotted = Spotted.objects.get(id=count)
     except:
         spotted = get_object_or_404(Spotted, id=spottedid)
-    print("finished")
     return render(request, 'spotteds/view_spotted.html', {'spotted': spotted})

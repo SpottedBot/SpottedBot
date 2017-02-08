@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, render_to_response, get_object_or_404, HttpResponse
 from spotteds.forms import PendingSpottedForm
 from custom_auth.models import FacebookUser
-from django.http import JsonResponse
+from django.http import JsonResponse, Http404
 from .forms import ContactForm, ReportForm
 from django.contrib import messages
 from django.conf import settings
@@ -9,6 +9,7 @@ from spotteds.models import Spotted, PendingSpotted
 from django.contrib.auth.models import User
 from django.template import RequestContext
 from api.api_interface import api_process_deleted, api_my_delete_options, api_forme_delete_options
+from django.contrib.auth.decorators import login_required
 
 
 def index(request, contactform=None, spottedform=None, reportform=None):
@@ -65,6 +66,7 @@ def report(request):
     return redirect('index')
 
 
+@login_required
 def delete_spotted(request):
     instance = get_object_or_404(Spotted, id=request.POST['id'])
 
@@ -83,6 +85,7 @@ def delete_spotted(request):
     return HttpResponse('Success')
 
 
+@login_required
 def dashboard(request):
 
     pendingspotteds = PendingSpotted.objects.filter(polemic=False)
@@ -106,15 +109,18 @@ def dashboard(request):
     })
 
 
+@login_required
 def my_spotteds(request):
     return render(request, 'main/users/my_spotteds.html')
 
 
+@login_required
 def my_delete_options(request):
     data = api_my_delete_options()
     return JsonResponse(data)
 
 
+@login_required
 def forme_spotteds(request):
     return render(request, 'main/users/forme_spotteds.html')
 
@@ -124,8 +130,12 @@ def forme_delete_options(request):
     return JsonResponse(data)
 
 
+@login_required
 def dismiss_submit(request):
     instance = get_object_or_404(Spotted, id=request.POST['id'])
+    if not instance.target == request.user:
+        raise Http404
+        return
     instance.dismissed = True
     instance.save()
     return HttpResponse('Success')
