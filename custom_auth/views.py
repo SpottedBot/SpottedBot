@@ -17,3 +17,4 @@ def facebook_login_response(request):
         return redirect(reverse('index'))
 
     request = login_successful(code, request)
+    return redirect(reverse('index'))
