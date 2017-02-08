@@ -1,16 +1,20 @@
 SpottedBot
 ==========
 
-O que é?
---------
-É uma plataforma de spotteds que almeja funcionar de forma 100% automatizada
+A platform for university students to send "spotteds", that aims to be completely automated using artificial intelligence to check for spam or inadequate messages.
 
-Funcionamento
+How does it work?
 -------------
-O app usa o Graph API do Facebook para postar os Spotteds e usa uma REST API feita por mim, ainda a ser postada, para filtrar as paradas.
+Spotteds are submitted through the main app's page and their attachments are sent to Web of Trust's API to be evaluated. They are also sent to Google Safe Browsing and are only deemed safe if both reply that the links are safe.
+
+Next, the spotted is sent to the SpottedAPI for evaluation. The SpottedAPI decides whether it should be posted to Facebook right away, rejected and deleted or sent to human evaluation.
+
+If it is posted, notifications are sent through Facebook's Notification API to every person related to the spotted.
+
+If it is sent to human evaluation, moderators will then analyze the spotted's contents and either approve it for publication or reject it. The decision is again sent to the SpottedAPI to be incorporated into it.
 
 
-Configuração
+Setting
 ------------
 
 ##APIs e mais APIs
