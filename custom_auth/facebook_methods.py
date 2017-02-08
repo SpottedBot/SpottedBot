@@ -55,7 +55,7 @@ def login_successful(code, request):
     try:
         token_expires = token_info['expires']
     except:
-        token_expires = 999999999999
+        token_expires = 9999999
 
     debug = debug_token(access_token)['data']
 

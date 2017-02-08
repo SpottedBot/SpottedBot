@@ -107,4 +107,17 @@ Pra fazer isso, basta clicar no botão abaixo e colocar as paradas certas quando
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
+##Heroku CLI
+
+Instala a [CLI do Heroku](https://devcenter.heroku.com/articles/heroku-cli)
+
+e executa os seguintes comandos, depois de logar na sua conta pelo CLI:
+
+`heroku run --app <nome-do-seu-app> python manage.py migrate`
+
+Agora você vai querer criar uma conta de superusuário. Com ela você vai conseguir adicionar moderadores e pá
+
+`heroku run --app <nome-do-seu-app> python manage.py createsuperuser`
+
+
 ##Tchüss!
