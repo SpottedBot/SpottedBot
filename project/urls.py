@@ -5,6 +5,9 @@ admin.autodiscover()
 # from app import views
 from django.views.generic import TemplateView
 
+handler404 = 'main.views.handler404'
+handler500 = 'main.views.handler500'
+
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include('main.urls')),
