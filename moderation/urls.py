@@ -30,4 +30,3 @@ urlpatterns = [
     url(r'un_report_submit/$', views.un_report_submit, name='un_report_submit'),
     url(r'report_submit/$', views.report_submit, name='report_submit'),
 ]
-
