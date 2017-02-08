@@ -10,9 +10,10 @@ def facebook_login(request):
 
 def facebook_login_response(request):
     try:
-        request = login_successful(request.GET['code'], request)
+        code = request.GET['code']
     except:
         # User cancelled login
         request = login_canceled(request)
+        return redirect(reverse('index'))
 
-    return redirect(reverse('index'))
+    request = login_successful(code, request)
