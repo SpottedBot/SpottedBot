@@ -60,6 +60,6 @@
     "SPOTTED_API_SECRET": {
       "description": "Token da sua conta na SpottedAPI",
       "value": ""
-    },
-  },
+    }
+  }
 }
