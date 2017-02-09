@@ -46,6 +46,18 @@
         }
     });
 
+    function change_public() {
+        if ($('#id_anonymous').is(":checked")) {
+            $('#public_field').hide();
+            $('#id_public').prop('checked', false);
+        }
+        else {
+            $('#public_field').show();
+        }
+    };
+
+    change_public()
+
     var targets = new Bloodhound({
       datumTokenizer: Bloodhound.tokenizers.whitespace,
       queryTokenizer: Bloodhound.tokenizers.whitespace,
