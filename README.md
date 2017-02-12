@@ -92,6 +92,12 @@ Vem [aqui agora](https://console.cloud.google.com/apis/credentials) e cria uma c
 
 Pega a `Key` e guarda ela.
 
+###GoogleAds
+
+Se você quiser colocar google ads no seu site, [venha aqui](https://www.google.com/adsense/start/) e pegue o `google_ad_client`.
+
+Salve esse valor tb como seu cliente do Google Ads
+
 ###SpottedAPI
 
 Guardei o melhor pro finak, uhu
