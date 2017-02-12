@@ -7,7 +7,7 @@
                 <th>Mensagem</th>
                 <th>Anexo</th>
                 <th>Facebook</th>
-                <!-- <th>Recall</th> -->
+                <th style="display:none;">ID</th>
             </tr>
         </thead>
         <tfoot>
@@ -17,7 +17,7 @@
                 <th>Mensagem</th>
                 <th>Anexo</th>
                 <th>Facebook</th>
-                <!-- <th>Recall</th> -->
+                <th style="display:none;">ID</th>
             </tr>
         </tfoot>
         <tbody>
@@ -28,9 +28,7 @@
                 <td>#{{ spotted.spotted_count }}<br><br>{{ spotted.message | linebreaksbr }}</td>
                 <td>{{ spotted.attachment }}</td>
                 <td><a href="https://facebook.com/{{spotted.post_id}}" target="_blank" class="ui button blue">Abrir</td>
-<!--                 <td><button class="ui button red">
-                    Recall
-                </button></td> -->
+                <td style="display:none;">{{ spotted.id }}</td>
             </tr>
             {% endfor %}
         </tbody>
@@ -40,6 +38,14 @@
     $(document).ready(function() {
         $('#example').DataTable({
             "order": [[ 1, "desc" ]],
+            "columnDefs": [
+                {'orderData':[5], 'targets': [1] },
+                {
+                    'targets': [5],
+                    'visible': false,
+                    'searchable': false
+                },
+            ],
             "language": {
                 "lengthMenu": "Mostrar _MENU_ Spotteds por página",
                 "zeroRecords": "Sem spotteds nessa pesquisa :(",
