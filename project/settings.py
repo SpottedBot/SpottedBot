@@ -191,3 +191,15 @@ GSB_SECRET = os.environ.get('GSB_SECRET')
 # Spotted API
 SPOTTED_API_URL = "http://spottedapi.herokuapp.com"
 SPOTTED_API_SECRET = os.environ.get('SPOTTED_API_SECRET')
+
+# Adsense
+
+ADS_ACTIVE = os.environ.get('ADS_ACTIVE')
+
+if eval(ADS_ACTIVE):
+    # Please do not alter the dev ads, as I provide you with free code for you to make money. Allow me a share out of it :)
+    DEV_AD = os.environ.get('DEV_AD')
+    SPOTTED_AD = os.environ.get('SPOTTED_AD')
+else:
+    DEV_AD = False
+    SPOTTED_AD = False

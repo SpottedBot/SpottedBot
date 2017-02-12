@@ -4,6 +4,7 @@
 <head>
 	<!-- Load project's staticfiles -->
 	{% load staticfiles %}
+	{% load ads %}
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
@@ -37,6 +38,7 @@
 
 	<!-- Local stylesheets -->
 	<link rel="stylesheet" type="text/css" href="{% static 'main/css/menu.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'main/css/responsive.css' %}">
 
 
 	<!-- Page scripts -->
@@ -47,6 +49,9 @@
 
 	<!-- Google Analytics -->
 	<script type="text/javascript" src="{% static 'main/js/GA.js' %}"></script>
+
+	<!-- Google Adsense -->
+	{% include 'main/init_ads.html' %}
 
 </head>
 
@@ -138,6 +143,12 @@
 		{% block masthead %}{% endblock %}
 
 		<!-- Specific contents -->
+
+
+
+			<div class="ui is_desktop test centered leaderboard ad" data-text="Large Leaderboard"></div>
+			<div class="centered ui mobile leaderboard test ad" data-text="Mobile Leaderboard"></div>
+
 		{% block content %}{% endblock %}
 
 		<!-- Footer - disabled until fixed -->
