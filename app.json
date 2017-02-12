@@ -57,6 +57,14 @@
       "description": "Token do seu Google Safe Browsing",
       "value": ""
     },
+    "SPOTTED_AD": {
+      "description": "Nome de cliente do seu Google Adsense, completo, se existente",
+      "value": ""
+    },
+    "ADS_ACTIVE": {
+      "description": "Ativar Anúncios? 'True' para sim e 'False' para não, sem as àspas e com a primeira letra maiúscula ",
+      "value": ""
+    },
     "SPOTTED_API_SECRET": {
       "description": "Token da sua conta na SpottedAPI",
       "value": ""

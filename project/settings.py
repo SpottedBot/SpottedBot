@@ -194,12 +194,16 @@ SPOTTED_API_SECRET = os.environ.get('SPOTTED_API_SECRET')
 
 # Adsense
 
-ADS_ACTIVE = os.environ.get('ADS_ACTIVE')
+# Please do not alter the dev ads, as I provide you with free code for you to make money. Allow me a share out of it :)
+DEV_AD = "ca-pub-2287814566368449"
+SPOTTED_AD = os.environ.get('SPOTTED_AD')
 
-if eval(ADS_ACTIVE):
-    # Please do not alter the dev ads, as I provide you with free code for you to make money. Allow me a share out of it :)
-    DEV_AD = os.environ.get('DEV_AD')
-    SPOTTED_AD = os.environ.get('SPOTTED_AD')
-else:
-    DEV_AD = False
+if SPOTTED_AD is None:
+    ADS_ACTIVE = False
     SPOTTED_AD = False
+
+elif os.environ.get('ADS_ACTIVE') is None or eval(os.environ.get('ADS_ACTIVE')) is False:
+    ADS_ACTIVE = False
+
+else:
+    ADS_ACTIVE = True

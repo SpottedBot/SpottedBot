@@ -13,9 +13,17 @@ spotted_ad = settings.SPOTTED_AD
 
 @register.simple_tag
 def ad_active():
-    if eval(ads_active):
+    print(ads_active)
+    if ads_active:
         return True
     return False
+
+
+@register.simple_tag
+def ad_load():
+    if not spotted_ad:
+        return False
+    return True
 
 
 @register.simple_tag

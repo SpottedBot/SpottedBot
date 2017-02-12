@@ -146,9 +146,11 @@
 		<!-- Specific contents -->
 
 
-
+		{% ad_active as ad_result %}
+		{% if ad_result %}
 		<div class="ui is_desktop test centered leaderboard ad" data-text="Large Leaderboard"></div>
 		<div class="centered ui mobile leaderboard test ad" data-text="Mobile Leaderboard"></div>
+		{% endif %}
 
 		{% block content %}{% endblock %}
 

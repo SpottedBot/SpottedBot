@@ -4,6 +4,7 @@
 <head>
     <!-- Load project's staticfiles -->
     {% load staticfiles %}
+    {% load ads %}
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
@@ -34,6 +35,7 @@
 
     <!-- Local scripts -->
     <script type="text/javascript" src="{% static 'main/js/sidebar.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/responsive.css' %}">
 
     <!-- Local stylesheets -->
     <link rel="stylesheet" type="text/css" href="{% static 'main/css/menu.css' %}">
@@ -41,17 +43,21 @@
     <!-- Google Analytics -->
     <script type="text/javascript" src="{% static 'main/js/GA.js' %}"></script>
 
-    <!-- Date widget fix -->
-    <script src="//cdn.jsdelivr.net/webshim/1.14.5/polyfiller.js"></script>
-    <script type="text/javascript" src="{% static 'main/js/datewidget.js' %}"></script>
+    <!-- Google Adsense -->
+    {% include 'main/init_ads.html' %}
 
 </head>
 
 <body data-gr-c-s-loaded="true" class="pushable">
 
-
     <!-- Page Contents -->
     <div class="pusher">
+
+    {% ad_active as ad_result %}
+    {% if ad_result %}
+    <div class="ui is_desktop test centered leaderboard ad" data-text="Large Leaderboard"></div>
+    <div class="centered ui mobile leaderboard test ad" data-text="Mobile Leaderboard"></div>
+    {% endif %}
 
 <div class="ui vertical stripe segment">
     <div class="ui middle aligned stackable grid container">
