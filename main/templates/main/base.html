@@ -60,8 +60,9 @@
 	<!-- Sidebar Menu -->
 	<div class="ui vertical inverted sidebar menu left">
 		<a href="/#submit" class="right item">Envie Spotteds</a>
-		<a href="/#details" class="item">Como funciona?</a>
-		<a href="/#contact" class="item">Contato</a>
+		<a href="{% url 'search' %}" class="item">Pegar contato</a>
+		<a href="{% url 'about' %}" class="item">Sobre</a>
+		<a href="/#contact" class="item">Fale conosco</a>
 		<a href="/#report" class="item">Reportar</a>
 		{% if user.is_authenticated %}
 		<div class="item">
@@ -97,7 +98,7 @@
 				</a>
 				<a href="/#submit" class="right item">Envie Spotteds</a>
 				<a href="{% url 'search' %}" class="item">Pegar contato</a>
-				<a href="/#details" class="item">Como funciona?</a>
+				<a href="{% url 'about' %}" class="item">Sobre</a>
 				<a href="/#contact" class="item">Fale conosco</a>
 				<a href="/#report" class="item">Reportar</a>
 
@@ -146,8 +147,8 @@
 
 
 
-			<div class="ui is_desktop test centered leaderboard ad" data-text="Large Leaderboard"></div>
-			<div class="centered ui mobile leaderboard test ad" data-text="Mobile Leaderboard"></div>
+		<div class="ui is_desktop test centered leaderboard ad" data-text="Large Leaderboard"></div>
+		<div class="centered ui mobile leaderboard test ad" data-text="Mobile Leaderboard"></div>
 
 		{% block content %}{% endblock %}
 

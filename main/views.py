@@ -33,6 +33,10 @@ def index(request, contactform=None, spottedform=None, reportform=None):
     })
 
 
+def about(request):
+    return render(request, 'main/about.html')
+
+
 def prefetch_facebook_usernames(request):
     names = [obj.name for obj in FacebookUser.objects.all()]
     return JsonResponse(names, safe=False)
