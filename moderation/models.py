@@ -90,7 +90,6 @@ class WorkHour(models.Model):
     @property
     def last_work(self):
         now2 = now.replace(hour=self.hour, minute=0)
-        print(now2)
         return now2 - datetime.timedelta((now2.weekday() - self.day) % 7)
 
     @property
