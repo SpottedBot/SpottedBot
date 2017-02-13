@@ -17,10 +17,13 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
+    # /api/+
+
     url(r'process_new_post/$', views.process_new_post, name='process_new_post'),
     url(r'process_approved/$', views.process_approved, name='process_approved'),
     url(r'process_rejected/$', views.process_rejected, name='process_rejected'),
     url(r'process_deleted/$', views.process_deleted, name='process_deleted'),
+
     url(r'reject_options/$', views.reject_options, name='reject_options'),
     url(r'my_options/$', views.my_delete_options, name='my_delete_options'),
     url(r'forme_options/$', views.forme_delete_options, name='forme_delete_options'),

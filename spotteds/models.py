@@ -7,10 +7,15 @@ from .wot_wrapper import is_safe
 from .notifications import author_notification, target_notification
 # Create your models here.
 
+# Initial spotted count
 initial_count = int(settings.INITIAL_COUNT)
 
 
 class Spotted(models.Model):
+    """Spotted
+
+     fields and methods
+     """
     author = models.ForeignKey(  # User Obj from author
         User,
         related_name='authored',
@@ -47,13 +52,21 @@ class Spotted(models.Model):
         return True
 
     def remove_spotted(self, db_remove=False):
+        """Remove Spotted
+
+        tries to delete the spotted from facebook and from the DB if db_remove is True
+        """
+
         try:
+            # Remove from facebook
             page_graph().delete_object(self.post_id)
         except:
             pass
         if db_remove:
+            # delete from db
             self.delete()
             return None
+        # recreate pending spotted if db_remove is False
         ps = PendingSpotted(message=self.message, author=self.author, target=self.target, attachment=self.attachment)
         ps.save()
         self.delete()
@@ -64,6 +77,11 @@ class Spotted(models.Model):
 
 
 class PendingSpotted(models.Model):
+    """Pending Spotted
+
+    fields and methods
+    """
+
     author = models.ForeignKey(  # User Obj from author
         User,
         on_delete=models.CASCADE,
@@ -110,17 +128,23 @@ class PendingSpotted(models.Model):
         if not self.is_attachment_safe:
             attachment = ''
 
+        # Create new Spotted object from self
         s = Spotted(message=self.message, author=self.author, approver=mod, target=self.target, attachment=attachment, public=self.public, api_id=self.api_id)
         s.save()
         new_id = s.id + initial_count
+
+        # format message
         f_message = "#" + str(new_id) + "\n\n" + self.message
 
+        # post to facebook
         resp = page_graph().put_wall_post(f_message, {'link': self.attachment})
 
+        # save response post id
         s.post_id = resp['id']
         s.save()
         self.delete()
 
+        # send notifications
         if s.author:
             author_notification(s)
         if s.target:

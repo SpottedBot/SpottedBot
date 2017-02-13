@@ -5,6 +5,9 @@ from .forms import TokenForm
 # Create your views here.
 
 
+# The views here are for debugging of requests and mimic the behavior of the API
+
+
 @csrf_exempt
 def process_new_post(request):
 

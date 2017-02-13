@@ -7,6 +7,10 @@ url = settings.SPOTTED_API_URL
 
 
 class TokenForm(forms.Form):
+    """Token Form
+
+    Form used by the site admin when recovering their token. Deprecated
+    """
 
     username = forms.CharField(label='Usuário', max_length=100)
     password = forms.CharField(label='Senha', widget=forms.PasswordInput(), max_length=100)

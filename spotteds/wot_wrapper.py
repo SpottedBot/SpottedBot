@@ -4,10 +4,21 @@ from django.conf import settings
 
 
 def is_safe(url):
+    """Is Safe
+
+    returns true if google and wot safe
+    false otherwise
+    """
+
     return is_google_safe(url) and is_WOT_safe(url)
 
 
 def is_WOT_safe(url):
+    """WOT API Wrapper
+
+    calls the api and checks for high levels of safety confidence
+    """
+
     secret = settings.WOT_SECRET
     payload = {'hosts': url, 'key': secret}
     response = requests.get("http://api.mywot.com/0.4/public_link_json2", params=payload)
@@ -31,6 +42,12 @@ def is_WOT_safe(url):
 
 
 def is_google_safe(url):
+    """Google Safe Browsing Wrapper
+
+    calls api, checks all lists and returns true if not found in any list
+    false otherwise
+    """
+
     secret = settings.GSB_SECRET
     params = {
         "key": secret

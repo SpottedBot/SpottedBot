@@ -3,6 +3,8 @@ from .models import WorkHour, Moderator
 
 
 class WorkHourForm(forms.ModelForm):
+    """Work Hours Form
+    """
 
     class Meta:
         model = WorkHour

@@ -5,10 +5,17 @@ from .facebook_methods import auth_url, login_successful, login_canceled
 
 
 def facebook_login(request):
+
+    # Generate auth_url and redirect to it
     return redirect(auth_url(request))
 
 
 def facebook_login_response(request):
+    """Facebook Login Response
+
+    Try to access 'code' from the response. If found, the login was successful. Unsuccessful otherwise
+    """
+
     try:
         code = request.GET['code']
     except:

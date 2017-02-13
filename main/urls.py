@@ -17,17 +17,24 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
+    # /+
     url(r'^$', views.index, name='index'),
     url(r'^about/$', views.about, name='about'),
     url(r'^dashboard/$', views.dashboard, name='dashboard'),
+
     url(r'^contact/$', views.contact, name='contact'),
     url(r'^report/$', views.report, name='report'),
+
     url(r'^my/$', views.my_spotteds, name='my_spotteds'),
     url(r'^my_delete_options/$', views.my_delete_options, name='my_delete_options'),
+
     url(r'^for-me/$', views.forme_spotteds, name='forme_spotteds'),
     url(r'^forme_delete_options/$', views.forme_delete_options, name='forme_delete_options'),
+
     url(r'^delete_spotted/$', views.delete_spotted, name='delete_spotted'),
     url(r'^dismiss_submit/$', views.dismiss_submit, name='dismiss_submit'),
+
     url(r'^search/$', views.search, name='search'),
+
     url(r'^prefetch_facebook_users/$', views.prefetch_facebook_usernames, name='prefetch_facebook_users')
 ]

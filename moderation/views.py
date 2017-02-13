@@ -14,6 +14,11 @@ from .decorators import is_moderator
 
 @user_passes_test(is_moderator)
 def pending_spotteds(request):
+    """Pending Spotteds
+
+    render pending spotteds view
+    """
+
     spotteds = PendingSpotted.objects.filter(polemic=False).order_by('-id')
     return render(request, 'moderation/pending_spotteds.html', {
         'spotteds': spotteds,
@@ -22,6 +27,11 @@ def pending_spotteds(request):
 
 @user_passes_test(is_moderator)
 def polemic_spotteds(request):
+    """Polemic Spotteds
+
+    render Polemic spotteds view
+    """
+
     spotteds = PendingSpotted.objects.filter(polemic=True).order_by('-id')
     return render(request, 'moderation/polemic_spotteds.html', {
         'spotteds': spotteds,
@@ -30,6 +40,11 @@ def polemic_spotteds(request):
 
 @user_passes_test(is_moderator)
 def history_spotteds(request):
+    """Spotted History
+
+    render spotted historys view
+    """
+
     spotteds = Spotted.objects.filter(reported='').order_by('-id')
     return render(request, 'moderation/history_spotteds.html', {
         'spotteds': spotteds,
@@ -38,6 +53,11 @@ def history_spotteds(request):
 
 @user_passes_test(is_moderator)
 def reported_spotteds(request):
+    """Reported Spotteds
+
+    render reported spotteds view
+    """
+
     spotteds = Spotted.objects.exclude(reported='').order_by('-id')
     return render(request, 'moderation/reported_spotteds.html', {
         'spotteds': spotteds,
@@ -46,6 +66,11 @@ def reported_spotteds(request):
 
 @user_passes_test(is_moderator)
 def change_shifts(request):
+    """Change Shifts
+
+    Allows a moderator to edit their shifts
+    """
+
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
         form = WorkHourFormSet(request.POST, instance=request.user.moderator)
@@ -64,6 +89,11 @@ def change_shifts(request):
 
 @user_passes_test(is_moderator)
 def show_shifts(request):
+    """Show Shifts
+
+    render show shifts view
+    """
+
     mods = Moderator.objects.all()
     return render(request, 'moderation/show_shifts.html', {'moderators': mods})
 
@@ -72,6 +102,11 @@ def show_shifts(request):
 
 @user_passes_test(is_moderator)
 def polemic_submit(request):
+    """Polemic Submit
+
+    process the submission of a polemic spotted
+    """
+
     instance = get_object_or_404(PendingSpotted, id=request.POST['id'])
     instance.polemic = True
     instance.save()
@@ -80,6 +115,11 @@ def polemic_submit(request):
 
 @user_passes_test(is_moderator)
 def approve_submit(request):
+    """Approve Submit
+
+    process the approval of a pending spotted
+    """
+
     instance = get_object_or_404(PendingSpotted, id=request.POST['id'])
     response = api_process_approved(instance)
     if not response:
@@ -92,12 +132,22 @@ def approve_submit(request):
 
 @user_passes_test(is_moderator)
 def reject_options(request):
+    """Reject Options
+
+    retrieve reject options from api
+    """
+
     data = api_reject_options()
     return JsonResponse(data)
 
 
 @user_passes_test(is_moderator)
 def reject_submit(request):
+    """Reject Submit
+
+    process the rejection of a pending spotted
+    """
+
     instance = get_object_or_404(PendingSpotted, id=request.POST['id'])
     response = api_process_rejected(instance, request.POST['option'])
     if not response:
@@ -110,6 +160,11 @@ def reject_submit(request):
 
 @user_passes_test(is_moderator)
 def un_report_submit(request):
+    """Un Report Submit
+
+    process the un-reporting of a reported spotted
+    """
+
     instance = get_object_or_404(Spotted, id=request.POST['id'])
     instance.reported = ''
     instance.save()
@@ -118,6 +173,11 @@ def un_report_submit(request):
 
 @user_passes_test(is_moderator)
 def report_submit(request):
+    """Report Submit
+
+    process the deletion of a reported spotted
+    """
+
     instance = get_object_or_404(Spotted, id=request.POST['id'])
     response = api_process_deleted(instance, request.POST['option'], "reported")
     if not response:

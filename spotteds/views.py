@@ -1,4 +1,4 @@
-from django.shortcuts import reverse, redirect, get_object_or_404, render
+from django.shortcuts import get_object_or_404, render
 from .forms import PendingSpottedForm
 from django.contrib import messages
 from .models import Spotted
@@ -11,7 +11,10 @@ from django.conf import settings
 
 
 def submit_spotted(request):
-    # User submitted spotted
+    """Submit Spotted
+
+    User submitted a spotted
+    """
 
     if request.method == 'POST':
         form = PendingSpottedForm(request.POST)
@@ -19,6 +22,7 @@ def submit_spotted(request):
         if form.is_valid():
             instance = form.save(request.user)
 
+            # Send to API
             if api_process_new_post(instance):
                 messages.add_message(request, messages.SUCCESS, 'Spotted enviado!')
             else:
@@ -31,6 +35,11 @@ def submit_spotted(request):
 @xframe_options_exempt
 @csrf_exempt
 def view_spotted(request, spottedid):
+    """View Spotted
+
+    Display spotted info. Certain fields may only be viewed by the author or target
+    """
+
     try:
         count = int(spottedid) - int(settings.INITIAL_COUNT)
         spotted = Spotted.objects.get(id=count)

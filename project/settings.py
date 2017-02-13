@@ -194,7 +194,7 @@ SPOTTED_API_SECRET = os.environ.get('SPOTTED_API_SECRET')
 
 # Adsense
 
-# Please do not alter the dev ads, as I provide you with free code for you to make money. Allow me a share out of it :)
+# Please do not alter the dev ads, as I provide you with free code and API support for you to make money. Allow me a share out of it :)
 DEV_AD = "ca-pub-2287814566368449"
 SPOTTED_AD = os.environ.get('SPOTTED_AD')
 

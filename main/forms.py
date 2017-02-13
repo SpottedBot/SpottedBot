@@ -5,6 +5,10 @@ from spotteds.models import Spotted
 
 
 class ContactForm(forms.Form):
+    """Contact Form
+
+    Contact form fields and methods
+    """
 
     name = forms.CharField(label='Seu nome', max_length=30)
     email = forms.EmailField(label='Seu email')
@@ -26,6 +30,10 @@ class ContactForm(forms.Form):
 
 
 class ReportForm(forms.Form):
+    """Report Form
+
+    Report form fields and methods
+    """
 
     number = forms.IntegerField(label='Número do Spottd')
     text = forms.CharField(widget=forms.Textarea(attrs={'rows': 4, 'cols': 15}), label='Mensagem')

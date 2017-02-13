@@ -17,6 +17,8 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
+    # /mod/+
+
     url(r'pending/$', views.pending_spotteds, name='pending'),
     url(r'polemic/$', views.polemic_spotteds, name='polemic'),
     url(r'history/$', views.history_spotteds, name='history'),
