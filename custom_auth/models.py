@@ -65,10 +65,18 @@ class FacebookUser(models.Model):
             obj.name = name
             obj.link = link
             print('USER UPDATED')
+
         else:
+            def f_usname(name, n=0):
+                """
+                appends n to the end of the username, automatically adding 1 if exists
+                """
+                if not User.objects.filter(username=name + '_' + str(n)).exists():
+                    return name + '_' + str(n)
+                return f_usname(name, n + 1)
 
             # If it is not found, create a new user and then a new facebookuser
-            user = User.objects.create_user(username=name)
+            user = User.objects.create_user(username=f_usname(name))
             user.save()
             obj = FacebookUser(
                 user=user,
