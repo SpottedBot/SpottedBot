@@ -14,14 +14,14 @@ If it is posted, notifications are sent through Facebook's Notification API to e
 If it is sent to human evaluation, moderators will then analyze the spotted's contents and either approve it for publication or reject it. The decision is again sent to the SpottedAPI to be incorporated into it.
 
 
-#Setup
+# Setup
 
-##APIs e mais APIs
+## APIs e mais APIs
 
 Você vai precisar pegar chaves de várias APIs.
 Vamo das mais complicadas pra as mais simples:
 
-###Facebook
+### Facebook
 
 Antes de começar, certifique-se de que você é Admin da página que quer associar ao seu spotted.
 
@@ -48,7 +48,7 @@ Entre no [Graph Explorer](https://developers.facebook.com/tools/explorer/)
 
 Se você fez tudo certo, terminamos com o Facebook.
 
-###reCaptcha
+### reCaptcha
 
 Vamos pegar umas chaves pro nosso reCaptcha agora. Ninguém gosta de bots enviando milhões de spotteds pra a gente e spammando nossa caixa, né?
 
@@ -66,7 +66,7 @@ Em `server side integration` pega e anota o `secret` como sua secret key do reca
 
 Done.
 
-###Web of Trust
+### Web of Trust
 
 Ninguém gosta de receber vírus ou pornografia como anexo, especialmente nos spotteds.
 
@@ -78,7 +78,7 @@ Dentro do seu perfil, procura por API
 
 Clica lá e cria um Token pra você. Guarda esse token tb
 
-###Google Safe Browsing
+### Google Safe Browsing
 
 Ninguém melhor que o google pra filtrar urls né não diga aí
 
@@ -92,13 +92,13 @@ Vem [aqui agora](https://console.cloud.google.com/apis/credentials) e cria uma c
 
 Pega a `Key` e guarda ela.
 
-###GoogleAds
+### GoogleAds
 
 Se você quiser colocar google ads no seu site, [venha aqui](https://www.google.com/adsense/start/) e pegue o `google_ad_client`.
 
 Salve esse valor tb como seu cliente do Google Ads
 
-###SpottedAPI
+### SpottedAPI
 
 Guardei o melhor pro finak, uhu
 
@@ -108,7 +108,7 @@ Infelizmente só quem tem minha permissão pode ter uma key da minha api.
 
 Pede pra mim que eu provavelmente sou bem de boa em deixar *wink wink*
 
-#Finalmentes
+# Finalmentes
 
 Você pode clonar esse rep e rodar tudo local usando esses valores aí de cima dentro de um `.env`, ou pode ir adiante e jogar tudo no heroku direto.
 
@@ -116,7 +116,7 @@ Pra fazer isso, basta clicar no botão abaixo e colocar as paradas certas quando
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
-##Heroku CLI
+## Heroku CLI
 
 Instala a [CLI do Heroku](https://devcenter.heroku.com/articles/heroku-cli)
 
@@ -128,5 +128,3 @@ Agora você vai querer criar uma conta de superusuário. Com ela você vai conse
 
 `heroku run --app <nome-do-seu-app> python manage.py createsuperuser`
 
-
-##Tchüss!
