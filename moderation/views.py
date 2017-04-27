@@ -47,7 +47,7 @@ def history_spotteds(request):
 
     spotteds = Spotted.objects.filter(reported='').order_by('-id')
     return render(request, 'moderation/history_spotteds.html', {
-        'spotteds': spotteds,
+        'spotteds': spotteds[:500],
     })
 
 
