@@ -41,7 +41,7 @@ class Spotted(models.Model):
     api_id = models.IntegerField(default=0)  # unique API id
     dismissed = models.BooleanField(default=False)  # used to save the state of spotteds dismissed by the target
     public = models.BooleanField(default=False)  # Whether the spotted is public or not
-    reported = models.CharField(default='', max_length=100)  # When someone reports a spotted, this is the report text
+    reported = models.CharField(default='', max_length=1000)  # When someone reports a spotted, this is the report text
 
     @property
     def spotted_count(self):
