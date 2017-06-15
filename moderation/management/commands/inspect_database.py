@@ -1,13 +1,9 @@
 from django.core.management.base import BaseCommand
-from datetime import timedelta
-from django.utils import timezone
 
 from custom_auth.models import FacebookUser
 from django.contrib.auth.models import User
 from moderation.models import Moderator, WorkHour
 from spotteds.models import Spotted, PendingSpotted
-
-now = timezone.now()
 
 
 class Command(BaseCommand):
