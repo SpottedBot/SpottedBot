@@ -53,3 +53,7 @@
 .twitter-typeahead {
     display: block !important;
 }
+
+.suggestion_item {
+  vertical-align:middle
+}
