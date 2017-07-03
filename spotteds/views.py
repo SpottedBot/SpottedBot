@@ -25,6 +25,7 @@ def submit_spotted(request):
             # Send to API
             if api_process_new_post(instance):
                 messages.add_message(request, messages.SUCCESS, 'Spotted enviado para moderação!')
+                form = PendingSpottedForm()
             else:
                 messages.add_message(request, messages.ERROR, 'Oops! Erro na comunicação com a API!')
     else:
