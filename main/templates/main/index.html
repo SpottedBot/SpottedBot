@@ -36,7 +36,7 @@
                             </a>
                             <br>
                             <div class="ui divider"></div>
-                            <a href="#" style="color: grey" onclick="next_tab(0);"><small>Não quero me inscrever</small></a>
+                            <a data-position="top center" href="#" id="refuse_button" style="color: grey" onclick="refuse_signin();"><small>Não quero me inscrever</small></a>
                             {% endif %}
                         </div>
                         <div class="ui transition fade in top attached tab" data-tab="1">
@@ -351,6 +351,22 @@
     {% if user.is_authenticated %}
     next_tab(0);
     {% endif %}
+
+    function refuse_signin() {
+        $("#refuse_button").popup({
+            position : 'top center',
+            target: "#refuse_button",
+            on: "click",
+            html  : '<h4 style="text-align: center">Tem certeza?</h4>\
+            <p style="text-align: center"><a href="{% url "custom_auth:facebook_login" %}">Ok, me inscreva</a></p>\
+            <p style="text-align: center"><a href="#" style="color: grey;" onclick="refuse_confirm();"><small>Não quero</small></a></p>'
+        });
+        $("#refuse_button").popup("show");
+    }
+    function refuse_confirm() {
+        $("#refuse_button").popup("hide");
+        next_tab(0);
+    }
 
     function message_next() {
 
