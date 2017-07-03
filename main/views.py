@@ -10,6 +10,7 @@ from django.contrib.auth.models import User
 from api.api_interface import api_process_deleted, api_my_delete_options, api_forme_delete_options
 from django.contrib.auth.decorators import login_required
 from custom_auth.facebook_methods import get_graph
+from project.manual_error_report import exception_email
 
 
 def index(request, contactform=None, spottedform=None, reportform=None):
@@ -132,9 +133,12 @@ def delete_spotted(request):
     if not response:
         raise Http404
         return
-
-    # Fully delete spotted(from page and from DB)
-    instance.remove_spotted(True)
+    try:
+        # Fully delete spotted(from page and from DB)
+        instance.remove_spotted(True)
+    except Exception as e:
+        exception_email(request, e)
+        raise e
     return HttpResponse('Success')
 
 

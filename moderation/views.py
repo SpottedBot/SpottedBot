@@ -7,6 +7,7 @@ from django.contrib import messages
 from .models import Moderator
 from django.contrib.auth.decorators import user_passes_test
 from .decorators import is_moderator
+from project.manual_error_report import exception_email
 # Create your views here.
 
 
@@ -119,14 +120,17 @@ def approve_submit(request):
 
     process the approval of a pending spotted
     """
+    try:
+        instance = get_object_or_404(PendingSpotted, id=request.POST['id'])
+        response = api_process_approved(instance)
+        if not response:
+            raise Http404
+            return
 
-    instance = get_object_or_404(PendingSpotted, id=request.POST['id'])
-    response = api_process_approved(instance)
-    if not response:
-        raise Http404
-        return
-
-    instance.post_spotted(request.user.moderator)
+        instance.post_spotted(request.user.moderator)
+    except Exception as e:
+        exception_email(request, e)
+        raise e
     return HttpResponse('Success')
 
 
@@ -147,14 +151,17 @@ def reject_submit(request):
 
     process the rejection of a pending spotted
     """
+    try:
+        instance = get_object_or_404(PendingSpotted, id=request.POST['id'])
+        response = api_process_rejected(instance, request.POST['option'])
+        if not response:
+            raise Http404
+            return
 
-    instance = get_object_or_404(PendingSpotted, id=request.POST['id'])
-    response = api_process_rejected(instance, request.POST['option'])
-    if not response:
-        raise Http404
-        return
-
-    instance.delete()
+        instance.delete()
+    except Exception as e:
+        exception_email(request, e)
+        raise e
     return HttpResponse('Success')
 
 
@@ -177,12 +184,15 @@ def report_submit(request):
 
     process the deletion of a reported spotted
     """
+    try:
+        instance = get_object_or_404(Spotted, id=request.POST['id'])
+        response = api_process_deleted(instance, request.POST['option'], "reported")
+        if not response:
+            raise Http404
+            return
 
-    instance = get_object_or_404(Spotted, id=request.POST['id'])
-    response = api_process_deleted(instance, request.POST['option'], "reported")
-    if not response:
-        raise Http404
-        return
-
-    instance.remove_spotted(True)
+        instance.remove_spotted(True)
+    except Exception as e:
+        exception_email(request, e)
+        raise e
     return HttpResponse('Success')
