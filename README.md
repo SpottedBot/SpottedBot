@@ -35,6 +35,8 @@ Antes de começar, certifique-se de que você é Admin da página que quer assoc
 
 Agora vamos pegar o Token da sua página.
 
+Siga [esse tutorial](https://medium.com/@Jenananthan/how-to-create-non-expiry-facebook-page-token-6505c642d0b1)
+
 Entre no [Graph Explorer](https://developers.facebook.com/tools/explorer/)
 
 * Em `Application`, selecione o app que acabou de criar
