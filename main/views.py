@@ -11,6 +11,7 @@ from api.api_interface import api_process_deleted, api_my_delete_options, api_fo
 from django.contrib.auth.decorators import login_required
 from custom_auth.facebook_methods import get_graph
 from project.manual_error_report import exception_email
+from django.utils import timezone
 
 
 def index(request, contactform=None, spottedform=None, reportform=None):
@@ -51,11 +52,38 @@ def about(request):
 
 
 def prefetch_facebook_usernames(request):
-    query_str = ','.join([obj.social_id for obj in FacebookUser.objects.all()])
-    results = get_graph().get_object("?fields=picture, name&ids=" + query_str)
+
+    # take no_thumbnail_users
+    no_thumbnail_users = FacebookUser.objects.exclude(thumbnail__isnull=False)
+
+    # If there are only a few users without thumbnail, take (50 - the size) out of the outdated users
+    if len(no_thumbnail_users) < 50:
+        # take 50 - len(no_thumbnail_users) users with outdated thumbnails
+        outdated_thumbnail_users = FacebookUser.objects.exclude(thumbnail__isnull=True).order_by("thumbnail_age")[:50 - len(no_thumbnail_users)]
+        # Join users
+        to_update_users = list(no_thumbnail_users) + list(outdated_thumbnail_users)
+    else:
+        to_update_users = no_thumbnail_users
+
+    # Chunkinator
+    def chunks(l, n):
+        """Yield successive n-sized chunks from l."""
+        for i in range(0, len(l), n):
+            yield l[i:i + n]
+
+    # Update the users, 50 at a time
+    for chunk in chunks(to_update_users, 50):
+        facebook_query_str = ','.join([obj.social_id for obj in chunk])
+        results = get_graph().get_object("?fields=picture, name&ids=" + facebook_query_str)
+        for user_info in results:
+            user = FacebookUser.objects.get(social_id=results[user_info]["id"])
+            user.thumbnail = results[user_info]["picture"]["data"]["url"]
+            user.thumbnail_age = timezone.now()
+            user.save()
+
     names = []
-    for res in results:
-        names.append({"name": results[res]['name'], "picture": results[res]["picture"]["data"]["url"], "id": results[res]["id"]})
+    for user in FacebookUser.objects.all():
+        names.append({"name": user.name, "picture": user.thumbnail, "id": user.social_id})
     return JsonResponse(names, safe=False)
 
 

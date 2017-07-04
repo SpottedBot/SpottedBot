@@ -31,6 +31,9 @@ class FacebookUser(models.Model):
     first_name = models.CharField(max_length=50)
     name = models.CharField(max_length=150)
 
+    thumbnail = models.CharField(max_length=1000, null=True)
+    thumbnail_age = models.DateTimeField(null=True)
+
     # Direct link to user's profile
     link = models.URLField()
 
