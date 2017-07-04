@@ -21,8 +21,8 @@ def target_notification(instance):
     render and send target notifications
     """
 
-    if instance.author:
-        # Include author info if existant
+    if instance.author and instance.share_with_crush:
+        # Include author info if existant and they chose to share their info
         sender = "@[" + str(instance.author.facebookuser.social_id) + "]"
     else:
         sender = "Alguém"

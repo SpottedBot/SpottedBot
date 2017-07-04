@@ -10,6 +10,7 @@ class PendingSpottedForm(forms.ModelForm):
     """
     target_name = forms.CharField(required=False, label='Nome do(a) Crush', widget=forms.TextInput(attrs={'class': 'typeahead', 'placeholder': 'Crush Santos da Silva'}))
     target_id = forms.CharField(required=False, widget=forms.HiddenInput())
+    share_with_crush = forms.BooleanField(required=False, initial=True, label="Informar crush que você é x autorx")
     captcha = ReCaptchaField(attrs={"callback": "captchaSpottedCallback", })
 
     class Meta:
@@ -43,12 +44,15 @@ class PendingSpottedForm(forms.ModelForm):
 
         instance = super(PendingSpottedForm, self).save(commit=False)
         target = self.cleaned_data['target_id']
+        share_with_crush = self.cleaned_data['share_with_crush']
 
         if author.is_authenticated():
             instance.author = author
 
         if target is not None:
             instance.target = target
+
+        instance.share_with_crush = share_with_crush
 
         instance.save()
         return instance

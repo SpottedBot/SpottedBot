@@ -46,6 +46,7 @@ class Spotted(models.Model):
     dismissed = models.BooleanField(default=False)  # used to save the state of spotteds dismissed by the target
     public = models.BooleanField(default=False)  # Whether the spotted is public or not
     reported = models.CharField(default='', max_length=1000)  # When someone reports a spotted, this is the report text
+    share_with_crush = models.BooleanField(default=True)   # Whether or not to let crush know who is the author
 
     @property
     def spotted_count(self):
@@ -106,6 +107,7 @@ class PendingSpotted(models.Model):
     public = models.BooleanField(default=False)  # Whether the spotted is public or not
     polemic = models.BooleanField(default=False)
     api_id = models.IntegerField(default=0)  # unique API id
+    share_with_crush = models.BooleanField(default=True)   # Whether or not to let crush know who is the author
 
     suggestion = models.CharField(default='', max_length=100)
 
@@ -134,7 +136,7 @@ class PendingSpotted(models.Model):
             attachment = ''
 
         # Create new Spotted object from self
-        s = Spotted(message=self.message, author=self.author, approver=mod, target=self.target, attachment=attachment, public=self.public, api_id=self.api_id)
+        s = Spotted(message=self.message, author=self.author, approver=mod, target=self.target, attachment=attachment, public=self.public, api_id=self.api_id, share_with_crush=self.share_with_crush)
         s.save()
         new_id = s.id + initial_count
 

@@ -20,7 +20,9 @@ $('#target_name .typeahead').typeahead(null, {
 $('#target_name .typeahead').on('typeahead:selected', function (e, datum) {
     $(".tt-menu").removeClass("tt-menu-keep-open");
     $("#id_target_id").val(datum['id']);
-    $("#target_found_tip").text("Crush selecionado!");
+    if (user_is_authenticated) {
+        $("#target_found_checkbox_div").show();
+    }
 });
 
 // Manually trigger typeahead

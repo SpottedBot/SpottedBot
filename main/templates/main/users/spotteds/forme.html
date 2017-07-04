@@ -34,7 +34,7 @@
                     <i class="ban icon"></i>Privado
                     {% endif %}
                     enviado por
-                    {% if spotted.author %}
+                    {% if spotted.author and spotted.share_with_crush %}
                      <a href="http://facebook.com/{{ spotted.target.facebookuser.social_id }}" target="_blank">{{ spotted.target.facebookuser.name }}</a>
                     {% else %}
                     <i class="spy icon"></i>Anônimo
