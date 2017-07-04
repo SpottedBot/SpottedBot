@@ -10,6 +10,9 @@
 <link rel="stylesheet" type="text/css" href="{% static 'main/css/typeahead.css' %}">
 <style type="text/css">
     .tt-menu-keep-open { display: block !important; }
+
+    /*remove relative position from column to fix problem with typeahead's menu*/
+    .ui.grid > .column:not(.row), .ui.grid > .row > .column {position: initial;}
 </style>
 {% endblock %}
 
