@@ -69,7 +69,7 @@
         <div class="ui divider"></div>
     </div>
     <div class="ui middle center aligned stackable grid container">
-        {% if spotted.public or spotted.author == user or (spotted.target == user and spotted.share_with_crush) %}
+        {% if spotted.public or spotted.author == user or spotted.target == user and spotted.share_with_crush %}
         <div class="ui link cards">
             {% if spotted.author %}
             <div class="card">
