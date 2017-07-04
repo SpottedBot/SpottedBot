@@ -6,6 +6,7 @@ from moderation.models import Moderator
 from .wot_wrapper import is_safe
 from .notifications import author_notification, target_notification
 from project.loghandler import LogHandler
+from facebook import GraphAPIError
 # Create your models here.
 
 logger = LogHandler(__name__).logger
@@ -143,6 +144,16 @@ class PendingSpotted(models.Model):
         # post to facebook
         try:
             resp = page_graph().put_wall_post(f_message, {'link': self.attachment})
+
+        # Try to catch invalid url exception
+        except GraphAPIError as e:
+            # If it was the case, resubmit without link
+            if e.message == "The url you supplied is invalid":
+                resp = page_graph().put_wall_post(f_message)
+            # Else, raise the exception and log it
+            else:
+                logger.exception("Exception raised while trying to post spotted(%s) to Facebook", self.id)
+                raise e
         except Exception as e:
             logger.exception("Exception raised while trying to post spotted(%s) to Facebook", self.id)
             raise e
