@@ -69,9 +69,10 @@
         <div class="ui divider"></div>
     </div>
     <div class="ui middle center aligned stackable grid container">
-        {% if spotted.public or spotted.author == user or spotted.target == user and spotted.share_with_crush %}
+        {% if spotted.public or spotted.author == user or spotted.target == user %}
         <div class="ui link cards">
             {% if spotted.author %}
+            {% if spotted.author == user or spotted.target == user and spotted.share_with_crush or spotted.public %}
             <div class="card">
                 <a target="_blank" href="https://facebook.com/{{ spotted.author.facebookuser.social_id }}" class="image">
                     <img src="{{ spotted.author.facebookuser.picture }}">
@@ -86,6 +87,7 @@
                     Ver no Facebook
                 </a>
             </div>
+            {% endif %}
             {% endif %}
             {% if spotted.author == user or spotted.target == user %}
             {% if spotted.target %}
