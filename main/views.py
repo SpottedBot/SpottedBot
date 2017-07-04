@@ -82,7 +82,7 @@ def prefetch_facebook_usernames(request):
             user.save()
 
     names = []
-    for user in FacebookUser.objects.all():
+    for user in FacebookUser.objects.all().order_by('?'):
         names.append({"name": user.name, "picture": user.thumbnail, "id": user.social_id})
     return JsonResponse(names, safe=False)
 
