@@ -36,7 +36,7 @@ class ReportForm(forms.Form):
     """
 
     number = forms.IntegerField(label='Número do Spottd')
-    text = forms.CharField(widget=forms.Textarea(attrs={'rows': 4, 'cols': 15}), label='Mensagem')
+    text = forms.CharField(widget=forms.Textarea(attrs={'rows': 4, 'cols': 15}), label='Mensagem', max_length=1000, required=True)
 
     def clean_number(self):
 

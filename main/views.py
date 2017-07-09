@@ -105,7 +105,8 @@ def contact(request):
             form.send()
             messages.add_message(request, messages.SUCCESS, 'Mensagem enviada com sucesso!')
         else:
-
+            errors = ". ".join([item for sublist in [[err for err in error] for field, error in form.errors.items()] for item in sublist])
+            messages.add_message(request, messages.ERROR, 'Oops!\n' + errors)
             # if it is not valid, render index with filled values
             return index(request, contactform=form)
     return redirect('index')
@@ -129,7 +130,8 @@ def report(request):
             form.report()
             messages.add_message(request, messages.SUCCESS, 'Spotted reportado!')
         else:
-
+            errors = ". ".join([item for sublist in [[err for err in error] for field, error in form.errors.items()] for item in sublist])
+            messages.add_message(request, messages.ERROR, 'Oops!\n' + errors)
             # if it is not valid, render index with filled values
             return index(request, reportform=form)
     return redirect('index')
