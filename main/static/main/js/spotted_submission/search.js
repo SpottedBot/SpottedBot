@@ -22,6 +22,7 @@ $('#target_name .typeahead').on('typeahead:selected', function (e, datum) {
     $("#id_target_id").val(datum['id']);
     if (user_is_authenticated) {
         $("#target_found_checkbox_div").show();
+        $("#target_found_tip").text("Crush selecionado!");
     }
 });
 

@@ -69,7 +69,9 @@
                             <p>Deixe seu crush saber o quão especial elx é</p>
                             <small>PS: Sua identidade e a identidade do seu crush não são compartilhadas com ninguém além de vocês mesmos. Nem com a moderação.<br><b>Sua privacidade é a nossa prioridade</b></small>
                             <br><br>
+                            <span style="color: blue" id="target_found_tip"></span>
                             <div id="target_found_checkbox_div" style="display: none;">
+                                <br><br>
                                 <div class="ui toggle checkbox {% if spottedform.share_with_crush.errors.as_text %}error{% endif %}">
                                     <span style="color: red" class="small">{{ spottedform.share_with_crush.errors.as_text }}</span>
                                     {{ spottedform.share_with_crush }}
