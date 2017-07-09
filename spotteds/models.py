@@ -18,8 +18,14 @@ initial_count = int(settings.INITIAL_COUNT)
 class Spotted(models.Model):
     """Spotted
 
-     fields and methods
-     """
+    fields and methods
+    """
+
+    @staticmethod
+    def total_spotteds():
+        # Returns the latest spotted id + initial_count for the total number of spotteds ever sent
+        return Spotted.objects.latest('id').spotted_count
+
     author = models.ForeignKey(  # User Obj from author
         User,
         related_name='authored',

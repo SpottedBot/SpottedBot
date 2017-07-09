@@ -32,14 +32,14 @@
                         </div>
                         <div style="text-align: center;" class="ui transition fade in top attached tab active" data-tab="0">
                             {% if not user.is_authenticated %}
-                            <h1>Submeter Spotteds nunca foi tão fácil</h1>
-                            <h2>Clique no botão abaixo para se inscrever e enviar spotteds agora!</h2>
+                            <h1>Envie Spotteds aqui</h1>
+                            <h2>Clique no botão abaixo para enviar um Spotted</h2>
                             <a href="{% url 'custom_auth:facebook_login' %}">
                                 <img style="max-height: 50px;" src="{% static 'main/img/login.png' %}">
                             </a>
                             <br>
                             <div class="ui divider"></div>
-                            <a data-position="top center" href="#" id="refuse_button" style="color: grey" onclick="refuse_signin();"><small>Não quero me inscrever</small></a>
+                            <a data-position="top center" href="#" id="refuse_button" style="color: grey" onclick="refuse_signin();"><small>Quero enviar sem me inscrever</small></a>
                             {% endif %}
                         </div>
                         <div class="ui transition fade in top attached tab" data-tab="1">
@@ -178,10 +178,10 @@
     <div class="ui three column centered grid stackable container">
         <div class="ui column aligned center">
             <h3>
-                A maior comunidade de crushes da Internet
+                A maior comunidade de crushes da interweb
             </h3>
             <p>
-                À sua disposição na distância de um Click!
+                À sua disposição na distância de um click
             </p>
         </div>
         <div class="ui column aligned center">
@@ -195,7 +195,7 @@
             </div>
             <div class="ui inverted huge statistic">
                 <div class="value">
-                    {{ spotteds | length }}<br>
+                    {{ spotteds.0.total_spotteds }}
                 </div>
                 <div class="label">
                     <i class="icon send"></i> Spotteds Enviados
@@ -207,7 +207,7 @@
                 Copiosas quantidades de amor
             </h3>
             <p>
-                Compartilhadas diariamente!
+                Compartilhadas diariamente
             </p>
         </div>
     </div>
@@ -371,7 +371,7 @@
             on: "click",
             html  : '<h4 style="text-align: center">Tem certeza?</h4>\
             <p style="text-align: center"><a href="{% url "custom_auth:facebook_login" %}">Ok, me inscreva</a></p>\
-            <p style="text-align: center"><a href="#" style="color: grey;" onclick="refuse_confirm();"><small>Não quero</small></a></p>'
+            <p style="text-align: center"><a href="#" style="color: grey;" onclick="refuse_confirm();"><small>Sim</small></a></p>'
         });
         $("#refuse_button").popup("show");
     }
