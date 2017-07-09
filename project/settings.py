@@ -74,6 +74,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'main.context_processors.enable_mod_shift'
             ],
         },
     },
@@ -166,6 +167,9 @@ SERVER_EMAIL = str(os.environ.get('EMAIL_ACCOUNT'))
 
 ADMINS = [('Admin', str(os.environ.get('ADMIN_ACCOUNT'))), ]
 
+
+# Moderation Hours
+ENABLE_MOD_SHIFT = False
 
 # Facebook Stuff
 FACEBOOK_KEY = os.environ.get('FACEBOOK_KEY')
