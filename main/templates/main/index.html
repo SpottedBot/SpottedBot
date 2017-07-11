@@ -46,7 +46,7 @@
                             <h1>Compartilhe o seu amor</h1>
                             <p>Envie algo especial para aquele alguém especial</p>
                             <p>Você também pode adicionar imagens e links ao seu spotted como anexos.<br>
-                            {% if not user.is_authenticated %}
+                            {% if not user.is_authenticated and ENABLE_IMGUR_UPLOAD %}
                             <small style="color: blue">Obs: usuários inscritos podem fazer upload de imagens</small>
                             {% endif %}</p>
                             <div class="field {% if spottedform.message.errors.as_text %}error{% endif %}">
