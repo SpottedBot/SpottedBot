@@ -7,3 +7,4 @@ facebook-sdk
 django-recaptcha
 
 requests
+imgurpython

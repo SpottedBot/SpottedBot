@@ -74,7 +74,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'main.context_processors.enable_mod_shift'
+                'main.context_processors.enable_mod_shift',
+                'main.context_processors.enable_imgur_upload'
             ],
         },
     },
@@ -138,6 +139,7 @@ STATIC_URL = '/static/'
 # https://warehouse.python.org/project/whitenoise/
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
+FILE_UPLOAD_HANDLERS = ['django.core.files.uploadhandler.TemporaryFileUploadHandler']
 
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
@@ -185,6 +187,9 @@ RECAPTCHA_PUBLIC_KEY = os.environ.get('RECAPTCHA_PUBLIC_KEY')
 RECAPTCHA_PRIVATE_KEY = os.environ.get('RECAPTCHA_PRIVATE_KEY')
 NOCAPTCHA = True
 
+# Imgur stuff
+IMGUR_CLIENT = os.environ.get('IMGUR_CLIENT', False)
+IMGUR_SECRET = os.environ.get('IMGUR_SECRET', False)
 
 # Web Of Trust
 WOT_SECRET = os.environ.get('WOT_SECRET')

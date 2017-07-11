@@ -36,5 +36,7 @@ urlpatterns = [
 
     url(r'^search/$', views.search, name='search'),
 
-    url(r'^prefetch_facebook_users/$', views.prefetch_facebook_usernames, name='prefetch_facebook_users')
+    url(r'^prefetch_facebook_users/$', views.prefetch_facebook_usernames, name='prefetch_facebook_users'),
+
+    url(r'^imgur_upload/$', views.imgur_image_upload, name='upload_image'),
 ]

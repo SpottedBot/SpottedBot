@@ -100,6 +100,20 @@ Se você quiser colocar google ads no seu site, [venha aqui](https://www.google.
 
 Salve esse valor tb como seu cliente do Google Ads
 
+### Imgur
+
+Você também pode permitir que seus usuários façam upload de imagens. Essas imagens não ficam salvas no seu servidor. Elas são automaticamente enviadas para o imgur por meio da api deles.
+
+Para permitir isso, você precisa da chave de cliente e do secret de uma conta no imgur.
+
+Primeiro [entre ou crie uma conta](https://imgur.com/register?redirect=https%3A%2F%2Fimgur.com%2F) e depois [crie um client novo aqui](http://api.imgur.com/oauth2/addclient).
+
+Na criação do cliente, selecione "Anonymous usage without user authentication".
+
+A URL de callback pode ser qualquer coisa. Coloque algo como `https://<nome_do_seu_spotted>.herokuapp.com`
+
+Copie e guarde as chaves que ele dá no final.
+
 ### SpottedAPI
 
 Guardei o melhor pro finak, uhu

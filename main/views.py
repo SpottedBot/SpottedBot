@@ -12,6 +12,7 @@ from django.contrib.auth.decorators import login_required
 from custom_auth.facebook_methods import get_graph
 from project.manual_error_report import exception_email
 from django.utils import timezone
+from project.imgur_helper import upload
 
 
 def index(request, contactform=None, spottedform=None, reportform=None):
@@ -85,6 +86,25 @@ def prefetch_facebook_usernames(request):
     for user in FacebookUser.objects.all().order_by('?'):
         names.append({"name": user.name, "picture": user.thumbnail, "id": user.social_id})
     return JsonResponse(names, safe=False)
+
+
+def imgur_image_upload(request):
+    if request.user.is_authenticated():
+        try:
+            file = request.FILES['picture']
+        except Exception as e:
+            response = {"ok": False, "error": ""}
+            return JsonResponse(response)
+
+        if file.size > 10 ** 7:
+            response = {"ok": False, "error": "A imagem tem que ser menor que 10mb"}
+        elif file.content_type.split("/")[0] != "image":
+            response = {"ok": False, "error": "O arquivo tem que ser uma imagem"}
+        else:
+            response = upload(file.temporary_file_path())
+        return JsonResponse(response)
+    else:
+        return JsonResponse({"ok": False, "error": "Usuário não logado"})
 
 
 def contact(request):

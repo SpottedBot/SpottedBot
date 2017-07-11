@@ -45,7 +45,10 @@
                         <div class="ui transition fade in top attached tab" data-tab="1">
                             <h1>Compartilhe o seu amor</h1>
                             <p>Envie algo especial para aquele alguém especial</p>
-                            <p>Você também pode adicionar imagens e links ao seu spotted como anexos</p>
+                            <p>Você também pode adicionar imagens e links ao seu spotted como anexos.<br>
+                            {% if not user.is_authenticated %}
+                            <small style="color: blue">Obs: usuários inscritos podem fazer upload de imagens</small>
+                            {% endif %}</p>
                             <div class="field {% if spottedform.message.errors.as_text %}error{% endif %}">
                                 <label>{{ spottedform.message.label}}</label>
                                 <span style="color: red" class="small">{{ spottedform.message.errors.as_text }}</span>
@@ -54,6 +57,9 @@
                                 <label>{{ spottedform.attachment.label}}</label>
                                 {{ spottedform.attachment }}
                             </div>
+                            {% if user.is_authenticated and ENABLE_IMGUR_UPLOAD %}
+                                {% include "main/imgur_form.html" %}
+                            {% endif %}
                             <br>
                             <div class="ui divider"></div>
                             <div style="text-align: right;">

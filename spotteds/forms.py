@@ -18,7 +18,7 @@ class PendingSpottedForm(forms.ModelForm):
         fields = ['message', 'attachment', 'public']
         labels = {
             'message': 'Mensagem',
-            'attachment': 'Anexo (GIFs, links, etc)',
+            'attachment': 'URL do anexo (GIFs, links, etc)',
             'public': 'Público?'
         }
         widgets = {

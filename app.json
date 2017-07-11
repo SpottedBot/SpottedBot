@@ -23,7 +23,7 @@
     },
     "ADMIN_ACCOUNT": {
       "description": "Email do admnistrador que vai receber os error reports. Use o meu email",
-      "value": ""
+      "value": "gustavomaronato@gmail.com"
     },
     "FACEBOOK_KEY": {
       "description": "App ID do seu App no Facebook",
@@ -39,7 +39,7 @@
     },
     "INITIAL_COUNT": {
       "description": "Número de postagens atualmente na sua página. Usado pra autoincrementação do número dos spotteds",
-      "value": ""
+      "value": "0"
     },
     "RECAPTCHA_PUBLIC_KEY": {
       "description": "Public Key do seu reCaptcha",
@@ -48,6 +48,16 @@
     "RECAPTCHA_PRIVATE_KEY": {
       "description": "Private Key do seu reCaptcha",
       "value": ""
+    },
+    "IMGUR_CLIENT": {
+      "description": "Client key do imgur",
+      "value": "",
+      "required": false
+    },
+    "IMGUR_SECRET": {
+      "description": "Secret key do imgur",
+      "value": "",
+      "required": false
     },
     "WOT_SECRET": {
       "description": "Token do seu WoT",
@@ -59,11 +69,12 @@
     },
     "SPOTTED_AD": {
       "description": "Nome de cliente do seu Google Adsense, completo, se existente",
-      "value": ""
+      "value": "",
+      "required": false
     },
     "ADS_ACTIVE": {
       "description": "Ativar Anúncios? 'True' para sim e 'False' para não, sem as àspas e com a primeira letra maiúscula ",
-      "value": ""
+      "value": "False"
     },
     "SPOTTED_API_SECRET": {
       "description": "Token da sua conta na SpottedAPI",
