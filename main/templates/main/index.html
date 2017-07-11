@@ -57,7 +57,7 @@
                                 <label>{{ spottedform.attachment.label}}</label>
                                 {{ spottedform.attachment }}
                             </div>
-                            {% if not user.is_authenticated and ENABLE_IMGUR_UPLOAD %}
+                            {% if user.is_authenticated and ENABLE_IMGUR_UPLOAD %}
                                 {% include "main/imgur_form.html" %}
                             {% endif %}
                             <br>

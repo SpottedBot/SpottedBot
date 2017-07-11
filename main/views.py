@@ -89,7 +89,7 @@ def prefetch_facebook_usernames(request):
 
 
 def imgur_image_upload(request):
-    if not request.user.is_authenticated():
+    if request.user.is_authenticated():
         try:
             file = request.FILES['picture']
         except Exception as e:
