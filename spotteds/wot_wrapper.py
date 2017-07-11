@@ -10,7 +10,18 @@ def is_safe(url):
     false otherwise
     """
 
-    return is_google_safe(url) and is_WOT_safe(url)
+    # Domain white lists
+    white_list = [
+        'http://i.imgur.com/',
+    ]
+
+    def is_whitelist(url):
+        for domain in white_list:
+            if url.startswith(domain):
+                return True
+        return False
+
+    return is_google_safe(url) and is_WOT_safe(url) or is_whitelist(url)
 
 
 def is_WOT_safe(url):
