@@ -89,17 +89,25 @@ def prefetch_facebook_usernames(request):
 
 
 def imgur_image_upload(request):
+    # Allows users to upload images
+
+    # Only works for authenticated users
     if request.user.is_authenticated():
         try:
+            # Get file
             file = request.FILES['picture']
         except Exception as e:
+            # If file was not uploaded, return silent error
             response = {"ok": False, "error": ""}
             return JsonResponse(response)
 
+        # 10mb max
         if file.size > 10 ** 7:
             response = {"ok": False, "error": "A imagem tem que ser menor que 10mb"}
+        # Has to be image
         elif file.content_type.split("/")[0] != "image":
             response = {"ok": False, "error": "O arquivo tem que ser uma imagem"}
+        # Upload file(may return api error)
         else:
             response = upload(file.temporary_file_path())
         return JsonResponse(response)
