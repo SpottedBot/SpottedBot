@@ -26,7 +26,7 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 SECRET_KEY = str(os.environ.get('DJANGO_SECRET'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -75,7 +75,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'main.context_processors.enable_mod_shift',
-                'main.context_processors.enable_imgur_upload'
+                'main.context_processors.enable_imgur_upload',
+                'main.context_processors.enable_ad_tag',
+                'main.context_processors.ad_slot'
             ],
         },
     },
@@ -205,14 +207,8 @@ SPOTTED_API_SECRET = os.environ.get('SPOTTED_API_SECRET')
 
 # Please do not alter the dev ads, as I provide you with free code and API support for you to make money. Allow me a share out of it :)
 DEV_AD = "ca-pub-2287814566368449"
-SPOTTED_AD = os.environ.get('SPOTTED_AD')
-
-if SPOTTED_AD is None:
-    ADS_ACTIVE = False
-    SPOTTED_AD = False
-
-elif os.environ.get('ADS_ACTIVE') is None or eval(os.environ.get('ADS_ACTIVE')) is False:
-    ADS_ACTIVE = False
-
-else:
-    ADS_ACTIVE = True
+SPOTTED_AD = os.environ.get('SPOTTED_AD', False)
+ADS_ACTIVE = eval(os.environ.get('ADS_ACTIVE', 'False'))
+AD_TEST = eval(os.environ.get('AD_TEST', 'False'))
+AD_SLOTS = eval(os.environ.get('AD_SLOTS', '[]')) or (["slot 1", "slot 2", "slot 3"] if AD_TEST else [])
+ADS_APPROVED = True if AD_SLOTS else False

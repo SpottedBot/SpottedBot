@@ -1,0 +1,25 @@
+{% load ads %}
+{% with AD_SLOT|next as slot %}
+{% if AD_ACTIVE and ADS_APPROVED and slot %}
+<div class="ui is_desktop centered {% if AD_TEST %}test {% endif %}leaderboard ad" data-text="Leaderboard Ad">
+    <ins class="adsbygoogle"
+    style="display:inline-block;width:728px;height:90px"
+    data-ad-client="{{ AD_CLIENT }}"
+    data-ad-slot="{{ slot }}">
+    </ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+<div style="height: 100px; width: 320px" class="centered ui mobile {% if AD_TEST %}test {% endif %}leaderboard ad" data-text="Mobile Banner Ad">
+    <ins class="adsbygoogle"
+    style="width:320px;height:100px"
+    data-ad-client="{{ AD_CLIENT }}"
+    data-ad-slot="{{ slot }}">
+    </ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+{% endif %}
+{% endwith %}

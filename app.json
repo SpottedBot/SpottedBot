@@ -76,6 +76,15 @@
       "description": "Ativar Anúncios? 'True' para sim e 'False' para não, sem as àspas e com a primeira letra maiúscula ",
       "value": "False"
     },
+    "AD_TEST": {
+      "description": "Se seu spotted ainda não foi aceito pelo Google Ads, mas você quer testar como eles ficam no site, entre com 'True' aqui",
+      "value": "False"
+    },
+    "AD_SLOTS": {
+      "description": "Se seu spotted já foi aceito pelo Google ads, coloque uma lista de ad slots aqui no formato ['slot 1', 'slot 2', 'slot 3'...]",
+      "value": "",
+      "required": false
+    },
     "SPOTTED_API_SECRET": {
       "description": "Token da sua conta na SpottedAPI",
       "value": ""
