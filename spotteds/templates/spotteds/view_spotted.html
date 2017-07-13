@@ -4,7 +4,6 @@
 <head>
     <!-- Load project's staticfiles -->
     {% load staticfiles %}
-    {% load ads %}
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
@@ -44,7 +43,7 @@
     <script type="text/javascript" src="{% static 'main/js/GA.js' %}"></script>
 
     <!-- Google Adsense -->
-    {% include 'main/init_ads.html' %}
+    {% include 'main/ads/init_ads.html' %}
 
 </head>
 
@@ -53,11 +52,7 @@
     <!-- Page Contents -->
     <div class="pusher">
 
-    {% ad_active as ad_result %}
-    {% if ad_result %}
-    <div class="ui is_desktop test centered leaderboard ad" data-text="Large Leaderboard"></div>
-    <div class="centered ui mobile leaderboard test ad" data-text="Mobile Leaderboard"></div>
-    {% endif %}
+    {% include 'main/ads/banner_ad.html' %}
 
 <div class="ui vertical stripe segment">
     <div class="ui middle aligned stackable grid container">
