@@ -62,6 +62,6 @@ class PendingSpottedForm(forms.ModelForm):
         try:
             instance.save()
         except ProgrammingError:
-            logger.info("%s\n%s", delete_old_spotteds.delete_executer(10, True), inspect_database.inspect_executer())
+            logger.info("%s\n%s", delete_old_spotteds.delete_executer(5, True), inspect_database.inspect_executer())
             instance.save()
         return instance
