@@ -2,6 +2,8 @@ from django import forms
 from .models import PendingSpotted
 from custom_auth.models import FacebookUser
 from captcha.fields import ReCaptchaField
+from django.db.utils import ProgrammingError
+from moderation.management.commands import delete_old_spotteds
 
 
 class PendingSpottedForm(forms.ModelForm):
@@ -53,6 +55,9 @@ class PendingSpottedForm(forms.ModelForm):
             instance.target = target
 
         instance.share_with_crush = share_with_crush
-
-        instance.save()
+        try:
+            instance.save()
+        except ProgrammingError:
+            print(delete_old_spotteds.delete_executer(30, True))
+            instance.save()
         return instance

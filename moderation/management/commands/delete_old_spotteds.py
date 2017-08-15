@@ -30,22 +30,18 @@ class Command(BaseCommand):
         # Get whether or not the changes are to be commited
         commit = options['commit']
 
-        # Get all spotteds
-        spotteds = Spotted.objects.all().order_by('created')
+        return delete_executer(days, commit)
 
-        del_date = now - timedelta(days=days)
 
-        counter = 0
-        for s in spotteds:
-            if s.created < del_date:
-                counter += 1
+def delete_executer(days, commit):
 
-                if commit:
-                    s.delete()
-            else:
-                break
+    del_date = now - timedelta(days=days)
 
-        if commit:
-            return str(counter) + ' spotteds flushed successfully.'
-        else:
-            return str(counter) + ' spotteds flushed successfully. (not commited)'
+    # Filter spotteds
+    spotteds = Spotted.objects.all().filter(created__lt=del_date)
+
+    if commit:
+        [s.delete() for s in spotteds]
+        return str(len(spotteds)) + ' spotteds flushed successfully.'
+    else:
+        return str(len(spotteds)) + ' spotteds flushed successfully. (not commited)'
