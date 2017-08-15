@@ -11,21 +11,25 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        tables = {
-            "FacebookUser": len(FacebookUser.objects.all()),
-            "User": len(User.objects.all()),
-            "Moderator": len(Moderator.objects.all()),
-            "WorkHour": len(WorkHour.objects.all()),
-            "Spotted": len(Spotted.objects.all()),
-            "PendingSpotted": len(PendingSpotted.objects.all())
-        }
+        return inspect_executer()
 
-        text = ""
-        count = 0
-        for key, value in tables.items():
-            text += "\n{} has {} rows".format(key, value)
-            count += value
 
-        text += "\n\nTotal editable rows: {}".format(count)
+def inspect_executer():
+    tables = {
+        "FacebookUser": len(FacebookUser.objects.all()),
+        "User": len(User.objects.all()),
+        "Moderator": len(Moderator.objects.all()),
+        "WorkHour": len(WorkHour.objects.all()),
+        "Spotted": len(Spotted.objects.all()),
+        "PendingSpotted": len(PendingSpotted.objects.all())
+    }
 
-        return text
+    text = ""
+    count = 0
+    for key, value in tables.items():
+        text += "\n{} has {} rows".format(key, value)
+        count += value
+
+    text += "\n\nTotal editable rows: {}".format(count)
+
+    return text

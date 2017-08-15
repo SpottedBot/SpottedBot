@@ -3,7 +3,7 @@ from .models import PendingSpotted
 from custom_auth.models import FacebookUser
 from captcha.fields import ReCaptchaField
 from django.db.utils import ProgrammingError
-from moderation.management.commands import delete_old_spotteds
+from moderation.management.commands import delete_old_spotteds, inspect_database
 from project.loghandler import LogHandler
 
 
@@ -62,6 +62,6 @@ class PendingSpottedForm(forms.ModelForm):
         try:
             instance.save()
         except ProgrammingError:
-            logger.info(delete_old_spotteds.delete_executer(10, True))
+            logger.info("%s\n%s", delete_old_spotteds.delete_executer(10, True), inspect_database.inspect_executer())
             instance.save()
         return instance
