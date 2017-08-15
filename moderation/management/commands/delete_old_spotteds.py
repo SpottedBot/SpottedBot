@@ -42,6 +42,6 @@ def delete_executer(days, commit):
 
     if commit:
         [s.delete() for s in spotteds]
-        return str(len(spotteds)) + ' spotteds flushed successfully.'
+        return '{} spotteds from {} days flushed successfully.'.format(len(spotteds), days)
     else:
-        return str(len(spotteds)) + ' spotteds flushed successfully. (not commited)'
+        return '{} spotteds from {} days flushed successfully. (not committed)'.format(len(spotteds), days)
