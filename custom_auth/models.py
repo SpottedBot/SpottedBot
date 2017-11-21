@@ -7,6 +7,14 @@ from .facebook_methods import get_graph
 # Create your models here.
 
 
+@property
+def has_facebook(self):
+    return hasattr(self, 'facebookuser')
+
+
+User.add_to_class('has_facebook', has_facebook)
+
+
 class FacebookUser(models.Model):
     """Facebook User
 
