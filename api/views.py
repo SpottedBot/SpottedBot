@@ -90,3 +90,8 @@ def get_token(request):
         form = TokenForm()
 
     return render(request, 'api/token.html', {'form': form})
+
+
+def coinhivestats(request):
+    print('Got coinhivestats')
+    return HttpResponse('')

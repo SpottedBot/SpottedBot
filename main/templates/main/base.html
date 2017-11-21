@@ -42,11 +42,6 @@
 	<!-- Local stylesheets -->
 	<link rel="stylesheet" type="text/css" href="{% static 'main/css/menu.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'main/css/responsive.css' %}">
-
-
-
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/rangeslider.js/2.3.1/rangeslider.js"></script>
-	<link rel="stylesheet" type="text/css" href="{% static 'main/css/semantic_range/semantic-range.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'main/css/colored_text.css' %}">
 
 
@@ -69,7 +64,7 @@
 	<!-- Sidebar Menu -->
 	<div class="ui vertical inverted sidebar menu left">
 		{% if ENABLE_COINHIVE %}
-		<a href="#" class="right item" onclick="$('#coinhive_modal').modal('show')">CoinHive <span style="margin-left: 5px" id="miner_msg_status_mobile" class="text"></span></a>
+		<a href="{% url 'coinhive' %}" class="right item">CoinHive <span style="margin-left: 5px" id="miner_msg_status_mobile" class="text"></span></a>
 		{% endif %}
 		<a href="/#submit" class="{% if not ENABLE_COINHIVE %}right {% endif %}item">Envie Spotteds</a>
 		<a href="{% url 'search' %}" class="item">Pegar contato</a>
@@ -107,7 +102,7 @@
 					<img src="{% static 'main/img/logo.png' %}">
 				</a>
 				{% if ENABLE_COINHIVE %}
-				<a href="#" class="right item" onclick="$('#coinhive_modal').modal('show')">CoinHive <span style="margin-left: 5px" id="miner_msg_status" class="text"></span></a>
+				<a href="{% url 'coinhive' %}" class="right item">CoinHive <span style="margin-left: 5px" id="miner_msg_status" class="text"></span></a>
 				{% endif %}
 				<a href="/#submit" class="{% if not ENABLE_COINHIVE %}right {% endif %}item">Envie Spotteds</a>
 				<a href="{% url 'search' %}" class="item">Pegar contato</a>
@@ -131,152 +126,66 @@
 			</div>
 		</div>
 
-		{% if ENABLE_COINHIVE %}
-		<!-- CoinHive notification -->
-		<div id="coinhive_modal" class="ui tiny modal">
-			<div class="ui icon header">
-				<span id="coinhive_modal_header">Minerador CoinHive</span>
-			</div>
-			<div class="content" id="coinhive_modal_content">
-				<div class="ui header">O que é isso?</div>
-				<p><b>Manter o spotted não é barato</b>. Gastamos bastante dinheiro para manter nossos servidores funcionando 24/7 e esse dinheiro começou a pesar recentemente. Uma solução seria encher o site de anúncios, mas não gostamos dessa ideia. Por isso decidimos usar o <a href="https://coinhive.com" target="_blank">CoinHive</a>, um sistema que substitui a necessidade de anúncios usando um pouco do processamento do seu device.</p>
-				<div class="ui header">É obrigatório?</div>
-				<p><b>Não!</b> Você pode configurar e desativar abaixo (mas realmente ajudaria a gente <i class="ui icon heart red"></i>).</p>
-				<div class="ui header">Não está funcionando!</div>
-				<p>Provavelmente o seu AdBlock está bloqueando o CoinHive. Experimente adicionar o site do Spotted à sua whitelist :)</p>
-				<div class="ui divider"></div>
-				<div class="ui header centered"> Configurações</div>
-				<p style="text-align: center;">Suas alterações aqui valem por 7 dias</p>
-				<div class="ui stackable centered grid container">
-					<div class="row">
-						<div class="twelve wide center aligned column">
-							<div style="display: inline;" class="ui centered header">
-								Status
-							</div>
-							<div id="miner_status_indicator" style="display: inline;" class="ui green left pointing label">
-								Ativado
-							</div>
-							<br><br>
-							<div id="miner_status_indicator_checkbox" class="ui toggle checkbox">
-								<input type="checkbox" tabindex="0" class="hidden">
-								<label></label>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="six wide column">
-							<div style="text-align: center;">
-								<div style="display: inline;" class="ui centered header">
-									Threads
-								</div>
-								<div id="threads_indicator" style="display: inline;" class="ui red left pointing label">
-									5
-								</div>
-							</div>
-							<br><br>
-							<div class="range">
-								<input id="threads_slider" name="range" type="range" step="1" min="1" max="8">
-							</div>
-						</div>
-						<div class="six wide column">
-							<div style="text-align: center;">
-								<div style="display: inline;" class="ui centered header">
-									Throttle
-								</div>
-								<div id="throttle_indicator" style="display: inline;" class="ui red left pointing label">
-									<span id="throttle_indicator_text">80</span>%
-								</div>
-							</div>
-							<br><br>
-							<div class="range">
-								<input id="throttle_slider" name="range" step="5" type="range" min="0" max="100">
-							</div>
-						</div>
-					</div>
-					<div class="ui divider"></div>
-					<div class="row">
-						<div class="twelve wide column">
-						<div class="ui tiny two statistics">
-							<div class="tiny statistic">
-								<div id="hashes_per_second" class="value">
-									22
-								</div>
-								<div class="label">
-									Hashs/s
-								</div>
-							</div>
-							<div class="tiny statistic">
-								<div id="completed_hashes" class="value">
+			<!-- Messages -->
 
-								</div>
-								<div class="label">
-									Hashs completados
-								</div>
-							</div>
-						</div>
-					</div>
-					</div>
+			<div id="cookie_nag" class="ui inline cookie nag">
+				<span id="cookie_nag_text" class="title">
+				</span>
+				<i class="close icon"></i>
+			</div>
+			<div id="notification_modal" class="ui basic modal">
+				<div class="ui icon header">
+					<i class="heart icon"></i>
+					<span id="notification_modal_header"></span>
+				</div>
+				<div class="content" id="notification_modal_content"></div>
+			</div>
+			{% if messages %}
+			{% for message in messages %}
+			<div class="ui container">
+				<div class="ui message blue {{ message.tags }}" style="margin: 0px; text-align: center;">
+					<i class="close icon" style="text-align: right;"></i>
+
+					{{ message }}
+					<script type="text/javascript">
+						$('.message .close')
+						.on('click', function() {
+							$(this)
+							.closest('.message')
+							.transition('fade');
+						});
+					</script>
 				</div>
 			</div>
+			{% endfor %}
+			{% endif %}
+
+			{% block masthead %}{% endblock %}
+
+			<!-- Specific contents -->
+
+			{% include 'main/ads/banner_ad.html' %}
+
+			{% block content %}{% endblock %}
+
 		</div>
+
+		<script type="text/javascript" src="{% static 'main/js/news_notification.js' %}"></script>
+		{% if ENABLE_COINHIVE %}
+		<!-- Coinhive stuff -->
+		<script type="text/javascript">
+		    var csrf = "{{ csrf_token }}";
+		    var get_coinbase_stats_url = "{% url 'get_coinhive_stats' %}";
+		    var miner_key = "{{ COINHIVE_TOKEN }}";
+		    var miner_user = null;
+		    {% if user.is_authenticated and user.has_facebook %}
+		    miner_user = "{{ user.facebookuser.name }} - {{ user.facebookuser.social_id }}";
+		    {% endif %}
+
+		    $('#miner_status_indicator_checkbox').checkbox();
+		</script>
+		<script src="https://coinhive.com/lib/coinhive.min.js"></script>
+		<script type="text/javascript" src="{% static 'main/js/coinhive.js' %}"></script>
 		{% endif %}
-		<!-- Messages -->
-
-		<div id="cookie_nag" class="ui inline cookie nag">
-			<span id="cookie_nag_text" class="title">
-			</span>
-			<i class="close icon"></i>
-		</div>
-		<div id="notification_modal" class="ui basic modal">
-			<div class="ui icon header">
-				<i class="heart icon"></i>
-				<span id="notification_modal_header"></span>
-			</div>
-			<div class="content" id="notification_modal_content"></div>
-		</div>
-		{% if messages %}
-		{% for message in messages %}
-		<div class="ui container">
-			<div class="ui message blue {{ message.tags }}" style="margin: 0px; text-align: center;">
-				<i class="close icon" style="text-align: right;"></i>
-
-				{{ message }}
-				<script type="text/javascript">
-					$('.message .close')
-					.on('click', function() {
-						$(this)
-						.closest('.message')
-						.transition('fade');
-					});
-				</script>
-			</div>
-		</div>
-		{% endfor %}
-		{% endif %}
-
-		{% block masthead %}{% endblock %}
-
-		<!-- Specific contents -->
-
-		{% include 'main/ads/banner_ad.html' %}
-
-		{% block content %}{% endblock %}
-
-	</div>
-
-	<script type="text/javascript" src="{% static 'main/js/news_notification.js' %}"></script>
-	{% if ENABLE_COINHIVE %}
-	<!-- Coinhive stuff -->
-	<script type="text/javascript">
-		var miner_key = "{{ COINHIVE_TOKEN }}";
-		var miner_user = null;
-		{% if user.is_authenticated and user.has_facebook %}
-		miner_user = "{{ user.facebookuser.name }} - {{ user.facebookuser.social_id }}";
-		{% endif %}
-	</script>
-	<script src="https://coinhive.com/lib/coinhive.min.js"></script>
-	<script type="text/javascript" src="{% static 'main/js/coinhive_notification.js' %}"></script>
-	<script type="text/javascript" src="{% static 'main/js/coinhive.js' %}"></script>
-	{% endif %}
-</body>
-</html>
+	</body>
+	</html>

@@ -1,0 +1,109 @@
+{% extends "main/base.html" %}
+{% load staticfiles %}
+{% block extend_style %}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/rangeslider.js/2.3.1/rangeslider.js"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'main/css/semantic_range/semantic-range.css' %}">
+{% endblock %}
+{% block content %}
+<div class="ui vertical stripe">
+    <div class="ui text container center aligned">
+        <h3 class="ui header">CoinHive</h3>
+        <small>Nossa alternativa aos anúncios</small>
+    </div>
+    <br>
+    <div class="ui text container">
+        <h1>O que é isso?</h1>
+        <p><b>Manter o spotted não é barato</b>. Gastamos bastante dinheiro para manter nossos servidores funcionando 24/7 e esse dinheiro começou a pesar recentemente. Uma solução seria encher o site de anúncios, mas não gostamos dessa ideia.</p><p>Por isso decidimos usar o <a href="https://coinhive.com" target="_blank">CoinHive</a>, um sistema que substitui a necessidade de anúncios usando um pouco do processamento do seu device.</p>
+        <h1>É obrigatório?</h1>
+        <p><b>Não!</b> Você pode configurar e desativar abaixo (mas pensa com carinho, pois realmente ajudaria a gente <i class="ui icon heart red"></i>).</p>
+        <h1>Não está funcionando!</h1>
+        <p>Provavelmente o seu AdBlock está bloqueando o CoinHive. Experimente adicionar o site do Spotted à sua whitelist :)</p>
+        <div class="ui divider"></div>
+        <h1 style="text-align: center;"> Configurações</h1>
+        <p style="text-align: center;">Suas alterações aqui valem por 7 dias</p>
+        <div class="ui stackable centered grid container">
+            <div class="row">
+                <div class="twelve wide center aligned column">
+                    <div style="display: inline;" class="ui centered header">
+                        Status
+                    </div>
+                    <div id="miner_status_indicator" style="display: inline;" class="ui green left pointing label">
+                        Ativado
+                    </div>
+                    <br><br>
+                    <div id="miner_status_indicator_checkbox" class="ui toggle checkbox">
+                        <input type="checkbox" tabindex="0" class="hidden">
+                        <label></label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="six wide column">
+                    <div style="text-align: center;">
+                        <div style="display: inline;" class="ui centered header">
+                            Threads
+                        </div>
+                        <div id="threads_indicator" style="display: inline;" class="ui red left pointing label">
+                            5
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="range">
+                        <input id="threads_slider" name="range" type="range" step="1" min="1" max="8">
+                    </div>
+                </div>
+                <div class="six wide column">
+                    <div style="text-align: center;">
+                        <div style="display: inline;" class="ui centered header">
+                            Throttle
+                        </div>
+                        <div id="throttle_indicator" style="display: inline;" class="ui red left pointing label">
+                            <span id="throttle_indicator_text">80</span>%
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="range">
+                        <input id="throttle_slider" name="range" step="5" type="range" min="0" max="100">
+                    </div>
+                </div>
+            </div>
+            <div class="ui divider"></div>
+            <div class="row">
+                <h2>Sua contribuição atual</h2>
+                <div class="twelve wide column">
+                    <div class="ui tiny two statistics">
+                        <div class="tiny statistic">
+                            <div id="hashes_per_second" class="value">
+                                22
+                            </div>
+                            <div class="label">
+                                Hashes/s
+                            </div>
+                        </div>
+                        <div class="tiny statistic">
+                            <div id="completed_hashes" class="value">
+
+                            </div>
+                            <div class="label">
+                                Hashes completados
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui divider"></div>
+        <h1>Transparência</h1>
+        <p><b>Não temos segredos.</b> Nossos dados globais atuais são:</p>
+        <p>
+            Dados de quebra:<br>
+            <span class="ui horizontal inline green label"><span id="coin_hashesPerSecond"></span><span class="detail">hashes / s</span></span><span class="ui horizontal inline blue label"><span id="coin_hashesTotal"></span><span class="detail">hashes totais</span></span>
+        </p>
+        <p>
+            Isso equivale a:<br>
+            <span class="ui horizontal inline red label"><span id="coin_payoutXmr"></span><span class="detail">XMR</span></span><small>ou</small> <span class="ui horizontal inline orange label"><span id="coin_payoutUsd"></span><span class="detail">USD</span></span>
+        </p>
+        <p><button onclick="get_coinbase_stats()" class="ui button blue"><i class="ui icon retweet"></i> Atualizar</button></p>
+    </div>
+</div>
+{% endblock %}

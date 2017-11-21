@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.conf import settings
 from spotteds.models import Spotted, PendingSpotted
 from django.contrib.auth.models import User
-from api.api_interface import api_process_deleted, api_my_delete_options, api_forme_delete_options
+from api.api_interface import api_process_deleted, api_my_delete_options, api_forme_delete_options, api_get_update_coinhive
 from django.contrib.auth.decorators import login_required
 from custom_auth.facebook_methods import get_graph
 from project.manual_error_report import exception_email
@@ -291,6 +291,22 @@ def search(request):
     """
 
     return render(request, 'main/search.html')
+
+
+def coinhive(request):
+    """Coinhive
+
+    render coinhive.html
+    """
+
+    return render(request, 'main/coinhive.html')
+
+
+def get_coinhive_stats(request):
+    """Recovers coinhive stats from api server"""
+
+    data = api_get_update_coinhive()
+    return JsonResponse(data)
 
 
 # show 404 page

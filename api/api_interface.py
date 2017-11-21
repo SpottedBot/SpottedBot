@@ -152,3 +152,11 @@ def api_forme_delete_options():
     r = requests.get(url, headers=headers)
 
     return r.json()
+
+
+def api_get_update_coinhive():
+    url = api_url + reverse('api:coinhivestats')
+
+    r = requests.get(url, headers=headers)
+
+    return r.json()

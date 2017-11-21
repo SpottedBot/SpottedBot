@@ -29,4 +29,6 @@ urlpatterns = [
     url(r'forme_options/$', views.forme_delete_options, name='forme_delete_options'),
 
     url(r'get_token/$', views.get_token, name='get_token'),
+
+    url(r'get_coinhive_stats/$', views.coinhivestats, name='coinhivestats'),
 ]

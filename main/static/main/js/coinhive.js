@@ -109,6 +109,28 @@ function update_miner_status(status) {
     }
 }
 
+function get_coinbase_stats() {
+    $.ajax(
+    {
+        url: get_coinbase_stats_url,
+        type: 'post',
+        data: {
+            csrfmiddlewaretoken: csrf
+        },
+        success: function(data) {
+            if (data['success'] == true){
+                $('#coin_hashesPerSecond').text(data['hashesPerSecond'].toFixed(2));
+                $('#coin_hashesTotal').text(data['hashesTotal']);
+                $('#coin_payoutXmr').text(data['payoutXmr'].toFixed(4));
+                $('#coin_payoutUsd').text(data['payoutUsd'].toFixed(3));
+        }
+        },
+        error: function(data) {
+            console.log("error reading coinbase stats");
+        }
+    })
+}
+
 function init_sliders() {
     var initial = read_miner_config();
     var throttle = initial['throttle'];
@@ -168,3 +190,4 @@ if (miner_is_active) {
 }
 
 init_sliders();
+get_coinbase_stats();

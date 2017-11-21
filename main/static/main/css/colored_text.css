@@ -31,3 +31,7 @@
 .text.blue {
   color: #3B83C0;
 }
+
+.label {
+  margin-top: 5px !important;
+}

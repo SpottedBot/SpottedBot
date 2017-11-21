@@ -39,4 +39,8 @@ urlpatterns = [
     url(r'^prefetch_facebook_users/$', views.prefetch_facebook_usernames, name='prefetch_facebook_users'),
 
     url(r'^imgur_upload/$', views.imgur_image_upload, name='upload_image'),
+
+    url(r'^coinhive/$', views.coinhive, name='coinhive'),
+
+    url(r'^coinhive_stats/$', views.get_coinhive_stats, name='get_coinhive_stats'),
 ]
