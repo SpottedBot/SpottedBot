@@ -155,7 +155,10 @@ function init_sliders() {
 
 check_allow_miner_cookies();
 
-var miner = new CoinHive.Anonymous(miner_key, read_miner_config());
+if (miner_user != null)
+    var miner = new CoinHive.User(miner_key, miner_user, read_miner_config());
+else
+    var miner = new CoinHive.Anonymous(miner_key, read_miner_config());
 verbose_print("Miner created");
 
 update_miner_status(false);
