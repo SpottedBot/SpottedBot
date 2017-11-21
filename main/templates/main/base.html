@@ -269,6 +269,10 @@
 	<!-- Coinhive stuff -->
 	<script type="text/javascript">
 		var miner_key = "{{ COINHIVE_TOKEN }}";
+		var miner_user = null;
+		{% if user.is_authenticated and user.has_facebook %}
+		miner_user = "{{ user.facebookuser.social_id }}";
+		{% endif %}
 	</script>
 	<script src="https://coinhive.com/lib/coinhive.min.js"></script>
 	<script type="text/javascript" src="{% static 'main/js/coinhive_notification.js' %}"></script>
