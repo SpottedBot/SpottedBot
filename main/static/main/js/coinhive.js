@@ -139,6 +139,9 @@ function init_sliders() {
     $('#miner_status_indicator_checkbox').checkbox('setting', 'onChecked', function() {enable_miner()});
     $('#miner_status_indicator_checkbox').checkbox('setting', 'onUnchecked', function() {disable_miner()});
 
+    if (typeof $('#threads_slider').rangeslider === "undefined")
+        return;
+
     $('#threads_slider').rangeslider({
         polyfill: false,
         rangeClass: 'rangeslider',
