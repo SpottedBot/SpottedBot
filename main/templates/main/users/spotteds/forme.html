@@ -139,12 +139,26 @@
                 $('#link1_' + id).hide();
                 $('#cancel_' + id).hide();
                 hide_loader(id);
+
+                // Google analytics
+                ga('send', {
+                    hitType: 'event',
+                    eventCategory: 'user - spotteds',
+                    eventAction: 'forme - dismissed'
+                });
             },
             error: function(data) {
                 $('#header_' + id).text("Erro 500. Oops!");
                 $('#link1_' + id).hide();
                 $('#cancel_' + id).hide();
                 hide_loader(id);
+
+                // Google analytics
+                ga('send', {
+                    hitType: 'event',
+                    eventCategory: 'user - error',
+                    eventAction: 'forme - dismissed'
+                });
             }
         });
     }
@@ -199,6 +213,14 @@
                 }
                 $('#cancel_' + id).hide();
                 hide_loader(id);
+
+                // Google analytics
+                ga('send', {
+                    hitType: 'event',
+                    eventCategory: 'user - spotteds',
+                    eventAction: 'forme - rejeted',
+                    eventLabel: option
+                });
             },
             error: function(data) {
                 $('#header_' + id).text("Erro 500. Oops!");
@@ -207,6 +229,13 @@
                 }
                 $('#cancel_' + id).hide();
                 hide_loader(id);
+
+                // Google analytics
+                ga('send', {
+                    hitType: 'event',
+                    eventCategory: 'user - error',
+                    eventAction: 'forme - rejected'
+                });
             }
         });
     }

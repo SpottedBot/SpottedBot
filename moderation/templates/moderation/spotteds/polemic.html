@@ -141,12 +141,26 @@
                 $('#link1_' + id).hide();
                 $('#cancel_' + id).hide();
                 hide_loader(id);
+
+                // Google analytics
+                ga('send', {
+                    hitType: 'event',
+                    eventCategory: 'mod - spotteds',
+                    eventAction: 'approved polemic'
+                });
             },
             error: function(data) {
                 $('#header_' + id).text("Erro 500. Oops!");
                 $('#link1_' + id).hide();
                 $('#cancel_' + id).hide();
                 hide_loader(id);
+
+                // Google analytics
+                ga('send', {
+                    hitType: 'event',
+                    eventCategory: 'mod - error',
+                    eventAction: 'approved polemic'
+                });
             }
         });
     }
@@ -201,6 +215,14 @@
                 }
                 $('#cancel_' + id).hide();
                 hide_loader(id);
+
+                // Google analytics
+                ga('send', {
+                    hitType: 'event',
+                    eventCategory: 'mod - spotteds',
+                    eventAction: 'rejected polemic',
+                    eventLabel: option
+                });
             },
             error: function(data) {
                 $('#header_' + id).text("Erro 500. Oops!");
@@ -209,6 +231,14 @@
                 }
                 $('#cancel_' + id).hide();
                 hide_loader(id);
+
+                // Google analytics
+                ga('send', {
+                    hitType: 'event',
+                    eventCategory: 'mod - error',
+                    eventAction: 'rejected polemic',
+                    eventLabel: option
+                });
             }
         });
     }

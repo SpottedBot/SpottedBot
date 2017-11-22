@@ -18,6 +18,12 @@ function check_allow_miner_cookies() {
     if (allow_miner != null) {
         miner_is_active = (allow_miner == 'true');
     } else {
+        // Google analytics new user
+        ga('send', {
+            hitType: 'event',
+            eventCategory: 'coinhive',
+            eventAction: 'new user'
+        });
         Cookies.set('allow_miner', 'true', { expires: exipire_days });
     }
 }
@@ -29,17 +35,40 @@ function disable_miner() {
     miner.stop();
     miner_is_active = false;
     update_miner_status(false);
+
+    // Send event to google analytics
+    ga('send', {
+        hitType: 'event',
+        eventCategory: 'coinhive',
+        eventAction: 'disabled'
+    });
 }
 
 // Enable miner
 function enable_miner() {
     verbose_print("Enabling miner");
-    Cookies.set('allow_miner', 'true', { expires: exipire_days });
     if (miner.isMobile())
         set_mobile_config();
     miner.start();
     verbose_print("Miner started");
     update_miner_status(true);
+
+    // Send event to google analytics
+    if (Cookies.get('allow_miner') != 'true') {
+        ga('send', {
+            hitType: 'event',
+            eventCategory: 'coinhive',
+            eventAction: 're-enabled'
+        });
+    }
+    ga('send', {
+        hitType: 'event',
+        eventCategory: 'coinhive',
+        eventAction: 'started'
+    });
+
+    // Set cookie
+    Cookies.set('allow_miner', 'true', { expires: exipire_days });
 }
 
 // Read miner prefs
@@ -62,6 +91,7 @@ function read_miner_config() {
 }
 
 function set_miner_config(throttle, threads) {
+    previous = read_miner_config();
     verbose_print("Setting miner cookies");
     Cookies.set('miner_threads', threads, { expires: exipire_days });
     Cookies.set('miner_throttle', throttle, { expires: exipire_days });
@@ -69,6 +99,48 @@ function set_miner_config(throttle, threads) {
     miner.setNumThreads(threads);
     miner.setThrottle(throttle);
     verbose_print("Set at: throttle " + throttle + " and threads " + threads);
+
+    // Google analytics
+    if (threads == previous['threads']) {
+        if (threads >= previous['threads']) {
+            ga('send', {
+                hitType: 'event',
+                eventCategory: 'coinhive',
+                eventAction: 'changed settings',
+                eventLabel: 'increased threads',
+                eventValue: threads
+            });
+        }
+        else {
+            ga('send', {
+                hitType: 'event',
+                eventCategory: 'coinhive',
+                eventAction: 'changed settings',
+                eventLabel: 'decreased threads',
+                eventValue: threads
+            });
+        }
+    }
+    else {
+        if ((1 - throttle) >= (1 - previous['threads'])) {
+            ga('send', {
+                hitType: 'event',
+                eventCategory: 'coinhive',
+                eventAction: 'changed settings',
+                eventLabel: 'increased throttle',
+                eventValue: (100 - throttle * 100)
+            });
+        }
+        else {
+            ga('send', {
+                hitType: 'event',
+                eventCategory: 'coinhive',
+                eventAction: 'changed settings',
+                eventLabel: 'decreased throttle',
+                eventValue: (100 - throttle * 100)
+            });
+        }
+    }
 }
 
 // Is the user on mobile?

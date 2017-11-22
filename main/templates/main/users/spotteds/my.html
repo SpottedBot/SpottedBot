@@ -158,6 +158,14 @@
                 }
                 $('#cancel_' + id).hide();
                 hide_loader(id);
+
+                // Google analytics
+                ga('send', {
+                    hitType: 'event',
+                    eventCategory: 'user - spotteds',
+                    eventAction: 'my - deleted',
+                    eventLabel: option
+                });
             },
             error: function(data) {
                 $('#header_' + id).text("Erro 500. Oops!");
@@ -166,6 +174,14 @@
                 }
                 $('#cancel_' + id).hide();
                 hide_loader(id);
+
+                // Google analytics
+                ga('send', {
+                    hitType: 'event',
+                    eventCategory: 'user - error',
+                    eventAction: 'my - deleted',
+                    eventLabel: option
+                });
             }
         });
     }
