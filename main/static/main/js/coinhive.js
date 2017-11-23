@@ -186,6 +186,7 @@ function update_miner_status(status) {
 }
 
 function get_coinbase_stats() {
+    $('#coinbase_stats_button').addClass('loading disabled');
     $.ajax(
     {
         url: get_coinbase_stats_url,
@@ -199,10 +200,12 @@ function get_coinbase_stats() {
                 $('#coin_hashesTotal').text(data['hashesTotal']);
                 $('#coin_payoutXmr').text(data['payoutXmr'].toFixed(4));
                 $('#coin_payoutUsd').text(data['payoutUsd'].toFixed(3));
-        }
+            }
+            $('#coinbase_stats_button').removeClass('loading disabled');
         },
         error: function(data) {
             console.log("error reading coinbase stats");
+            $('#coinbase_stats_button').removeClass('loading disabled');
         }
     })
 }
