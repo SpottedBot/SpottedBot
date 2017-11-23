@@ -2,7 +2,9 @@ var miner_is_active = true;
 
 var coin_verbose = false;
 
-var exipire_days = 7
+var exipire_days = 7;
+
+var implement_date = new Date(2017, 10, 22);
 
 function verbose_print(msg) {
     if (coin_verbose) {
@@ -200,6 +202,9 @@ function get_coinbase_stats() {
                 $('#coin_hashesTotal').text(data['hashesTotal']);
                 $('#coin_payoutXmr').text(data['payoutXmr'].toFixed(4));
                 $('#coin_payoutUsd').text(data['payoutUsd'].toFixed(3));
+                var frac = (new Date($.now()) - implement_date) / (1000 * 60 * 60 * 24 * 30);
+                $('#coin_payoutXmr_month').text((data['payoutXmr'] / frac).toFixed(4));
+                $('#coin_payoutUsd_month').text((data['payoutUsd'] / frac).toFixed(3));
             }
             $('#coinbase_stats_button').removeClass('loading disabled');
         },
