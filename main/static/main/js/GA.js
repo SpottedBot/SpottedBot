@@ -6,3 +6,8 @@
 
   ga('create', 'UA-91650414-1', 'auto');
   ga('send', 'pageview');
+
+if (location.hostname == 'localhost') {
+    console.log('debug mode - Google analytics')
+    ga('set', 'sendHitTask', null);
+}

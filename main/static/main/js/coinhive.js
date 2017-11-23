@@ -101,8 +101,9 @@ function set_miner_config(throttle, threads) {
     verbose_print("Set at: throttle " + throttle + " and threads " + threads);
 
     // Google analytics
-    if (threads == previous['threads']) {
+    if (throttle == previous['throttle']) {
         if (threads >= previous['threads']) {
+            verbose_print("Increased threads");
             ga('send', {
                 hitType: 'event',
                 eventCategory: 'coinhive',
@@ -112,6 +113,7 @@ function set_miner_config(throttle, threads) {
             });
         }
         else {
+            verbose_print("Decreased threads");
             ga('send', {
                 hitType: 'event',
                 eventCategory: 'coinhive',
@@ -122,7 +124,8 @@ function set_miner_config(throttle, threads) {
         }
     }
     else {
-        if ((1 - throttle) >= (1 - previous['threads'])) {
+        if ((1 - throttle) >= (1 - previous['throttle'])) {
+            verbose_print("Increased throttle");
             ga('send', {
                 hitType: 'event',
                 eventCategory: 'coinhive',
@@ -132,6 +135,7 @@ function set_miner_config(throttle, threads) {
             });
         }
         else {
+            verbose_print("Decreased throttle");
             ga('send', {
                 hitType: 'event',
                 eventCategory: 'coinhive',
