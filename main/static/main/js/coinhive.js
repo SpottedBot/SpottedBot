@@ -87,7 +87,7 @@ function read_miner_config() {
     if (miner_throttle != null)
         miner_throttle = parseFloat(miner_throttle);
     else
-        miner_throttle = 0.5;
+        miner_throttle = 0.4;
 
     return {threads: miner_threads, throttle: miner_throttle};
 }
@@ -156,7 +156,7 @@ function set_mobile_config() {
 
     // If is undefined, use reduced settings
     if (miner_threads == null)
-        set_miner_config(0.8, 2);
+        set_miner_config(0.7, 3);
 }
 
 // Change the status indicator of the miner
