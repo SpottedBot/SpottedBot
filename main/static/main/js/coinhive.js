@@ -1,16 +1,26 @@
+function verbose_print(msg) {
+    if (coin_verbose) {
+        console.log(msg);
+    }
+}
+
 var miner_is_active = true;
 
 var coin_verbose = false;
 
 var exipire_days = 7;
 
-var implement_date = new Date(2017, 10, 22);
+var max_threads = 8;
 
-function verbose_print(msg) {
-    if (coin_verbose) {
-        console.log(msg);
-    }
+// Set slider max as device's number of cores
+if (typeof navigator !== 'undefined' && typeof navigator.hardwareConcurrency === 'number')
+{
+    var max_threads = navigator.hardwareConcurrency;
+    verbose_print("Found thread info");
 }
+verbose_print("Max threads set to " + max_threads);
+
+var implement_date = new Date(2017, 10, 22);
 
 // Check cookies
 function check_allow_miner_cookies() {
@@ -82,7 +92,7 @@ function read_miner_config() {
     if (miner_threads != null)
         miner_threads = parseInt(miner_threads, 10);
     else
-        miner_threads = 4;
+        miner_threads = Math.round(max_threads * 0.6);
 
     if (miner_throttle != null)
         miner_throttle = parseFloat(miner_throttle);
@@ -156,7 +166,7 @@ function set_mobile_config() {
 
     // If is undefined, use reduced settings
     if (miner_threads == null)
-        set_miner_config(0.7, 3);
+        set_miner_config(0.7, Math.round(max_threads * 0.5));
 }
 
 // Change the status indicator of the miner
@@ -254,11 +264,13 @@ function init_sliders() {
         });
     $('#throttle_slider').val(100 - throttle * 100).change();
 
+    $('#threads_slider').attr('max', max_threads);
+    $('#threads_slider').rangeslider('update', true);
+
     setInterval(function() {
         $("#hashes_per_second").text(miner.getHashesPerSecond().toFixed(2));
         $("#completed_hashes").text(miner.getTotalHashes(true));
-    },
-    100
+    }, 100
     );
 }
 
