@@ -58,9 +58,9 @@ def prefetch_facebook_usernames(request):
     no_thumbnail_users = FacebookUser.objects.exclude(thumbnail__isnull=False)
 
     # If there are only a few users without thumbnail, take (300 - the size) out of the outdated users
-    if len(no_thumbnail_users) < 300:
+    if len(no_thumbnail_users) < 100:
         # take 50 - len(no_thumbnail_users) users with outdated thumbnails
-        outdated_thumbnail_users = FacebookUser.objects.exclude(thumbnail__isnull=True).order_by("thumbnail_age")[:300 - len(no_thumbnail_users)]
+        outdated_thumbnail_users = FacebookUser.objects.exclude(thumbnail__isnull=True).order_by("thumbnail_age")[:100 - len(no_thumbnail_users)]
         # Join users
         to_update_users = list(no_thumbnail_users) + list(outdated_thumbnail_users)
     else:
