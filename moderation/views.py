@@ -8,7 +8,6 @@ from .models import Moderator
 from django.contrib.auth.decorators import user_passes_test
 from .decorators import is_moderator
 from project.manual_error_report import exception_email
-from django.db import transaction
 # Create your views here.
 
 
@@ -115,7 +114,6 @@ def polemic_submit(request):
     return HttpResponse('Success')
 
 
-@transaction.commit_manually()
 @user_passes_test(is_moderator)
 def approve_submit(request):
     """Approve Submit
@@ -130,7 +128,6 @@ def approve_submit(request):
         raise Http404
 
     instance.post_spotted(request.user.moderator)
-    transaction.commit()
     return HttpResponse('Success')
 
 
@@ -145,7 +142,6 @@ def reject_options(request):
     return JsonResponse(data)
 
 
-@transaction.commit_manually()
 @user_passes_test(is_moderator)
 def reject_submit(request):
     """Reject Submit
@@ -160,7 +156,6 @@ def reject_submit(request):
         raise Http404
 
     instance.delete()
-    transaction.commit()
     return HttpResponse('Success')
 
 
