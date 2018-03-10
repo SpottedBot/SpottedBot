@@ -155,8 +155,10 @@ def reject_submit(request):
         instance = get_object_or_404(PendingSpotted, id=request.POST['id'])
         response = api_process_rejected(instance, request.POST['option'])
         if not response:
-            raise Http404
-            return
+            # raise Http404
+            # return
+            # Even if the spotted is not registered on the api, allow local deletion
+            pass
 
         instance.delete()
     except Exception as e:
