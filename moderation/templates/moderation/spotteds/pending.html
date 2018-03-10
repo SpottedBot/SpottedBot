@@ -203,7 +203,7 @@
                     eventAction: 'approved'
                 });
             },
-            error: function(data) {
+            error: function(xhr, textStatus, errorThrown) {
                 $('#header_' + id).text("Erro " + xhr.status + ". Oops!");
                 $('#link1_' + id).hide();
                 $('#cancel_' + id).hide();
@@ -278,7 +278,7 @@
                     eventLabel: option
                 });
             },
-            error: function(data) {
+            error: function(xhr, textStatus, errorThrown) {
                 $('#header_' + id).text("Erro " + xhr.status + ". Oops!");
                 for (k in reject_options) {
                     $('#link' + k + '_' + id).hide();

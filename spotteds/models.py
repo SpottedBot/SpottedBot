@@ -140,6 +140,8 @@ class PendingSpotted(models.Model):
         attachment = self.attachment
         if not self.is_attachment_safe:
             attachment = ''
+        if attachment is None:
+            attachment = ''
 
         # Create new Spotted object from self
         s = Spotted(message=self.message, author=self.author, approver=mod, target=self.target, attachment=attachment, public=self.public, api_id=self.api_id, share_with_crush=self.share_with_crush)
