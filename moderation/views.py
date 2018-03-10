@@ -129,6 +129,7 @@ def approve_submit(request):
     instance.post_spotted(request.user.moderator)
     response = api_process_approved(instance)
     if not response:
+        instance.delete()
         raise Http404
     return HttpResponse('Success')
 
@@ -158,6 +159,7 @@ def reject_submit(request):
     instance.delete()
     response = api_process_rejected(instance, request.POST['option'])
     if not response:
+        instance.delete()
         raise Http404
     return HttpResponse('Success')
 
