@@ -124,10 +124,10 @@ def approve_submit(request):
         instance = get_object_or_404(PendingSpotted, id=request.POST['id'])
         response = api_process_approved(instance)
         if not response:
-            raise Http404
-            return
-
-        instance.post_spotted(request.user.moderator)
+            # If the spotted is not found within the API, delete it locally
+            instance.delete()
+        else:
+            instance.post_spotted(request.user.moderator)
     except Exception as e:
         exception_email(request, e)
         raise e
@@ -155,8 +155,6 @@ def reject_submit(request):
         instance = get_object_or_404(PendingSpotted, id=request.POST['id'])
         response = api_process_rejected(instance, request.POST['option'])
         if not response:
-            # raise Http404
-            # return
             # Even if the spotted is not registered on the api, allow local deletion
             pass
 
