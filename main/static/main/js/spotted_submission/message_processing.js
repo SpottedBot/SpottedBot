@@ -37,15 +37,15 @@ function process_message() {
             return 1;
         return 0;
     }
-    var selected = [...resp].sort(compare)[0];
-
-    for (val in selected) {
-        var name = val;
-        break;
-    }
-    if (name)
-        if (name.length > 3 && selected[name].length > 0)
+    var sorted_users = [...resp].sort(compare);
+    for (user in sorted_users) {
+        for (p in sorted_users[user]) {
+            name = p;
+            break;
+        }
+        if (name.length > 4) {
             return name;
+        }
+    }
     return null;
-
 }
