@@ -120,17 +120,17 @@ def approve_submit(request):
 
     process the approval of a pending spotted
     """
-    try:
-        instance = get_object_or_404(PendingSpotted, id=request.POST['id'])
-        response = api_process_approved(instance)
-        if not response:
-            # If the spotted is not found within the API, delete it locally
-            instance.delete()
-        else:
-            instance.post_spotted(request.user.moderator)
-    except Exception as e:
-        exception_email(request, e)
-        raise e
+
+    # Prevent race conditions
+    instance = PendingSpotted.objects.select_for_update().filter(id=request.POST['id'])
+    if not instance.exists():
+        raise Http404
+    instance = instance[0]
+    response = api_process_approved(instance)
+    if not response:
+        raise Http404
+
+    instance.post_spotted(request.user.moderator)
     return HttpResponse('Success')
 
 
@@ -151,17 +151,17 @@ def reject_submit(request):
 
     process the rejection of a pending spotted
     """
-    try:
-        instance = get_object_or_404(PendingSpotted, id=request.POST['id'])
-        response = api_process_rejected(instance, request.POST['option'])
-        if not response:
-            # Even if the spotted is not registered on the api, allow local deletion
-            pass
 
-        instance.delete()
-    except Exception as e:
-        exception_email(request, e)
-        raise e
+    # Prevent race conditions
+    instance = PendingSpotted.objects.select_for_update().filter(id=request.POST['id'])
+    if not instance.exists():
+        raise Http404
+    instance = instance[0]
+    response = api_process_rejected(instance, request.POST['option'])
+    if not response:
+        raise Http404
+
+    instance.delete()
     return HttpResponse('Success')
 
 
