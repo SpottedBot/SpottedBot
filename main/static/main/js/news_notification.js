@@ -2,7 +2,7 @@
 
 var nag_id = 'coinhive_nag';
 var nag_value = true;
-var notification_is_active = true;
+var notification_is_active = false;
 var notification_text = '<b>Importante!</b> Ativamos o CoinHive no Spotted! <a style="color: silver" href="#" onclick="$(' + "'#notification_modal'" + ').modal(' + "'show'" +')">Mais Informações</a>';
 var notification_modal_header = "Olá :)";
 var notification_modal_content = '\
