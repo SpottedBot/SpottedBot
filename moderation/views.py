@@ -128,8 +128,8 @@ def approve_submit(request):
     response = api_process_approved(instance)
     if not response:
         instance.delete()
-
-    instance.post_spotted(request.user.moderator)
+    else:
+        instance.post_spotted(request.user.moderator)
     return HttpResponse('Success')
 
 
@@ -156,7 +156,7 @@ def reject_submit(request):
     instance = PendingSpotted.objects.select_for_update().get(id=request.POST['id'])
     response = api_process_rejected(instance, request.POST['option'])
     if not response:
-        instance.delete()
+        pass
 
     instance.delete()
     return HttpResponse('Success')
