@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib.auth.views import logout
 from . import views
+app_name = 'custom_auth'
 
 urlpatterns = [
     # /custom_auth/+
