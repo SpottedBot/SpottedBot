@@ -15,3 +15,15 @@ def exception_email(request, e):
         subject, message, fail_silently=True,
         html_message=reporter.get_traceback_html()
     )
+
+
+def no_request_exception(tb, e):
+    try:
+        subject = e.message.replace('\n', '\\n').replace('\r', '\\r')[:989]
+    except AttributeError:
+        subject = "Unkown Error"
+    message = tb
+    mail.mail_admins(
+        subject, message, fail_silently=True,
+        html_message=tb
+    )

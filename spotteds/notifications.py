@@ -1,5 +1,7 @@
 from custom_auth.facebook_methods import get_graph as app_graph
 from django.shortcuts import reverse
+from project.manual_error_report import no_request_exception
+import traceback
 from facebook import GraphAPIError
 
 
@@ -15,8 +17,9 @@ def author_notification(instance):
 
     try:
         app_graph().put_object(parent_object=userid, connection_name="notifications", href=href, template=template)
-    except GraphAPIError:
-        pass
+    except GraphAPIError as e:
+        tb = traceback.format_exc()
+        no_request_exception(tb, e)
 
 
 def target_notification(instance):
@@ -36,5 +39,6 @@ def target_notification(instance):
 
     try:
         app_graph().put_object(parent_object=userid, connection_name="notifications", href=href, template=template)
-    except GraphAPIError:
-        pass
+    except GraphAPIError as e:
+        tb = traceback.format_exc()
+        no_request_exception(tb, e)
