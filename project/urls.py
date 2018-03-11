@@ -9,7 +9,7 @@ handler404 = 'main.views.handler404'
 handler500 = 'main.views.handler500'
 
 urlpatterns = [
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', admin.site.urls),
     url(r'^', include('main.urls')),
     url(r'^auth/', include('custom_auth.urls', namespace='custom_auth')),
     url(r'^spotted/', include('spotteds.urls', namespace='spotteds')),
