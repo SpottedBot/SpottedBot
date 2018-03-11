@@ -30,19 +30,22 @@ class Spotted(models.Model):
         User,
         related_name='authored',
         blank=True,
-        null=True
+        null=True,
+        on_delete=models.SET_NULL
     )
     target = models.ForeignKey(  # Targeted user
         User,
         related_name='targeted',
         blank=True,
-        null=True
+        null=True,
+        on_delete=models.SET_NULL
     )
     approver = models.ForeignKey(
         Moderator,
         related_name='approved_spotteds',
         blank=True,
-        null=True
+        null=True,
+        on_delete=models.SET_NULL
     )
     created = models.DateTimeField(auto_now_add=True, null=True)
     message = models.TextField()  # Spotted message
@@ -96,14 +99,14 @@ class PendingSpotted(models.Model):
 
     author = models.ForeignKey(  # User Obj from author
         User,
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
         related_name='pending_authored',
         blank=True,
         null=True
     )
     target = models.ForeignKey(  # Targeted user
         User,
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
         related_name='pending_targeted',
         blank=True,
         null=True
