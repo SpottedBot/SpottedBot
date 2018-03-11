@@ -15,10 +15,12 @@ Including another URLconf
 """
 from django.conf.urls import url
 from . import views
+from custom_auth.views import facebook_login
 
 urlpatterns = [
     # /+
     url(r'^$', views.index, name='index'),
+    url(r'^login/$', facebook_login),
     url(r'^about/$', views.about, name='about'),
     url(r'^dashboard/$', views.dashboard, name='dashboard'),
 

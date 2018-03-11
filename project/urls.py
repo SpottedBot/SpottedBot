@@ -5,7 +5,8 @@ admin.autodiscover()
 # from app import views
 from django.views.generic import TemplateView
 
-handler404 = 'main.views.handler404'
+# Disabled until bug is fixed
+# handler404 = 'main.views.handler404'
 handler500 = 'main.views.handler500'
 
 urlpatterns = [
