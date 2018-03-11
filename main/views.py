@@ -92,7 +92,7 @@ def imgur_image_upload(request):
     # Allows users to upload images
 
     # Only works for authenticated users
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         try:
             # Get file
             file = request.FILES['picture']

@@ -52,7 +52,7 @@ class PendingSpottedForm(forms.ModelForm):
         target = self.cleaned_data['target_id']
         share_with_crush = self.cleaned_data['share_with_crush']
 
-        if author.is_authenticated():
+        if author.is_authenticated:
             instance.author = author
 
         if target is not None:
