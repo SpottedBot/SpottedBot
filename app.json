@@ -82,7 +82,7 @@
     },
     "AD_SLOTS": {
       "description": "Se seu spotted já foi aceito pelo Google ads, coloque uma lista de ad slots aqui no formato ['slot 1', 'slot 2', 'slot 3'...]",
-      "value": "",
+      "value": "[]",
       "required": false
     },
     "SPOTTED_API_SECRET": {
