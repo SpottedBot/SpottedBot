@@ -53,9 +53,15 @@ class FacebookUser(models.Model):
 
     @property
     def picture(self):
-
         # Fetches a 500x500 picture from the user. On demand
-        return get_graph().get_object(str(self.social_id) + "/picture?width=500&height=500")['url']
+        if self.thumbnail_age is None or self.thumbnail_age < timezone.now() - datetime.timedelta(days=7):
+            try:
+                self.thumbnail = get_graph().get_object(str(self.social_id) + "/picture?width=500&height=500")['url']
+            except:
+                return "https://goo.gl/g5rGM3"
+            self.thumbnail_age = timezone.now()
+            self.save()
+        return self.thumbnail
 
     @staticmethod
     def create_or_update(social_id, access_token, expires, first_name, name, link):
