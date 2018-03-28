@@ -6,6 +6,7 @@ register = template.Library()
 
 @register.filter(name='stat_order')
 def stat_order(value):
+    # Transforms things like 13502 into 13.5K
     units = {
         1: 'K',
         2: 'M',
