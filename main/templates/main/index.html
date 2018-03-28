@@ -1,5 +1,6 @@
 {% extends "main/base.html" %}
 {% load staticfiles %}
+{% load stat_crunch %}
 
 {% block extend_scripts %}
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.js"></script>
@@ -193,7 +194,7 @@
         <div class="ui column aligned center">
             <div class="ui inverted huge statistic">
                 <div class="value">
-                    {{ users | length }}
+                    {{ users | length | stat_order }}
                 </div>
                 <div class="label">
                     <i class="icon heart"></i>Crushes Ativos
@@ -201,7 +202,7 @@
             </div>
             <div class="ui inverted huge statistic">
                 <div class="value">
-                    {{ spotteds.0.total_spotteds }}
+                    {{ spotteds.0.total_spotteds | stat_order }}
                 </div>
                 <div class="label">
                     <i class="icon send"></i> Spotteds Enviados
