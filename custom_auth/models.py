@@ -39,8 +39,13 @@ class FacebookUser(models.Model):
     first_name = models.CharField(max_length=50)
     name = models.CharField(max_length=150)
 
+    # 50x50 thumbnail
     thumbnail = models.CharField(max_length=1000, null=True)
     thumbnail_age = models.DateTimeField(null=True)
+
+    # 500x500 thumbnail
+    hd_thumbnail = models.CharField(max_length=1000, null=True)
+    hd_thumbnail_age = models.DateTimeField(null=True)
 
     # Direct link to user's profile
     link = models.URLField()
@@ -53,15 +58,15 @@ class FacebookUser(models.Model):
 
     @property
     def picture(self):
-        # Fetches a 500x500 picture from the user. On demand
-        if self.thumbnail_age is None or self.thumbnail_age < timezone.now() - datetime.timedelta(days=7):
+        # Fetches a 500x500 picture from the user
+        if self.hd_thumbnail_age is None or self.hd_thumbnail_age < timezone.now() - datetime.timedelta(days=7):
             try:
-                self.thumbnail = get_graph().get_object(str(self.social_id) + "/picture?width=500&height=500")['url']
+                self.hd_thumbnail = get_graph().get_object(str(self.social_id) + "/picture?width=500&height=500")['url']
             except:
                 return "https://goo.gl/g5rGM3"
-            self.thumbnail_age = timezone.now()
+            self.hd_thumbnail_age = timezone.now()
             self.save()
-        return self.thumbnail
+        return self.hd_thumbnail
 
     @staticmethod
     def create_or_update(social_id, access_token, expires, first_name, name, link):
