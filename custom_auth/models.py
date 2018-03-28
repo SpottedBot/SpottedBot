@@ -40,11 +40,11 @@ class FacebookUser(models.Model):
     name = models.CharField(max_length=150)
 
     # 50x50 thumbnail
-    thumbnail = models.CharField(max_length=1000, null=True)
+    thumbnail = models.URLField(null=True)
     thumbnail_age = models.DateTimeField(null=True)
 
     # 500x500 thumbnail
-    hd_thumbnail = models.CharField(max_length=1000, null=True)
+    hd_thumbnail = models.URLField(null=True)
     hd_thumbnail_age = models.DateTimeField(null=True)
 
     # Direct link to user's profile
