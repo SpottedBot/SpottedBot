@@ -74,7 +74,8 @@ def api_process_approved(instance):
     if r.status_code == requests.codes.ok:
         instance.api_id = r.json()['api_id']
         instance.save()
-
+    elif r.status_code != 403:
+        instance.delete()
     # Returns True if the status code is OK, False otherwise
     return r.status_code == requests.codes.ok
 
@@ -93,6 +94,9 @@ def api_process_rejected(instance, reason):
     url = api_url + reverse('api:process_rejected')
 
     r = requests.post(url, headers=headers, data=data)
+
+    if r.status_code != 403:
+        instance.delete()
 
     return r.status_code == requests.codes.ok
 

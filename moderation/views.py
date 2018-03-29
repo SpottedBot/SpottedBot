@@ -126,10 +126,9 @@ def approve_submit(request):
     # Prevent race conditions
     instance = PendingSpotted.objects.select_for_update().get(id=request.POST['id'])
     response = api_process_approved(instance)
-    if not response:
-        instance.delete()
-    else:
+    if response:
         instance.post_spotted(request.user.moderator)
+
     return HttpResponse('Success')
 
 
@@ -155,10 +154,6 @@ def reject_submit(request):
     # Prevent race conditions
     instance = PendingSpotted.objects.select_for_update().get(id=request.POST['id'])
     response = api_process_rejected(instance, request.POST['option'])
-    if not response:
-        pass
-
-    instance.delete()
     return HttpResponse('Success')
 
 
