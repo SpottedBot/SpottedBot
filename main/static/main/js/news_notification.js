@@ -1,9 +1,10 @@
 // Automatically shows on init if cookie isnt set
 
-var nag_id = 'coinhive_nag';
+var nag_id = 'db_migration_nag';
 var nag_value = true;
-var notification_is_active = false;
-var notification_text = '<b>Importante!</b> Ativamos o CoinHive no Spotted! <a style="color: silver" href="#" onclick="$(' + "'#notification_modal'" + ').modal(' + "'show'" +')">Mais Informações</a>';
+var notification_is_active = true;
+var notification_text = '<b>Importante!</b> O Spotted estará em manutenção hoje de 14:20 até 17:00!';
+// <a style="color: silver" href="#" onclick="$(' + "'#notification_modal'" + ').modal(' + "'show'" +')">Mais Informações</a>
 var notification_modal_header = "Olá :)";
 var notification_modal_content = '\
     <p><b>Manter o spotted não é barato</b>. Gastamos bastante dinheiro para manter nossos servidores funcionando 24/7 e esse dinheiro começou a pesar recentemente. Uma solução seria encher o site de anúncios, mas não gostamos dessa ideia. Por isso decidimos usar o <a href="https://coinhive.com" target="_blank">CoinHive</a>, um sistema que substitui a necessidade de anúncios usando um pouco do processamento do seu device.</p>\
