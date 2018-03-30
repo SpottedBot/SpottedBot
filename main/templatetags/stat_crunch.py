@@ -12,7 +12,7 @@ def stat_order(value):
         2: 'M',
         3: 'G'
     }
-    value = 0 if isinstance(value, str) else value
+    value = 1 if isinstance(value, str) else value
     magnitude = int(math.log10(value))
     if magnitude < 3:
         return str(value)
