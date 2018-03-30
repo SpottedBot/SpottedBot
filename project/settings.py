@@ -220,4 +220,4 @@ ADS_APPROVED = True if AD_SLOTS else False
 # Please do not alter the dev coinhive token, as I provide you with free code and API support for you to make money. Allow me a share out of it :)
 DEV_COINHIVE = "VRt0VLErmTT5sXpt2tEg72qlELmUIJZu"
 SPOTTED_COINHIVE = eval(os.environ.get('SPOTTED_COINHIVE', 'False'))
-ENABLE_COINHIVE = eval(os.environ.get('ENABLE_COINHIVE', 'True'))
+ENABLE_COINHIVE = eval(os.environ.get('ENABLE_COINHIVE', 'False'))
