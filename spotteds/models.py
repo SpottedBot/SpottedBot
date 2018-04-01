@@ -156,7 +156,11 @@ class PendingSpotted(models.Model):
 
         # post to facebook
         try:
-            resp = page_graph().put_wall_post(f_message, {'link': self.attachment})
+            # Only if not in debug mode
+            if not settings.TEST_MODE:
+                resp = page_graph().put_wall_post(f_message, {'link': self.attachment})
+            else:
+                resp = {'id': 1}
 
         # Try to catch invalid url exception
         except GraphAPIError as e:
@@ -177,9 +181,9 @@ class PendingSpotted(models.Model):
         self.delete()
 
         # send notifications
-        if s.author:
+        if s.author and not settings.TEST_MODE:
             author_notification(s)
-        if s.target:
+        if s.target and not settings.TEST_MODE:
             target_notification(s)
         return s
 

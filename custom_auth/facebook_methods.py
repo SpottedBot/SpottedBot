@@ -22,7 +22,7 @@ def get_graph():
 
 
 # save graph object to scope
-graph = get_graph()
+# graph = get_graph()
 
 
 def canv_url(request):
@@ -68,7 +68,7 @@ def debug_token(token):
     Returns debug string from token
     """
 
-    return graph.debug_access_token(token, app_id, app_secret)
+    return get_graph().debug_access_token(token, app_id, app_secret)
 
 
 def login_successful(code, request):
@@ -78,6 +78,7 @@ def login_successful(code, request):
     """
 
     canvas_url = canv_url(request)
+    graph = get_graph()
 
     # Get token info from user
     token_info = graph.get_access_token_from_code(code, canvas_url, app_id, app_secret)

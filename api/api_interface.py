@@ -2,15 +2,21 @@ import requests
 from django.shortcuts import reverse
 from django.conf import settings
 
-api_url = settings.SPOTTED_API_URL
-token = settings.SPOTTED_API_SECRET
-headers = {'Authorization': 'Token ' + token}
+
+def get_settings():
+
+    api_url = settings.SPOTTED_API_URL
+    token = settings.SPOTTED_API_SECRET
+    headers = {'Authorization': 'Token ' + token}
+    return api_url, token, headers
 
 
 def api_process_new_post(instance):
     """
     Process new post through the API
     """
+
+    api_url, token, headers = get_settings()
 
     # Payload
     data = {
@@ -23,19 +29,17 @@ def api_process_new_post(instance):
 
     # Send payload to API
     response = requests.post(url, headers=headers, data=data)
-
     # If ok,
     if response.status_code == requests.codes.ok:
-
         # Check for the required response data
         try:
-
             # If the API has decided that the post should be posted right away, do that
             if response.json()['action'] == 'approve':
                 instance.suggestion = response.json()['suggestion']
                 instance.api_id = response.json()['api_id']
                 instance.save()
                 instance.post_spotted()
+
                 return True
 
             # If the API has decided that the post should be rejected, do that
@@ -49,9 +53,8 @@ def api_process_new_post(instance):
                 instance.api_id = response.json()['api_id']
                 instance.save()
                 return True
-        except:
-            pass
-
+        except Exception as e:
+            print(e)
     # Abort and delete post if the response is invalid
     instance.delete()
     return False
@@ -62,6 +65,8 @@ def api_process_approved(instance):
     """
     Process an approved post through the API
     """
+
+    api_url, token, headers = get_settings()
 
     data = {
         'api_id': instance.api_id
@@ -85,6 +90,8 @@ def api_process_rejected(instance, reason):
     Process a rejected post through the API
     """
 
+    api_url, token, headers = get_settings()
+
     data = {
         'reason': reason,
         'api_id': instance.api_id,
@@ -107,6 +114,8 @@ def api_reject_options():
     These options will be shown at the moderator's view when trying to reject a post
     """
 
+    api_url, token, headers = get_settings()
+
     url = api_url + reverse('api:reject_options')
 
     r = requests.get(url, headers=headers)
@@ -118,6 +127,8 @@ def api_process_deleted(instance, reason, by):
     """
     Process a deleted post through the API
     """
+
+    api_url, token, headers = get_settings()
 
     data = {
         'reason': reason,
@@ -138,6 +149,8 @@ def api_my_delete_options():
     These options will be shown at the user's view when trying to delete a post they own
     """
 
+    api_url, token, headers = get_settings()
+
     url = api_url + reverse('api:my_delete_options')
 
     r = requests.get(url, headers=headers)
@@ -151,6 +164,8 @@ def api_forme_delete_options():
     These options will be shown at the user's view when trying to delete a post sent to them
     """
 
+    api_url, token, headers = get_settings()
+
     url = api_url + reverse('api:forme_delete_options')
 
     r = requests.get(url, headers=headers)
@@ -159,6 +174,8 @@ def api_forme_delete_options():
 
 
 def api_get_update_coinhive():
+    api_url, token, headers = get_settings()
+
     url = api_url + reverse('api:coinhivestats')
 
     r = requests.get(url, headers=headers)
