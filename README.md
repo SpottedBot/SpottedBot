@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.org/SpottedBot/SpottedBot.svg?branch=master)](https://travis-ci.org/SpottedBot/SpottedBot) [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0) [![forthebadge](https://forthebadge.com/images/badges/fuck-it-ship-it.svg)](https://forthebadge.com)
+[![Build Status](https://travis-ci.org/SpottedBot/SpottedBot.svg?branch=master)](https://travis-ci.org/SpottedBot/SpottedBot) [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 
-[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
+[![forthebadge](https://forthebadge.com/images/badges/fuck-it-ship-it.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
 
 SpottedBot
 ==========
