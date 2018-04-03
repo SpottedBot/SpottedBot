@@ -91,7 +91,7 @@ class TestModerationAPI(TestCase):
 class TestUserControlAPI(TestCase):
 
     def test_process_deleted(self):
-        spotted = Spotted.objects.create(message="Eu sempre quis saber", attachment_safe=True)
+        spotted = Spotted.objects.create(message="Eu sempre quis saber")
         resp = api_interface.api_process_deleted(spotted, 'Repetido', 'author')
         self.assertTrue(resp)
 
@@ -100,13 +100,12 @@ class TestUserControlAPI(TestCase):
         with self.settings(SPOTTED_API_SECRET='abc'):
             resp = api_interface.api_process_deleted(spotted, 'Repetido', 'author')
         self.assertFalse(resp)
-        self.assertTrue(resp)
 
     def test_process_deleted_wrong_url(self):
         spotted = PendingSpotted.objects.create(message="beija garotas?", attachment_safe=True)
         with self.settings(SPOTTED_API_URL='https://google.com/'):
             resp = api_interface.api_process_deleted(spotted, 'Repetido', 'author')
-        self.assertTrue(resp)
+        self.assertFalse(resp)
 
 
 class TestOptionsAPI(TestCase):

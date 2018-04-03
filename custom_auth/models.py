@@ -108,6 +108,5 @@ class FacebookUser(models.Model):
                 name=name,
                 link=link
             )
-            print('USER CREATED')
         obj.save()
         return obj

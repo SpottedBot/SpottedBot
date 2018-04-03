@@ -184,7 +184,7 @@ FACEBOOK_PAGE_TOKEN = os.environ.get('FACEBOOK_PAGE_TOKEN')
 FACEBOOK_PERMISSIONS = []
 
 # Page Stuff
-INITIAL_COUNT = os.environ.get('INITIAL_COUNT')
+INITIAL_COUNT = int(os.environ.get('INITIAL_COUNT', '0'))
 
 # Google Captcha stuff
 RECAPTCHA_PUBLIC_KEY = os.environ.get('RECAPTCHA_PUBLIC_KEY')
