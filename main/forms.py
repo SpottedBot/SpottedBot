@@ -25,7 +25,7 @@ class ContactForm(forms.Form):
             subject,
             name + ', ' + email + ', enviou um email pelo site do Spotted:\n\n---------\n' + text + '\n---------\n\nLove,\nSpotted Bot.',
             email,
-            [settings.DEFAULT_CONTACT_EMAIL]
+            [settings.DEFAULT_CONTACT_EMAIL, email]
         )
 
 
