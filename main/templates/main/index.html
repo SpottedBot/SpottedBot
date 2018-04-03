@@ -420,6 +420,10 @@
                 manual_trigger(name);
                 $("#target_found_tip").text("Acho que encontrei alguém no seu spotted. Será que alguma dessas pessoas é o seu crush?");
             }
+            else {
+                manual_trigger('');
+                $("#target_found_tip").text("");
+            }
             enable_tab(2);
             next_tab(1);
             $("#message_button").popup("hide");
