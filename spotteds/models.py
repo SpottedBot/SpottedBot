@@ -145,9 +145,7 @@ class PendingSpotted(models.Model):
 
         # Only post with attachment if safe
         attachment = self.attachment
-        if not self.is_attachment_safe:
-            attachment = ''
-        if attachment is None:
+        if not self.is_attachment_safe or not self.has_attachment:
             attachment = ''
 
         # Create new Spotted object from self
