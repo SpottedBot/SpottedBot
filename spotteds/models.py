@@ -158,7 +158,7 @@ class PendingSpotted(models.Model):
         try:
             # Only if not in debug mode
             if not settings.TEST_MODE:
-                resp = page_graph().put_wall_post(f_message, {'link': self.attachment})
+                resp = page_graph().put_wall_post(f_message, {'link': attachment})
             else:
                 resp = {'id': 1}
 
