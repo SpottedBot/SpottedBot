@@ -22,6 +22,7 @@ def api_process_new_post(instance):
     data = {
         'message': instance.message,
         'is_safe': instance.is_attachment_safe,
+        'has_attachment': instance.has_attachment
     }
 
     # Resolve URL
