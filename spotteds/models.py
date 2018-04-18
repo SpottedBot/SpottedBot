@@ -123,9 +123,13 @@ class PendingSpotted(models.Model):
     attachment_safe = models.BooleanField(default=False)
 
     @property
+    def has_attachment(self):
+        return self.attachment is not None and self.attachment != ''
+
+    @property
     def is_attachment_safe(self):
         # If there is an attachment and it is not safe
-        if not self.attachment_safe and self.attachment:
+        if not self.attachment_safe and self.has_attachment:
             # Check if really not safe
             res = is_safe(self.attachment)
             # Update spotted
