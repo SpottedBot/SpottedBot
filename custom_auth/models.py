@@ -40,15 +40,15 @@ class FacebookUser(models.Model):
     name = models.CharField(max_length=150)
 
     # 50x50 thumbnail
-    thumbnail = models.URLField(null=True)
+    thumbnail = models.URLField(max_length=2000, null=True)
     thumbnail_age = models.DateTimeField(null=True)
 
     # 500x500 thumbnail
-    hd_thumbnail = models.URLField(null=True)
+    hd_thumbnail = models.URLField(max_length=2000, null=True)
     hd_thumbnail_age = models.DateTimeField(null=True)
 
     # Direct link to user's profile
-    link = models.URLField()
+    link = models.URLField(max_length=2000)
 
     @property
     def is_expired(self):
