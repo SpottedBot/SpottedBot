@@ -39,14 +39,6 @@ class FacebookUser(models.Model):
     first_name = models.CharField(max_length=50)
     name = models.CharField(max_length=150)
 
-    # 50x50 thumbnail
-    thumbnail = models.URLField(max_length=2000, null=True)
-    thumbnail_age = models.DateTimeField(null=True)
-
-    # 500x500 thumbnail
-    hd_thumbnail = models.URLField(max_length=2000, null=True)
-    hd_thumbnail_age = models.DateTimeField(null=True)
-
     # Direct link to user's profile
     link = models.URLField(max_length=2000)
 
@@ -57,15 +49,18 @@ class FacebookUser(models.Model):
         return timezone.now() > self.updated_at + datetime.timedelta(seconds=self.expires)
 
     @property
+    def thumbnail(self):
+        """50x50 thumbnail"""
+        return "https://graph.facebook.com/{}/picture?width=50&height=50".format(self.social_id)
+
+    @property
+    def hd_thumbnail(self):
+        """500x500 thumbnail"""
+        return "https://graph.facebook.com/{}/picture?width=500&height=500".format(self.social_id)
+
+    @property
     def picture(self):
-        # Fetches a 500x500 picture from the user
-        if self.hd_thumbnail_age is None or self.hd_thumbnail_age < timezone.now() - datetime.timedelta(days=7):
-            try:
-                self.hd_thumbnail = get_graph().get_object(str(self.social_id) + "/picture?width=500&height=500")['url']
-            except:
-                return "https://goo.gl/g5rGM3"
-            self.hd_thumbnail_age = timezone.now()
-            self.save()
+        """500x500 thumbnail"""
         return self.hd_thumbnail
 
     @staticmethod

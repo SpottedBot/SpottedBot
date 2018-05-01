@@ -53,39 +53,10 @@ def about(request):
 
 
 def prefetch_facebook_usernames(request):
-
-    # take no_thumbnail_users
-    no_thumbnail_users = FacebookUser.objects.exclude(thumbnail__isnull=False)
-
-    # If there are only a few users without thumbnail, take (300 - the size) out of the outdated users
-    if len(no_thumbnail_users) < 100:
-        # take 50 - len(no_thumbnail_users) users with outdated thumbnails
-        outdated_thumbnail_users = FacebookUser.objects.exclude(thumbnail__isnull=True).order_by("thumbnail_age")[:100 - len(no_thumbnail_users)]
-        # Join users
-        to_update_users = list(no_thumbnail_users) + list(outdated_thumbnail_users)
-    else:
-        to_update_users = no_thumbnail_users
-
-    # Chunkinator
-    def chunks(l, n):
-        """Yield successive n-sized chunks from l."""
-        for i in range(0, len(l), n):
-            yield l[i:i + n]
-
-    # Update the users, 50 at a time
-    for chunk in chunks(to_update_users, 50):
-        facebook_query_str = ','.join([obj.social_id for obj in chunk])
-        results = get_graph().get_object("?fields=picture, name&ids=" + facebook_query_str)
-        for user_info in results:
-            user = FacebookUser.objects.get(social_id=results[user_info]["id"])
-            user.thumbnail = results[user_info]["picture"]["data"]["url"]
-            user.thumbnail_age = timezone.now()
-            user.save()
-
-    names = []
+    users = []
     for user in FacebookUser.objects.all().order_by('?'):
-        names.append({"name": user.name, "picture": user.thumbnail, "id": user.social_id})
-    return JsonResponse(names, safe=False)
+        users.append({"name": user.name, "picture": user.thumbnail, "id": user.social_id})
+    return JsonResponse(users, safe=False)
 
 
 def imgur_image_upload(request):
