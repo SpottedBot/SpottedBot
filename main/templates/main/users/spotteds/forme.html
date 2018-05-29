@@ -35,7 +35,7 @@
                     {% endif %}
                     enviado por
                     {% if spotted.author and spotted.share_with_crush %}
-                     <a href="http://facebook.com/{{ spotted.author.facebookuser.social_id }}" target="_blank">{{ spotted.author.facebookuser.name }}</a>
+                     <a href="{{ spotted.author.facebookuser.link }}" target="_blank">{{ spotted.author.facebookuser.name }}</a>
                     {% else %}
                     <i class="spy icon"></i>Anônimo
                     {% endif %}

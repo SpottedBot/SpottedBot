@@ -33,7 +33,7 @@
                     <i class="ban icon"></i>Privado
                     {% endif %}
                     {% if spotted.target %}
-                     para <a href="http://facebook.com/{{ spotted.target.facebookuser.social_id }}" target="_blank">{{ spotted.target.facebookuser.name }}</a>
+                     para <a href="{{ spotted.target.facebookuser.link }}" target="_blank">{{ spotted.target.facebookuser.name }}</a>
                     {% endif %}
 
                 </div>

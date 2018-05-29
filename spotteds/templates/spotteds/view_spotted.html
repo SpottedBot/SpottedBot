@@ -69,7 +69,7 @@
                     {% if spotted.author %}
                         {% if spotted.author == user or spotted.target == user and spotted.share_with_crush %}
                         <div class="card">
-                            <a target="_blank" href="https://facebook.com/{{ spotted.author.facebookuser.social_id }}" class="image">
+                            <a target="_blank" href="{{ spotted.author.facebookuser.link }}" class="image">
                                 <img src="{{ spotted.author.facebookuser.picture }}">
                             </a>
                             <div class="content">
@@ -78,7 +78,7 @@
                                     <a>Autor(a) do Spotted</a>
                                 </div>
                             </div>
-                            <a target="_blank" href="https://facebook.com/{{ spotted.author.facebookuser.social_id }}" class="ui bottom attached blue button">
+                            <a target="_blank" href="{{ spotted.author.facebookuser.link }}" class="ui bottom attached blue button">
                                 Ver no Facebook
                             </a>
                         </div>
@@ -86,7 +86,7 @@
                     {% endif %}
                     {% if spotted.target %}
                     <div class="card">
-                        <a target="_blank" href="https://facebook.com/{{ spotted.target.facebookuser.social_id }}" class="image">
+                        <a target="_blank" href="{{ spotted.target.facebookuser.link }}" class="image">
                             <img src="{{ spotted.target.facebookuser.picture }}">
                         </a>
                         <div class="content">
@@ -95,7 +95,7 @@
                                 <a>Crush do Spotted</a>
                             </div>
                         </div>
-                        <a target="_blank" href="https://facebook.com/{{ spotted.target.facebookuser.social_id }}" class="ui bottom attached blue button">
+                        <a target="_blank" href="{{ spotted.target.facebookuser.link }}" class="ui bottom attached blue button">
                             Ver no Facebook
                         </a>
                     </div>
