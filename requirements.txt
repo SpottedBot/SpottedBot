@@ -10,3 +10,6 @@ tblib==1.3.2
 
 requests==2.18.4
 imgurpython==1.1.7
+
+redis
+celery

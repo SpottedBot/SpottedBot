@@ -17,6 +17,35 @@ If it is posted, notifications are sent through Facebook's Notification API to e
 
 If it is sent to human evaluation, moderators will then analyze the spotted's contents and either approve it for publication or reject it. The decision is again sent to the SpottedAPI to be incorporated into it.
 
+## Messenger
+
+O SpotteBot também vem com um chatbot que você pode associar à sua página. Ele vai conversar com seus usuários, impedindo que eles enviem o conteúdo dos seus spotteds por inbox.
+
+Caso o usuário tenha uma pergunta que o bot não saiba responder, ele passará o controle da conversa automaticamente para você, humano.
+
+### Setup do Messenger Bot
+
+Primeiro você irá adicionar duas variáveis de ambiente ao seu site. Elas são:
+* FACEBOOK_VERIFY_CHATBOT (Uma string qualquer que você vai usar novamente nos passos abaixo)
+* ROOT_URL (o domínio base do seu site, sem barra no final e sem http. ex: meusite.com)
+
+Para configurar o bot você precisa fazer algumas coisas:
+* Primeiro vá [na sua lista de apps](https://developers.facebook.com/apps/614202462290543/webhooks/) e selecione o seu app
+* Depois, no menu de _products_ à esquerda, clique no +
+* Procure _Messenger_ e clique em Set Up
+* Na nova tela, vá em _Token Generation_, selecione sua página e crie um novo token de acesso. Esse será seu novo token de página, que vai substituir o anterior que geramos.
+* Em _Webhooks_, clique em _Setup Webhooks_
+* Em _callback url_ coloque https://<seu-site>/hooks/messenger/
+* Em _Verify Token_ coloque a string que vc escolheu para FACEBOOK_VERIFY_CHATBOT
+* Em _Subscription Fields_ **selecione messages**, **messaging_postbacks**, **standby** e **messaging_handovers**
+* Clique em salvar. A página vai recarregar
+* Novamente em _Webhooks_, uma opção nova vai ter aparecido (_Select Page_). Selecione sua página lá e clique em Subscribe
+
+Agora, no Facebook, vá até a sua página. No canto superior direito dela, procure pela opção _Settings_.
+* Em _General_, marque a opção que permite que pessoas te enviem mensagens
+* Em _Messaging_, desabilite os assistentes de resposta se você tiver ativado
+* Em _Messager Platform_, marque a opção **Responses are partially automated, with some support by people**
+* Procure por _Subscribed Apps_, encontre seu app e coloque-o apenas como **Primary Receiver** e coloque _Page Inbox_ como **Secondary Receiver**
 
 # Setup
 

@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^spotted/', include('spotteds.urls', namespace='spotteds')),
     url(r'^mod/', include('moderation.urls', namespace='mod')),
     url(r'^api/', include('api.urls', namespace='api')),
+    url(r'^hooks/', include('chatbot.urls', namespace='chatbot')),
 
     url(r'^robots\.txt$', TemplateView.as_view(template_name='main/robots.txt', content_type='text/plain')),
     url(r'^humans\.txt$', TemplateView.as_view(template_name='main/humans.txt', content_type='text/plain')),

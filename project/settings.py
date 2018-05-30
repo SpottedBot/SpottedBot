@@ -18,6 +18,9 @@ import dj_database_url
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
+# Website root url
+ROOT_URL = os.environ.get('ROOT_URL', 'localhost:8000')
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
@@ -47,6 +50,7 @@ INSTALLED_APPS = [
     'spotteds',
     'moderation',
     'api',
+    'chatbot',
 
     'captcha',
 ]
@@ -181,6 +185,8 @@ ENABLE_MOD_SHIFT = False
 FACEBOOK_KEY = os.environ.get('FACEBOOK_KEY')
 FACEBOOK_SECRET = os.environ.get('FACEBOOK_SECRET')
 FACEBOOK_PAGE_TOKEN = os.environ.get('FACEBOOK_PAGE_TOKEN')
+FACEBOOK_USE_CHATBOT = eval(os.environ.get('FACEBOOK_USE_CHATBOT').capitalize())
+FACEBOOK_VERIFY_CHATBOT = os.environ.get('FACEBOOK_VERIFY_CHATBOT')
 FACEBOOK_PERMISSIONS = []
 
 # Page Stuff
@@ -204,6 +210,9 @@ GSB_SECRET = os.environ.get('GSB_SECRET')
 # Spotted API
 SPOTTED_API_URL = "http://spottedapi.herokuapp.com"
 SPOTTED_API_SECRET = os.environ.get('SPOTTED_API_SECRET')
+
+# Celery stuff
+CELERY_BROKER_URL = str(os.environ.get('REDIS_URL'))
 
 # Adsense
 
