@@ -32,4 +32,7 @@ urlpatterns = [
     url(r'get_token/$', views.get_token, name='get_token'),
 
     url(r'get_coinhive_stats/$', views.coinhivestats, name='coinhivestats'),
+
+    url(r'chatbot/chat_submit/$', views.submit_message_log, name='submit_message_log'),
+    url(r'chatbot/process_chat_message/$', views.process_raw_bot_message, name='process_raw_bot_message'),
 ]

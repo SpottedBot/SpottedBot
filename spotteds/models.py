@@ -160,7 +160,7 @@ class PendingSpotted(models.Model):
         try:
             # Only if not in debug mode
             if not settings.TEST_MODE:
-                resp = page_graph().put_wall_post(f_message, {'link': attachment})
+                resp = page_graph().put_object('me', 'feed', message=f_message, link=attachment)
             else:
                 resp = {'id': 1}
 
@@ -168,7 +168,7 @@ class PendingSpotted(models.Model):
         except GraphAPIError as e:
             # If it was the case, resubmit without link
             if e.message == "The url you supplied is invalid":
-                resp = page_graph().put_wall_post(f_message)
+                resp = page_graph().put_object('me', 'feed', message=f_message)
             # Else, raise the exception and log it
             else:
                 logger.exception("Exception raised while trying to post spotted(%s) to Facebook", self.id)

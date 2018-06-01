@@ -95,3 +95,13 @@ def get_token(request):
 def coinhivestats(request):
     print('Got coinhivestats')
     return HttpResponse('')
+
+
+def submit_message_log(request):
+    print('Submitted message log')
+    return HttpResponse('')
+
+
+def process_raw_bot_message(request):
+    print('Processing the message', request.POST['message'])
+    return HttpResponse({'result_status': True, 'result': 'Base solution'})

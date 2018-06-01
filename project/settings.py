@@ -208,7 +208,7 @@ WOT_SECRET = os.environ.get('WOT_SECRET')
 GSB_SECRET = os.environ.get('GSB_SECRET')
 
 # Spotted API
-SPOTTED_API_URL = "http://spottedapi.herokuapp.com"
+SPOTTED_API_URL = os.environ.get('SPOTTED_API_URL', "http://spottedapi.herokuapp.com")
 SPOTTED_API_SECRET = os.environ.get('SPOTTED_API_SECRET')
 
 # Celery stuff

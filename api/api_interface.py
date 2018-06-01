@@ -182,3 +182,41 @@ def api_get_update_coinhive():
     r = requests.get(url, headers=headers)
 
     return r.json()
+
+
+def api_submit_message_log(conversation_id, text, sender):
+    """Submit message log.
+
+    Submits a new message log to the server
+    """
+    api_url, token, headers = get_settings()
+
+    data = {
+        'conversation_id': conversation_id,
+        'text': text,
+        'sender': sender
+    }
+
+    url = api_url + reverse('api:submit_message_log')
+
+    r = requests.post(url, headers=headers, data=data)
+
+    return r.status_code == requests.codes.ok
+
+
+def api_process_raw_bot_message(message):
+    """Process raw bot message.
+
+    Processes and returns the a solution to the request
+    """
+    api_url, token, headers = get_settings()
+
+    data = {
+        'message': message
+    }
+
+    url = api_url + reverse('api:process_raw_bot_message')
+
+    r = requests.post(url, headers=headers, data=data)
+
+    return r.json()
