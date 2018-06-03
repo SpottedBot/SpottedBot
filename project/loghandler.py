@@ -7,7 +7,7 @@ LOG_PATH = os.path.dirname(os.path.dirname(__file__)) + '/logs/'
 
 
 class LogHandler(object):
-    """Log Handler class
+    """Log Handler class.
 
     Generates log handling objects to modules and makes it easier to
     add methods and events to them
