@@ -4,7 +4,7 @@ __pycache__/
 *$py.class
 *.rdb
 *.sublime-project
-*.sublime-workspace
+SpottedBot.sublime-workspace
 # C extensions
 
 
