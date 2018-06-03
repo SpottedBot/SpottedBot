@@ -16,7 +16,7 @@ initial_count = int(settings.INITIAL_COUNT)
 
 
 class Spotted(models.Model):
-    """Spotted
+    """Spotted.
 
     fields and methods
     """
@@ -66,11 +66,10 @@ class Spotted(models.Model):
         return True
 
     def remove_spotted(self, db_remove=False):
-        """Remove Spotted
+        """Remove Spotted.
 
         tries to delete the spotted from facebook and from the DB if db_remove is True
         """
-
         try:
             # Remove from facebook
             page_graph().delete_object(self.post_id)
@@ -92,7 +91,7 @@ class Spotted(models.Model):
 
 
 class PendingSpotted(models.Model):
-    """Pending Spotted
+    """Pending Spotted.
 
     fields and methods
     """
@@ -154,11 +153,11 @@ class PendingSpotted(models.Model):
         new_id = s.id + initial_count
 
         # format message
-        f_message = "#" + str(new_id) + "\n\n" + self.message
+        f_message = f"# {new_id}\n\n{self.message}"
 
         # post to facebook
         try:
-            # Only if not in debug mode
+            # Only if not in test mode
             if not settings.TEST_MODE:
                 resp = page_graph().put_object('me', 'feed', message=f_message, link=attachment)
             else:
@@ -184,9 +183,9 @@ class PendingSpotted(models.Model):
 
         # send notifications
         if s.author and not settings.TEST_MODE:
-            author_notification(s)
+            author_notification.delay(s.id)
         if s.target and not settings.TEST_MODE:
-            target_notification(s)
+            target_notification.delay(s.id)
         return s
 
     def __str__(self):
