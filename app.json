@@ -6,9 +6,16 @@
     "AI",
     "Spotted"
   ],
-  "repository": "https://github.com/Maronato/SpottedBot",
+  "addons": [
+        "heroku-redis"
+  ],
+  "repository": "https://github.com/SpottedBot/SpottedBot",
   "success_url": "/",
   "env": {
+    "DEBUG": {
+      "description": "Ativar modo debug (se em dúvida, deixe False)",
+      "value": "False"
+    },
     "SECRET_KEY": {
       "description": "String longa e aleatória usada como chave de encriptação das comunicações do site.",
       "generator": "secret"
@@ -25,6 +32,10 @@
       "description": "Email do admnistrador que vai receber os error reports. Use o meu email",
       "value": "gustavomaronato@gmail.com"
     },
+    "ROOT_URL" : {
+        "description": "URL do seu app (<nome-do-app>.herokuapp.com)",
+        "value": "",
+    },
     "FACEBOOK_KEY": {
       "description": "App ID do seu App no Facebook",
       "value": ""
@@ -37,17 +48,28 @@
       "description": "Token permanente de acesso da sua página",
       "value": ""
     },
+    "FACEBOOK_USE_CHATBOT": {
+      "description": "Quer usar o chatbot incluso? (True ou False)",
+      "value": "False"
+    },
+    "FACEBOOK_VERIFY_CHATBOT": {
+      "description": "String para verificação do chatbot (pode ser qualquer uma, mas lembre-se dela)",
+      "value": "abc123",
+      "required": false
+    },
     "INITIAL_COUNT": {
       "description": "Número de postagens atualmente na sua página. Usado pra autoincrementação do número dos spotteds",
       "value": "0"
     },
     "RECAPTCHA_PUBLIC_KEY": {
       "description": "Public Key do seu reCaptcha",
-      "value": ""
+      "value": "",
+      "required": false
     },
     "RECAPTCHA_PRIVATE_KEY": {
       "description": "Private Key do seu reCaptcha",
-      "value": ""
+      "value": "",
+      "required": false
     },
     "IMGUR_CLIENT": {
       "description": "Client key do imgur",
@@ -61,28 +83,12 @@
     },
     "WOT_SECRET": {
       "description": "Token do seu WoT",
-      "value": ""
-    },
-    "GSB_SECRET": {
-      "description": "Token do seu Google Safe Browsing",
-      "value": ""
-    },
-    "SPOTTED_AD": {
-      "description": "Nome de cliente do seu Google Adsense, completo, se existente",
       "value": "",
       "required": false
     },
-    "ADS_ACTIVE": {
-      "description": "Ativar Anúncios? 'True' para sim e 'False' para não, sem as àspas e com a primeira letra maiúscula ",
-      "value": "False"
-    },
-    "AD_TEST": {
-      "description": "Se seu spotted ainda não foi aceito pelo Google Ads, mas você quer testar como eles ficam no site, entre com 'True' aqui",
-      "value": "False"
-    },
-    "AD_SLOTS": {
-      "description": "Se seu spotted já foi aceito pelo Google ads, coloque uma lista de ad slots aqui no formato ['slot 1', 'slot 2', 'slot 3'...]",
-      "value": "[]",
+    "GSB_SECRET": {
+      "description": "Token do seu Google Safe Browsing",
+      "value": "",
       "required": false
     },
     "SPOTTED_API_SECRET": {
