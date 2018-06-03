@@ -11,5 +11,9 @@ tblib==1.3.2
 requests==2.18.4
 imgurpython==1.1.7
 
+# Parallel tasking
 redis
 celery
+
+# Debug-only ssl server
+django-sslserver
