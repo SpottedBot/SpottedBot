@@ -30,6 +30,7 @@ SECRET_KEY = str(os.environ.get('DJANGO_SECRET'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = eval(str(os.environ.get('DEBUG', 'False')).capitalize())
+# Ads test
 TEST_MODE = eval(str(os.environ.get('TEST_MODE', 'False')).capitalize())
 
 ALLOWED_HOSTS = ['*']
@@ -167,9 +168,7 @@ DATABASES['default'].update(db_from_env)
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-SECURE_SSL_REDIRECT = True
-
-LOGIN_URL = '/login/'
+LOGIN_URL = '/auth/facebook/login/'
 LOGIN_REDIRECT_URL = '/dashboard/'
 
 DEFAULT_CONTACT_EMAIL = str(os.environ.get('EMAIL_ACCOUNT'))
