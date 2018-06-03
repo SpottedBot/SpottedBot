@@ -252,3 +252,7 @@ Inicie o servidor novamente, vá até sua página e abra uma janela de chat.
 
 Para subir seu app para o Heroku, clique no botão abaixo e siga as instruções:
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
+## Todo
+
+- [ ] put all of these instructions in a wiki or docs
