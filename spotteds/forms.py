@@ -5,19 +5,24 @@ from captcha.fields import ReCaptchaField
 from django.db.utils import ProgrammingError
 from moderation.management.commands import delete_old_spotteds, inspect_database
 from project.loghandler import LogHandler
+from django.conf import settings
 
 
 logger = LogHandler(__name__).logger
 
 
 class PendingSpottedForm(forms.ModelForm):
-    """PendingSpottedForm
+    """PendingSpottedForm.
+
     Form for the submission of new spotteds
     """
+
     target_name = forms.CharField(required=False, label='Nome do(a) Crush', widget=forms.TextInput(attrs={'class': 'typeahead', 'placeholder': 'Crush Santos da Silva'}))
     target_id = forms.CharField(required=False, widget=forms.HiddenInput())
     share_with_crush = forms.BooleanField(required=False, initial=True, label="Informar crush que você é x autorx")
-    captcha = ReCaptchaField(attrs={"callback": "captchaSpottedCallback", })
+
+    if settings.RECAPTCHA_PUBLIC_KEY:
+        captcha = ReCaptchaField(attrs={"callback": "captchaSpottedCallback", })
 
     class Meta:
         model = PendingSpotted

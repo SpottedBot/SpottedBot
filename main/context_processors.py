@@ -14,6 +14,13 @@ def enable_imgur_upload(request):
     return {'ENABLE_IMGUR_UPLOAD': False}
 
 
+def enable_recaptcha(request):
+
+    if settings.RECAPTCHA_PUBLIC_KEY:
+        return {'ENABLE_RECAPTCHA': True}
+    return {'ENABLE_RECAPTCHA': False}
+
+
 def enable_ad_tag(request):
 
     ads_active = settings.ADS_ACTIVE

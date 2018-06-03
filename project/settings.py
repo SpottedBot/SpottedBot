@@ -30,7 +30,8 @@ SECRET_KEY = str(os.environ.get('DJANGO_SECRET'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = eval(str(os.environ.get('DEBUG', 'False')).capitalize())
-# Ads test
+
+# manage.py test mode that disables fb connection stuff
 TEST_MODE = eval(str(os.environ.get('TEST_MODE', 'False')).capitalize())
 
 ALLOWED_HOSTS = ['*']
@@ -86,6 +87,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'main.context_processors.enable_mod_shift',
                 'main.context_processors.enable_imgur_upload',
+                'main.context_processors.enable_recaptcha',
                 'main.context_processors.enable_ad_tag',
                 'main.context_processors.ad_slot',
                 'main.context_processors.enable_coinhive'
@@ -203,8 +205,8 @@ RECAPTCHA_PRIVATE_KEY = os.environ.get('RECAPTCHA_PRIVATE_KEY')
 NOCAPTCHA = True
 
 # Imgur stuff
-IMGUR_CLIENT = os.environ.get('IMGUR_CLIENT', False)
-IMGUR_SECRET = os.environ.get('IMGUR_SECRET', False)
+IMGUR_CLIENT = os.environ.get('IMGUR_CLIENT')
+IMGUR_SECRET = os.environ.get('IMGUR_SECRET')
 
 # Web Of Trust
 WOT_SECRET = os.environ.get('WOT_SECRET')

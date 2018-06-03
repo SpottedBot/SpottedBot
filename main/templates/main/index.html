@@ -100,15 +100,20 @@
                             </div>
                         </div>
                         <div class="ui transition fade in top attached tab" data-tab="3">
+                            {% if ENABLE_RECAPTCHA %}
                             <h1>Quase lá!</h1>
                             <p>Precisamos ter certeza de que você está mesmo aí</p>
                             <br>
                             {{ spottedform.captcha }}
                             <br><br>
+                            {% else %}
+                            <h1>Tudo ok?</h1>
+                            <p>É agora ou nunca!</p>
+                            {% endif %}
                             <div class="ui divider"></div>
                             <div style="text-align: right;">
                                 <button type="button" class="ui button red" onclick="previous_tab(3)"><i class="icon angle left"></i>Anterior</button>
-                                <button id="spotted_submit_button" disabled class="ui button blue"><i class="send icon"></i> Enviar Spotted</button>
+                                <button id="spotted_submit_button" {% if ENABLE_RECAPTCHA %} disabled {% endif %} class="ui button blue"><i class="send icon"></i> Enviar Spotted</button>
                             </div>
                         </div>
                     </div>

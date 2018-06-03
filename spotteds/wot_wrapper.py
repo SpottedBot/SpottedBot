@@ -4,15 +4,15 @@ from django.conf import settings
 
 
 def is_safe(url):
-    """Is Safe
+    """Is Safe.
 
     returns true if google and wot safe
     false otherwise
     """
-
     # Domain white lists
     white_list = [
         'http://i.imgur.com/',
+        'https://i.imgur.com/',
     ]
 
     def is_whitelist(url):
@@ -21,15 +21,23 @@ def is_safe(url):
                 return True
         return False
 
-    return is_google_safe(url) and is_WOT_safe(url) or is_whitelist(url)
+    if is_whitelist(url):
+        return True
+
+    if settings.WOT_SECRET and not is_WOT_safe(url):
+        return False
+
+    if settings.GSB_SECRET and not is_google_safe(url):
+        return False
+
+    return True
 
 
 def is_WOT_safe(url):
-    """WOT API Wrapper
+    """WOT API Wrapper.
 
     calls the api and checks for high levels of safety confidence
     """
-
     secret = settings.WOT_SECRET
     payload = {'hosts': url, 'key': secret}
     response = requests.get("http://api.mywot.com/0.4/public_link_json2", params=payload)
