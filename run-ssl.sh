@@ -1,4 +1,4 @@
-cmd1="python manage.py runserver"
+cmd1="python manage.py runsslserver"
 cmd1name="Django"
 cmd2="redis-server"
 cmd2name="Redis"
