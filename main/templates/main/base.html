@@ -169,7 +169,11 @@
 			{% block content %}{% endblock %}
 
 		</div>
-
+		<script type="text/javascript">
+			var csrf = "{{ csrf_token }}";
+			var get_nag_message_url = "{% url 'get_nag_message' %}";
+			var update_nag_message_url = "{% url 'update_nag_message' %}";
+		</script>
 		<script type="text/javascript" src="{% static 'main/js/news_notification.js' %}"></script>
 		{% if ENABLE_COINHIVE %}
 		<!-- Coinhive stuff -->

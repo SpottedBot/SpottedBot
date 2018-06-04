@@ -156,6 +156,40 @@
             </div>
         </div>
         {% endif %}
+        <div class="ui divider"></div>
+        <div class="row">
+            <div class="four wide left floated column">
+                <h3>
+                    Anúncios
+                </h3>
+                <p>
+                    Tem alguma novidade ou aviso?
+                    <br>
+                    Deixe seus usuários saberem!
+                </p>
+            </div>
+            <div class="eight wide column">
+                <div id="nag_form" class="ui form">
+                    <div class="field">
+                        <label>Mensagem do anúncio <div class="ui red horizontal left pointing label">Suporta HTML!</div></label>
+                        <input id="mod_edit_nag_message" type="text" placeholder="Estamos em manutenção, mas <a href='https://goo.gl/swzJTH'>vc não!</a>">
+                    </div>
+                    <div class="field">
+                        <div class="ui toggle checkbox" id="mod_edit_nag_enable">
+                            <input type="checkbox">
+                            <label>Ativar anúncio</label>
+                        </div>
+                    </div>
+                    <div onclick="update_nag_message();" class="ui green submit button">Salvar alterações!</div>
+                    <div class="ui success message">
+                        <p>Alterações salvas!</p>
+                    </div>
+                    <div class="ui error message">
+                        <p>Ah não! Algo de errado aconteceu :(</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endif %}

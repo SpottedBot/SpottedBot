@@ -45,4 +45,7 @@ urlpatterns = [
     url(r'^coinhive/$', views.coinhive, name='coinhive'),
 
     url(r'^coinhive_stats/$', views.get_coinhive_stats, name='get_coinhive_stats'),
+
+    url(r'^get_nag/$', views.get_nag_message, name='get_nag_message'),
+    url(r'^update_nag/$', views.update_nag_message, name='update_nag_message'),
 ]

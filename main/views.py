@@ -3,16 +3,17 @@ from spotteds.forms import PendingSpottedForm
 from custom_auth.models import FacebookUser
 from django.http import JsonResponse, Http404
 from .forms import ContactForm, ReportForm
+from .models import NagMessage
 from django.contrib import messages
 from django.conf import settings
 from spotteds.models import Spotted, PendingSpotted
 from django.contrib.auth.models import User
 from api.api_interface import api_process_deleted, api_my_delete_options, api_forme_delete_options, api_get_update_coinhive
-from django.contrib.auth.decorators import login_required
-from custom_auth.facebook_methods import get_graph
+from django.contrib.auth.decorators import login_required, user_passes_test
 from project.manual_error_report import exception_email
-from django.utils import timezone
 from project.imgur_helper import upload
+from moderation.decorators import is_moderator
+import json
 
 
 def index(request, contactform=None, spottedform=None, reportform=None):
@@ -278,6 +279,22 @@ def get_coinhive_stats(request):
 
     data = api_get_update_coinhive()
     return JsonResponse(data)
+
+
+def get_nag_message(request):
+    nag = NagMessage.get()
+    data = {
+        'message': nag.message,
+        'id': nag.nag_id,
+        'enable': nag.enable
+    }
+    return JsonResponse(data)
+
+
+@user_passes_test(is_moderator)
+def update_nag_message(request):
+    NagMessage.update(request.POST['message'], json.loads(request.POST['enable']))
+    return HttpResponse()
 
 
 # show 404 page
