@@ -89,6 +89,9 @@ class Spotted(models.Model):
     def __str__(self):
         return "Spotted #" + str(self.id)
 
+    class Meta:
+        ordering = ['-id']
+
 
 class PendingSpotted(models.Model):
     """Pending Spotted.
