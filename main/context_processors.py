@@ -7,6 +7,10 @@ def enable_mod_shift(request):
     return {'ENABLE_MOD_SHIFT': settings.ENABLE_MOD_SHIFT}
 
 
+def facebook_app_id(request):
+    return {'FB_APP_ID': settings.FACEBOOK_KEY}
+
+
 def enable_imgur_upload(request):
 
     if settings.IMGUR_CLIENT and settings.IMGUR_SECRET:

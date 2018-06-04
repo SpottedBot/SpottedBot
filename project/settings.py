@@ -90,6 +90,7 @@ TEMPLATES = [
                 'main.context_processors.enable_recaptcha',
                 'main.context_processors.enable_ad_tag',
                 'main.context_processors.ad_slot',
+                'main.context_processors.facebook_app_id',
                 'main.context_processors.enable_coinhive'
             ],
         },

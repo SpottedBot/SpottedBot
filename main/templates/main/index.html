@@ -34,9 +34,8 @@
                         <div style="text-align: center;" class="ui transition fade in top attached tab active" data-tab="0">
                             {% if not user.is_authenticated %}
                             <h1>Envie Spotteds aqui</h1>
-                            <h2>Clique no botão abaixo para enviar um Spotted</h2>
-                            <a href="{% url 'custom_auth:facebook_login' %}">
-                                <img style="max-height: 50px;" src="{% static 'main/img/login.png' %}">
+                            <h2>Conecte-se ao Facebook para criar sua conta</h2>
+                            <div class="fb-login-button" data-width="300" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="true" data-onlogin='OnFbLogin()'></div>
                             </a>
                             <br>
                             <div class="ui divider"></div>
