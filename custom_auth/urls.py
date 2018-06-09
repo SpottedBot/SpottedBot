@@ -13,14 +13,14 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.urls import path
 from django.contrib.auth.views import logout
 from . import views
 app_name = 'custom_auth'
 
 urlpatterns = [
     # /custom_auth/+
-    url(r'facebook/login/$', views.FacebookLogin.as_view(), name='facebook_login'),
-    url(r'facebook/login_response/$', views.LoginResponse.as_view(), name='facebook_login_response'),
-    url(r'^logout/$', logout, {'next_page': '/'}, name='logout'),
+    path('facebook/login/', views.FacebookLogin.as_view(), name='facebook_login'),
+    path('facebook/login_response/', views.LoginResponse.as_view(), name='facebook_login_response'),
+    path('logout/', logout, {'next_page': '/'}, name='logout'),
 ]

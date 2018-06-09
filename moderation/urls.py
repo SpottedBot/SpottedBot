@@ -13,23 +13,23 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.urls import path
 from . import views
 app_name = 'moderation'
 
 urlpatterns = [
     # /mod/+
 
-    url(r'pending/$', views.PendingSpottedsView.as_view(), name='pending'),
-    url(r'polemic/$', views.PolemicSpottedsView.as_view(), name='polemic'),
-    url(r'history/$', views.HistorySpottedsView.as_view(), name='history'),
-    url(r'reported/$', views.ReportedSpottedsView.as_view(), name='reported'),
-    url(r'change_shifts/$', views.ChangeShifts.as_view(), name='shifts'),
-    url(r'show_shifts/$', views.ShowShifts.as_view(), name='show_shifts'),
-    url(r'polemic_submit/$', views.PolemicSubmit.as_view(), name='polemic_submit'),
-    url(r'approve_submit/$', views.ApproveSubmit.as_view(), name='approve_submit'),
-    url(r'reject_options/$', views.RejectOptions.as_view(), name='reject_options'),
-    url(r'reject_submit/$', views.RejectSubmit.as_view(), name='reject_submit'),
-    url(r'un_report_submit/$', views.UnReportSubmit.as_view(), name='un_report_submit'),
-    url(r'report_submit/$', views.ReportSubmit.as_view(), name='report_submit'),
+    path('pending/', views.PendingSpottedsView.as_view(), name='pending'),
+    path('polemic/', views.PolemicSpottedsView.as_view(), name='polemic'),
+    path('history/', views.HistorySpottedsView.as_view(), name='history'),
+    path('reported/', views.ReportedSpottedsView.as_view(), name='reported'),
+    path('change_shifts/', views.ChangeShifts.as_view(), name='shifts'),
+    path('show_shifts/', views.ShowShifts.as_view(), name='show_shifts'),
+    path('polemic_submit/', views.PolemicSubmit.as_view(), name='polemic_submit'),
+    path('approve_submit/', views.ApproveSubmit.as_view(), name='approve_submit'),
+    path('reject_options/', views.RejectOptions.as_view(), name='reject_options'),
+    path('reject_submit/', views.RejectSubmit.as_view(), name='reject_submit'),
+    path('un_report_submit/', views.UnReportSubmit.as_view(), name='un_report_submit'),
+    path('report_submit/', views.ReportSubmit.as_view(), name='report_submit'),
 ]
