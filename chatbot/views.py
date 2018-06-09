@@ -21,15 +21,5 @@ class MessengerHook(View):
     @method_decorator(messenger_secure)
     def post(self, request, *args, **kwargs):
         messages = json.loads(self.request.body.decode('utf-8')).get('entry', None)
-        print("received", len(messages), 'messages')
-        print(messages)
-        print()
         handler(messages)
-        """
-        asyncio.set_event_loop(asyncio.new_event_loop())
-        loop = asyncio.get_event_loop()
-        tasks = [asyncio.ensure_future(simple_message(message['sender']['id'], message['message']['text'])) for user_messages in messages for message in user_messages['messaging']]
-        loop.run_until_complete(asyncio.wait(tasks))
-        loop.close()
-        """
         return HttpResponse()
