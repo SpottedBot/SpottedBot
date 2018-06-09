@@ -1,13 +1,12 @@
 from django.conf.urls import include, url
-
+from django.views.generic import TemplateView
+from main.views import Handler404, Handler500
 from django.contrib import admin
 admin.autodiscover()
 # from app import views
-from django.views.generic import TemplateView
 
-# Disabled until bug is fixed
-# handler404 = 'main.views.handler404'
-handler500 = 'main.views.handler500'
+handler404 = Handler404.as_view()
+handler500 = Handler500.as_view()
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),

@@ -2,10 +2,12 @@ from django import forms
 from django.core.mail import send_mail
 from django.conf import settings
 from spotteds.models import Spotted
+from django.template.defaultfilters import filesizeformat
+from project.imgur_helper import upload
 
 
 class ContactForm(forms.Form):
-    """Contact Form
+    """Contact Form.
 
     Contact form fields and methods
     """
@@ -30,7 +32,7 @@ class ContactForm(forms.Form):
 
 
 class ReportForm(forms.Form):
-    """Report Form
+    """Report Form.
 
     Report form fields and methods
     """
@@ -44,7 +46,7 @@ class ReportForm(forms.Form):
         try:
             val = int(data) - int(settings.INITIAL_COUNT)
             i = Spotted.objects.get(id=val)
-        except:
+        except Spotted.DoesNotExist:
             raise forms.ValidationError(
                 "Não existe Spotted com esse ID"
             )
@@ -56,3 +58,49 @@ class ReportForm(forms.Form):
 
         instance.reported = text
         instance.save()
+
+
+class ContentTypeRestrictedFileField(forms.FileField):
+
+    def __init__(self, *args, **kwargs):
+        self.content_types = kwargs.pop("content_types")
+        self.max_upload_size = kwargs.pop("max_upload_size")
+
+        super().__init__(*args, **kwargs)
+
+    def clean(self, *args, **kwargs):
+        file = super().clean(*args, **kwargs)
+
+        try:
+            content_type = file.content_type
+            print(content_type)
+            if content_type in self.content_types:
+                if file.size > self.max_upload_size:
+                    raise forms.ValidationError(f'O tamanho máximo permitido é {filesizeformat(self.max_upload_size)}. Tamanho atual: {filesizeformat(file.size)}')
+            else:
+                raise forms.ValidationError('Arquivo deve ser uma imagem.')
+        except AttributeError:
+            pass
+
+        return file
+
+
+class ImgurForm(forms.Form):
+    picture = ContentTypeRestrictedFileField(
+        allow_empty_file=False,
+        content_types=['image/jpeg', 'image/png'],
+        max_upload_size=10485760
+    )
+
+    def upload(self, data=None):
+        file = data or self.cleaned_data['picture']
+        return upload(file.temporary_file_path())
+
+    def clean_picture(self):
+        data = super().clean()['picture']
+        print(data)
+        response = self.upload(data)
+        if isinstance(response, forms.ValidationError):
+            raise response
+        self.response_data = response
+        return data

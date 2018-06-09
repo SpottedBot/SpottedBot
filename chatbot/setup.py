@@ -21,5 +21,6 @@ class MessengerSetup(BaseMessage):
 
 
 def setup_messenger(greeting='Olá, {{user_first_name}}', get_started_payload='get_started'):
+    # Sets up messenger on the facebook server
     m = MessengerSetup(greeting, get_started_payload)
     return m.send()

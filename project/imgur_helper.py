@@ -2,6 +2,7 @@ from imgurpython import ImgurClient
 from django.conf import settings
 from project.loghandler import LogHandler
 from imgurpython.helpers.error import ImgurClientError
+from django.forms import ValidationError
 
 logger = LogHandler(__name__).logger
 
@@ -13,13 +14,12 @@ def upload(file_path):
         return_data = {"ok": True, "url": data['link']}
     except ImgurClientError as e:
         if "JSON decoding of response failed" in getattr(e, 'error_message', ""):
-            return_data = {"ok": False, "error": "Erro na API do Imgur. Tente outro anexo."}
+            return_data = ValidationError("Erro na API do Imgur. Tente outro anexo.")
         else:
             logger.exception("Erro na API do Imgur")
-            return_data = {"ok": False, "error": "Erro na API do Imgur"}
+            return_data = ValidationError("Erro na API do Imgur")
     except Exception as e:
         logger.exception("Erro na API do Imgur")
-        return_data = {"ok": False, "error": "Erro na API do Imgur"}
-
+        return_data = ValidationError("Erro na API do Imgur")
     finally:
         return return_data

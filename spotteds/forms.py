@@ -46,7 +46,7 @@ class PendingSpottedForm(forms.ModelForm):
                 target = FacebookUser.objects.get(social_id=target_id)
                 if target.name == target_name:
                     return target.user
-            except:
+            except FacebookUser.DoesNotExist:
                 raise forms.ValidationError(target_name + " ainda não está cadastrado(a). Verifique sua digitação ou deixe em branco.")
         return None
 

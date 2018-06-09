@@ -6,11 +6,11 @@ from django.core.exceptions import PermissionDenied
 
 
 def messenger_enabled(view_func):
-    """
+    """Message Enabled.
+
     Decorator for views that checks if the use of
     the messenger chatbot is enabled.
     """
-
     def decorator(view_func):
         @wraps(view_func)
         def _wrapped_view(request, *args, **kwargs):
@@ -22,10 +22,10 @@ def messenger_enabled(view_func):
 
 
 def messenger_secure(view_func):
-    """
+    """Messenger Secure.
+
     Decorator that verifies that the request came from facebook
     """
-
     def decorator(view_func):
         @wraps(view_func)
         def _wrapped_view(request, *args, **kwargs):

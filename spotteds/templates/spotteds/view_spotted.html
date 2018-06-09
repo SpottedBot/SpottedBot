@@ -35,6 +35,11 @@
     <!-- Local scripts -->
     <script type="text/javascript" src="{% static 'main/js/sidebar.js' %}"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'main/css/responsive.css' %}">
+    <script type="text/javascript">
+        function OnFbLogin() {
+            window.location.href = "{% url 'custom_auth:facebook_login' %}?next=" + window.location.pathname;
+        }
+    </script>
 
     <!-- Local stylesheets -->
     <link rel="stylesheet" type="text/css" href="{% static 'main/css/menu.css' %}">
@@ -48,6 +53,7 @@
 </head>
 
 <body data-gr-c-s-loaded="true" class="pushable">
+    {% include 'main/facebook_sdk.html' %}
 
     <!-- Page Contents -->
     <div class="pusher">
@@ -104,15 +110,14 @@
                 {% else %}
                 <div class="row">
                     <h2>Informações sobre x autor(a) e crush não disponíveis!</h2>
+                    <p>Isso deve ser porque eles não deram permissão para que outras pessoas soubessem de suas identidades :(</p>
                 </div>
                 {% if not user.is_authenticated %}
                 <div class="row">
-                    <h4>É x autor(a) ou crush? Entre em sua conta!</h4>
+                    <h4>É x autor(a) ou crush? Entre em sua conta para ver os detalhes do spotted :)</h4>
                 </div>
                 <div class="row">
-                    <a href="{% url 'custom_auth:facebook_login' %}?next">
-                        <img style="max-height: 70px;" src="{% static 'main/img/login.png' %}">
-                    </a>
+                    <div class="fb-login-button" data-width="300" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="true" data-onlogin='OnFbLogin()'></div>
                 </div>
                 {% endif %}
                 {% endif %}

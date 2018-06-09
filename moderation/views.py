@@ -1,190 +1,196 @@
-from django.shortcuts import render, HttpResponse, get_object_or_404
-from spotteds.models import PendingSpotted, Spotted
+from django.shortcuts import HttpResponse, get_object_or_404
+from django.views.generic import View, ListView, FormView
+from django.utils.decorators import method_decorator
 from django.http import JsonResponse, Http404
+from django.contrib import messages
+from django.db import transaction
+
+from spotteds.models import PendingSpotted, Spotted
+from .models import Moderator
+
 from api.api_interface import api_process_approved, api_process_rejected, api_reject_options, api_process_deleted
 from .forms import WorkHourFormSet
-from django.contrib import messages
-from .models import Moderator
-from django.contrib.auth.decorators import user_passes_test
-from .decorators import is_moderator
-from project.manual_error_report import exception_email
-from django.db import transaction
+from main.mixins import ModOnlyMixin
 # Create your views here.
 
 
 # Generic Views
 
-@user_passes_test(is_moderator)
-def pending_spotteds(request):
-    """Pending Spotteds
+
+class ModView(ModOnlyMixin, ListView):
+    context_object_name = 'spotteds'
+
+
+class PendingSpottedsView(ModView):
+    """Pending Spotteds.
 
     render pending spotteds view
     """
 
-    spotteds = PendingSpotted.objects.filter(polemic=False).order_by('-id')
-    return render(request, 'moderation/pending_spotteds.html', {
-        'spotteds': spotteds,
-    })
+    template_name = 'moderation/pending_spotteds.html'
+    model = PendingSpotted
+
+    def get_queryset(self, **kwargs):
+        return self.model.objects.filter(polemic=False)
 
 
-@user_passes_test(is_moderator)
-def polemic_spotteds(request):
-    """Polemic Spotteds
+class PolemicSpottedsView(ModView):
+    """Polemic Spotteds.
 
     render Polemic spotteds view
     """
 
-    spotteds = PendingSpotted.objects.filter(polemic=True).order_by('-id')
-    return render(request, 'moderation/polemic_spotteds.html', {
-        'spotteds': spotteds,
-    })
+    template_name = 'moderation/polemic_spotteds.html'
+    model = PendingSpotted
+
+    def get_queryset(self, **kwargs):
+        return self.model.objects.filter(polemic=True)
 
 
-@user_passes_test(is_moderator)
-def history_spotteds(request):
-    """Spotted History
+class HistorySpottedsView(ModView):
+    """Spotted History.
 
     render spotted historys view
     """
 
-    spotteds = Spotted.objects.filter(reported='').order_by('-id')
-    return render(request, 'moderation/history_spotteds.html', {
-        'spotteds': spotteds[:500],
-    })
+    template_name = 'moderation/history_spotteds.html'
+    model = Spotted
+
+    def get_queryset(self, **kwargs):
+        return self.model.objects.filter(reported='')[:500]
 
 
-@user_passes_test(is_moderator)
-def reported_spotteds(request):
-    """Reported Spotteds
+class ReportedSpottedsView(ModView):
+    """Reported Spotteds.
 
     render reported spotteds view
     """
 
-    spotteds = Spotted.objects.exclude(reported='').order_by('-id')
-    return render(request, 'moderation/reported_spotteds.html', {
-        'spotteds': spotteds,
-    })
+    template_name = 'moderation/reported_spotteds.html'
+    model = Spotted
+
+    def get_queryset(self, **kwargs):
+        return self.model.objects.exclude(reported='')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        print(context)
+        return context
 
 
-@user_passes_test(is_moderator)
-def change_shifts(request):
-    """Change Shifts
+class ChangeShifts(ModOnlyMixin, FormView):
+    form_class = WorkHourFormSet
+    template_name = 'moderation/shifts.html'
 
-    Allows a moderator to edit their shifts
-    """
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['instance'] = self.request.user.moderator
+        return kwargs
 
-    if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-        form = WorkHourFormSet(request.POST, instance=request.user.moderator)
-        # check whether it's valid:
-        if form.is_valid():
-            # Aplly it
-            form.save()
-            messages.add_message(request, messages.SUCCESS, 'Turnos atualizados!')
-        else:
-            return render(request, 'moderation/shifts.html', {'formset': form})
+    def form_valid(self, form):
+        form.save()
+        messages.add_message(self.request, messages.SUCCESS, 'Turnos atualizados!')
+        return super().form_valid(form)
 
-    # if a GET (or any other method) we'll create a blank form
-    form = WorkHourFormSet(instance=request.user.moderator)
-    return render(request, 'moderation/shifts.html', {'formset': form})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['formset'] = context['form']
+        return context
 
 
-@user_passes_test(is_moderator)
-def show_shifts(request):
-    """Show Shifts
+class ShowShifts(ModOnlyMixin, ListView):
+    """Show Shifts.
 
     render show shifts view
     """
 
-    mods = Moderator.objects.all()
-    return render(request, 'moderation/show_shifts.html', {'moderators': mods})
+    template_name = 'moderation/show_shifts.html'
+    model = Moderator
+    context_object_name = 'moderators'
+
+    def get_queryset(self, **kwargs):
+        return self.model.objects.all()
 
 
 # Action Views
 
-@user_passes_test(is_moderator)
-def polemic_submit(request):
-    """Polemic Submit
+class PolemicSubmit(ModOnlyMixin, View):
+    """Polemic Submit.
 
     process the submission of a polemic spotted
     """
 
-    instance = get_object_or_404(PendingSpotted, id=request.POST['id'])
-    instance.polemic = True
-    instance.save()
-    return HttpResponse('Success')
+    def post(self, request):
+        instance = get_object_or_404(PendingSpotted, id=request.POST['id'])
+        instance.polemic = True
+        instance.save()
+        return HttpResponse('Success')
 
 
-@transaction.atomic
-@user_passes_test(is_moderator)
-def approve_submit(request):
-    """Approve Submit
+@method_decorator(transaction.atomic, name='dispatch')
+class ApproveSubmit(ModOnlyMixin, View):
+    """Approve Submit.
 
     process the approval of a pending spotted
     """
 
-    # Prevent race conditions
-    instance = PendingSpotted.objects.select_for_update().get(id=request.POST['id'])
-    response = api_process_approved(instance)
-    if response:
-        instance.post_spotted(request.user.moderator)
+    def post(self, request):
+        instance = PendingSpotted.objects.select_for_update().get(id=request.POST['id'])
+        response = api_process_approved(instance)
+        if response:
+            instance.post_spotted(request.user.moderator)
 
-    return HttpResponse('Success')
+        return HttpResponse('Success')
 
 
-@user_passes_test(is_moderator)
-def reject_options(request):
-    """Reject Options
+class RejectOptions(ModOnlyMixin, View):
+    """Reject Options.
 
     retrieve reject options from api
     """
 
-    data = api_reject_options()
-    return JsonResponse(data)
+    def get(self, request):
+        data = api_reject_options()
+        return JsonResponse(data)
 
 
-@transaction.atomic
-@user_passes_test(is_moderator)
-def reject_submit(request):
-    """Reject Submit
+@method_decorator(transaction.atomic, name='dispatch')
+class RejectSubmit(ModOnlyMixin, View):
+    """Reject Submit.
 
     process the rejection of a pending spotted
     """
 
-    # Prevent race conditions
-    instance = PendingSpotted.objects.select_for_update().get(id=request.POST['id'])
-    response = api_process_rejected(instance, request.POST['option'])
-    return HttpResponse('Success')
+    def post(self, request):
+        instance = PendingSpotted.objects.select_for_update().get(id=request.POST['id'])
+        api_process_rejected(instance, request.POST['option'])
+        return HttpResponse('Success')
 
 
-@user_passes_test(is_moderator)
-def un_report_submit(request):
-    """Un Report Submit
+class UnReportSubmit(ModOnlyMixin, View):
+    """Un Report Submit.
 
     process the un-reporting of a reported spotted
     """
 
-    instance = get_object_or_404(Spotted, id=request.POST['id'])
-    instance.reported = ''
-    instance.save()
-    return HttpResponse('Success')
+    def post(self, request):
+        instance = get_object_or_404(Spotted, id=request.POST['id'])
+        instance.reported = ''
+        instance.save()
+        return HttpResponse('Success')
 
 
-@user_passes_test(is_moderator)
-def report_submit(request):
-    """Report Submit
+@method_decorator(transaction.atomic, name='dispatch')
+class ReportSubmit(ModOnlyMixin, View):
+    """Report Submit.
 
     process the deletion of a reported spotted
     """
-    try:
+
+    def post(self, request):
         instance = get_object_or_404(Spotted, id=request.POST['id'])
         response = api_process_deleted(instance, request.POST['option'], "reported")
         if not response:
             raise Http404
-            return
-
         instance.remove_spotted(True)
-    except Exception as e:
-        exception_email(request, e)
-        raise e
-    return HttpResponse('Success')
+        return HttpResponse('Success')

@@ -1,27 +1,23 @@
-from django.shortcuts import redirect, reverse
+from django.shortcuts import reverse
+from django.views.generic import RedirectView
 from .facebook_methods import auth_url, login_successful, login_canceled
 
 # Create your views here.
 
 
-def facebook_login(request):
+class FacebookLogin(RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        return auth_url(self.request)
 
-    # Generate auth_url and redirect to it
-    return redirect(auth_url(request))
 
-
-def facebook_login_response(request):
-    """Facebook Login Response
-
-    Try to access 'code' from the response. If found, the login was successful. Unsuccessful otherwise
-    """
-
-    try:
-        code = request.GET['code']
-    except:
-        # User cancelled login
-        request = login_canceled(request)
-        return redirect(reverse('index'))
-
-    request = login_successful(code, request)
-    return redirect(reverse('index'))
+class LoginResponse(RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        code = self.request.GET.get('code', False)
+        next_url = self.request.GET.get('state', False)
+        if not code:
+            self.request = login_canceled(self.request)
+        else:
+            self.request = login_successful(code, self.request)
+        if next_url:
+            return next_url
+        return reverse('index')

@@ -20,7 +20,7 @@ app_name = 'custom_auth'
 
 urlpatterns = [
     # /custom_auth/+
-    url(r'facebook/login/$', views.facebook_login, name='facebook_login'),
-    url(r'facebook/login_response/$', views.facebook_login_response, name='facebook_login_response'),
+    url(r'facebook/login/$', views.FacebookLogin.as_view(), name='facebook_login'),
+    url(r'facebook/login_response/$', views.LoginResponse.as_view(), name='facebook_login_response'),
     url(r'^logout/$', logout, {'next_page': '/'}, name='logout'),
 ]

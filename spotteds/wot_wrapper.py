@@ -50,23 +50,22 @@ def is_WOT_safe(url):
         try:
             if inside['0'][0] < 60 and inside['0'][1] > 20:
                 return False
-        except:
+        except IndexError:
             pass
         try:
             if inside['4'][0] < 60 and inside['4'][1] > 20:
                 return False
-        except:
+        except IndexError:
             pass
         return True
 
 
 def is_google_safe(url):
-    """Google Safe Browsing Wrapper
+    """Google Safe Browsing Wrapper.
 
     calls api, checks all lists and returns true if not found in any list
     false otherwise
     """
-
     secret = settings.GSB_SECRET
     params = {
         "key": secret

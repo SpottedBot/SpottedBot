@@ -61,6 +61,13 @@ $('input:file', '.ui.file.input').on('change', function(e) {
                 $("#imgur_info").text(msg['error']);
                 $('input:text', file_field.parent()).val("Oops!");
             }
+        },
+        error: function(msg) {
+            $("#imgur_button").removeClass("loading");
+            $("#message_button").prop('disabled', false);
+            $("#imgur_button").prop('disabled', false);
+            $("#imgur_info").text(msg['responseJSON']['picture'][0]);
+            $('input:text', file_field.parent()).val("Oops!");
         }
     });
 });

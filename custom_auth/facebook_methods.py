@@ -11,26 +11,20 @@ app_secret = settings.FACEBOOK_SECRET
 
 
 def get_graph():
-    """Get App Graph Object
+    """Get App Graph Object.
 
     returns a graph object containing an app token from the registered facebook app
     """
-
     graph = facebook.GraphAPI(version='2.7')
     graph.access_token = graph.get_app_access_token(app_id, app_secret)
     return graph
 
 
-# save graph object to scope
-# graph = get_graph()
-
-
 def canv_url(request):
-    """Return Canvas URL
+    """Return Canvas URL.
 
     Generates the canvas_url used by facebook to redirect after auth
     """
-
     # Check whether the last call was secure and use its protocol
     if request.is_secure():
         return 'https://' + request.get_host() + reverse('custom_auth:facebook_login_response')
@@ -39,11 +33,10 @@ def canv_url(request):
 
 
 def auth_url(request):
-    """Auth URL
+    """Auth URL.
 
     Returns the facebook auth url using the current app's domain
     """
-
     canvas_url = canv_url(request)
 
     # Permissions set by user. Default is none
@@ -54,6 +47,11 @@ def auth_url(request):
     # Payload
     kvps = {'client_id': app_id, 'redirect_uri': canvas_url}
 
+    # Add 'next' as state if provided
+    next_param = request.GET.get('next', False)
+    if next_param:
+        kvps['state'] = next_param
+
     # Format permissions if needed
     if perms:
         kvps['scope'] = ",".join(perms)
@@ -63,20 +61,18 @@ def auth_url(request):
 
 
 def debug_token(token):
-    """Debug Token
+    """Debug Token.
 
     Returns debug string from token
     """
-
     return get_graph().debug_access_token(token, app_id, app_secret)
 
 
 def login_successful(code, request):
-    """Login Successful
+    """Login Successful.
 
     Process successful login by creating or updating an user using Facebook's response
     """
-
     canvas_url = canv_url(request)
     graph = get_graph()
 
@@ -88,8 +84,8 @@ def login_successful(code, request):
 
     # Token may never expire, so set its expire time to something big if needed
     try:
-        token_expires = token_info['expires']
-    except:
+        token_expires = token_info['expires_in']
+    except KeyError:
         token_expires = 9999999
 
     # Debug the token, as per documentation

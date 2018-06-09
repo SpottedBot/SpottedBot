@@ -1,49 +1,40 @@
-from django.shortcuts import get_object_or_404, render
-from .forms import PendingSpottedForm
-from django.contrib import messages
+from django.utils.decorators import method_decorator
+from django.utils.translation import gettext as _
+from django.views.generic import DetailView
+from django.http import Http404
 from .models import Spotted
-from main.views import index
-from api.api_interface import api_process_new_post
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 # Create your views here.
 
 
-def submit_spotted(request):
-    """Submit Spotted
+@method_decorator([xframe_options_exempt, csrf_exempt], name='dispatch')
+class ViewSpotted(DetailView):
+    model = Spotted
+    template_name = 'spotteds/view_spotted.html'
+    context_object_name = 'spotted'
 
-    User submitted a spotted
-    """
+    def get_object(self, queryset=None):
 
-    if request.method == 'POST':
-        form = PendingSpottedForm(request.POST)
+        if queryset is None:
+            queryset = self.get_queryset()
 
-        if form.is_valid():
-            instance = form.save(request.user)
+        # Next, try looking up by primary key.
+        pk = int(self.kwargs.get(self.pk_url_kwarg)) - int(settings.INITIAL_COUNT)
+        print(pk)
+        if pk is not None:
+            queryset = queryset.filter(pk=pk)
 
-            # Send to API
-            if api_process_new_post(instance):
-                messages.add_message(request, messages.SUCCESS, 'Spotted enviado para moderação!')
-                form = PendingSpottedForm()
-            else:
-                messages.add_message(request, messages.ERROR, 'Oops! Erro na comunicação com a API!')
-    else:
-        form = PendingSpottedForm()
-    return index(request, spottedform=form)
-
-
-@xframe_options_exempt
-@csrf_exempt
-def view_spotted(request, spottedid):
-    """View Spotted
-
-    Display spotted info. Certain fields may only be viewed by the author or target
-    """
-
-    try:
-        count = int(spottedid) - int(settings.INITIAL_COUNT)
-        spotted = Spotted.objects.get(id=count)
-    except:
-        spotted = get_object_or_404(Spotted, id=spottedid)
-    return render(request, 'spotteds/view_spotted.html', {'spotted': spotted})
+        # If none of those are defined, it's an error.
+        if pk is None:
+            raise AttributeError("Generic detail view %s must be called with "
+                                 "either an object pk or a slug."
+                                 % self.__class__.__name__)
+        try:
+            # Get the single item from the filtered queryset
+            obj = queryset.get()
+        except queryset.model.DoesNotExist:
+            raise Http404(_("No %(verbose_name)s found matching the query") %
+                          {'verbose_name': queryset.model._meta.verbose_name})
+        return obj

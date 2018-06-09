@@ -13,11 +13,10 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.urls import path
 from . import views
 app_name = 'spotteds'
 
 urlpatterns = [
-    url(r'submit/$', views.submit_spotted, name='submit'),
-    url(r'view_spotted/(?P<spottedid>\w{0,50})/$', views.view_spotted, name='view_spotted'),
+    path('view_spotted/<int:pk>/', views.ViewSpotted.as_view(), name='view_spotted'),
 ]

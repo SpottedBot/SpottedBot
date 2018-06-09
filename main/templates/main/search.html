@@ -31,7 +31,7 @@
 <script type="text/javascript">
     function search() {
         var sp = $('#spotted').val();
-        window.location.href = "{% url 'spotteds:view_spotted' spottedid='' %}".slice(0, -1) + sp;
+        window.location.href = "{% url 'spotteds:view_spotted' 1 %}".slice(0, -2) + sp;
         $('#button').prop('disabled', true);
     }
 </script>
