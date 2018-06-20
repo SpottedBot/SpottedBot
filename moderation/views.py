@@ -135,7 +135,10 @@ class ApproveSubmit(ModOnlyMixin, View):
     """
 
     def post(self, request):
-        instance = PendingSpotted.objects.select_for_update().get(id=request.POST['id'])
+        try:
+            instance = PendingSpotted.objects.select_for_update().get(id=request.POST['id'])
+        except PendingSpotted.DoesNotExist:
+            return HttpResponse('Success')
         response = api_process_approved(instance)
         if response:
             instance.post_spotted(request.user.moderator)
@@ -162,7 +165,10 @@ class RejectSubmit(ModOnlyMixin, View):
     """
 
     def post(self, request):
-        instance = PendingSpotted.objects.select_for_update().get(id=request.POST['id'])
+        try:
+            instance = PendingSpotted.objects.select_for_update().get(id=request.POST['id'])
+        except PendingSpotted.DoesNotExist:
+            return HttpResponse('Success')
         api_process_rejected(instance, request.POST['option'])
         return HttpResponse('Success')
 
