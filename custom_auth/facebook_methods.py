@@ -48,9 +48,14 @@ def auth_url(request):
     kvps = {'client_id': app_id, 'redirect_uri': canvas_url}
 
     # Add 'next' as state if provided
-    next_param = request.GET.get('next', False)
-    if next_param:
+    next_param = f"next_url={request.GET.get('next', False)}"
+    # Add 'redirected' as state if provided
+    redirected_param = f"redirected={request.GET.get('redirected', False)}"
+    if request.GET.get('next', False):
         kvps['state'] = next_param
+        redirected_param = f',{redirected_param}'
+    if request.GET.get('redirected', False):
+        kvps['state'] = kvps.get('state', '') + redirected_param
 
     # Format permissions if needed
     if perms:
@@ -77,7 +82,11 @@ def login_successful(code, request):
     graph = get_graph()
 
     # Get token info from user
-    token_info = graph.get_access_token_from_code(code, canvas_url, app_id, app_secret)
+    try:
+        token_info = graph.get_access_token_from_code(code, canvas_url, app_id, app_secret)
+    except facebook.GraphAPIError:
+        # For some reason, the auth code has already been used, redirect to login again
+        return 'auth code used'
 
     # Extract token from token info
     access_token = token_info['access_token']
@@ -117,6 +126,25 @@ def login_successful(code, request):
 def login_canceled(request):
 
     # If the user has canceled the login process, or something else happened, do nothing and display error message
-    messages.add_message(request, messages.ERROR, 'Oops! Algo de errado aconteceu!')
+    messages.add_message(request, messages.ERROR, 'Oops! Algo de errado aconteceu :( Se isso se repetir, fale conosco!')
 
     return request
+
+
+def decode_state_data(state):
+    if not state:
+        return {}
+    parts = state.split(',')
+    data = {}
+    for part in parts:
+        p = part.split('=')
+        data[p[0]] = p[1]
+    return data
+
+
+def code_already_used_url(next_url, redirected):
+    state = {}
+    if next_url:
+        state['next'] = next_url
+    state['redirected'] = int(redirected) + 1 if redirected else 0
+    return reverse('custom_auth:facebook_login') + '?' + urlencode(state)
