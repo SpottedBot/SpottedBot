@@ -73,9 +73,9 @@ class Spotted(models.Model):
         try:
             # Remove from facebook
             page_graph().delete_object(self.post_id)
-        except Exception as e:
-            logger.exception("Exception raised while trying to delete spotted(%s) from Facebook", self.post_id)
-            pass
+        except GraphAPIError as e:
+            if 'does not exist, cannot be loaded due to missing permissions' not in getattr(e, 'message', ''):
+                logger.exception("Exception raised while trying to delete spotted(%s) from Facebook", self.post_id)
         if db_remove:
             # delete from db
             self.delete()
