@@ -21,7 +21,7 @@ def author_notification(instance_id):
     try:
         app_graph().put_object(parent_object=userid, connection_name="notifications", href=href, template=template)
     except GraphAPIError as e:
-        if 'Only web canvas apps can send app notifications' in getattr(e, 'message', ''):
+        if 'Only web canvas apps can send app notifications' in getattr(e, 'message', '') or 'Cannot send notifications to a user who has not installed the app' in getattr(e, 'message', ''):
             print(e.message.replace('\n', '\\n').replace('\r', '\\r')[:989])
         else:
             tb = traceback.format_exc()
@@ -48,7 +48,7 @@ def target_notification(instance_id):
     try:
         app_graph().put_object(parent_object=userid, connection_name="notifications", href=href, template=template)
     except GraphAPIError as e:
-        if 'Only web canvas apps can send app notifications' in getattr(e, 'message', ''):
+        if 'Only web canvas apps can send app notifications' in getattr(e, 'message', '') or 'Cannot send notifications to a user who has not installed the app' in getattr(e, 'message', ''):
             print(e.message.replace('\n', '\\n').replace('\r', '\\r')[:989])
         else:
             tb = traceback.format_exc()
