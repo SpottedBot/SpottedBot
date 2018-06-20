@@ -107,7 +107,7 @@ def login_successful(code, request):
     extra_data = graph.get_object(str(social_id) + '/?fields=name,first_name,link')
     name = extra_data['name']
     first_name = extra_data['first_name']
-    link = extra_data['link']
+    link = extra_data.get('link', '')
 
     # Call FacebookUser's method to create or update based on social_id, that returns an facebookuser object
     from .models import FacebookUser
