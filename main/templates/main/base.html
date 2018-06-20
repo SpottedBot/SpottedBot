@@ -138,7 +138,7 @@
 		{% if messages %}
 		{% for message in messages %}
 		<div class="ui container">
-			<div class="ui message blue {{ message.tags }}" style="margin: 0px; text-align: center;">
+			<div class="ui message {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %} red {% else %} blue {% endif %} {{ message.tags }}" style="margin: 0px; text-align: center;">
 				<i class="close icon" style="text-align: right;"></i>
 
 				{{ message }}
