@@ -225,7 +225,7 @@ CELERY_BROKER_URL = str(os.environ.get('REDIS_URL'))
 # Adsense
 
 # Please do not alter the dev ads, as I provide you with free code and API support for you to make money. Allow me a share out of it :)
-DEV_AD = "ca-pub-2287814566368449"
+DEV_AD = os.environ.get("DEV_AD", 'ca-pub-7213431984816764')
 SPOTTED_AD = os.environ.get('SPOTTED_AD', False)
 ADS_ACTIVE = eval(os.environ.get('ADS_ACTIVE', 'False'))
 AD_TEST = eval(os.environ.get('AD_TEST', 'False'))
