@@ -74,6 +74,7 @@
 		<a href="{% url 'coinhive' %}" class="right item">CoinHive <span style="margin-left: 5px" id="miner_msg_status_mobile" class="text"></span></a>
 		{% endif %}
 		<a href="/#submit" class="{% if not ENABLE_COINHIVE %}right {% endif %}item">Envie Spotteds</a>
+		<a href="{% url 'spotteds:list_spotteds' %}" class="item">Explorar Spotteds</a>
 		<a href="{% url 'search' %}" class="item">Pegar contato</a>
 		<a href="/#report" class="item">Reportar</a>
 		{% if user.is_authenticated %}
@@ -106,6 +107,7 @@
 				<a href="{% url 'coinhive' %}" class="right item">CoinHive <span style="margin-left: 5px" id="miner_msg_status" class="text"></span></a>
 				{% endif %}
 				<a href="/#submit" class="{% if not ENABLE_COINHIVE %}right {% endif %}item">Envie Spotteds</a>
+				<a href="{% url 'spotteds:list_spotteds' %}" class="item">Explorar Spotteds</a>
 				<a href="{% url 'search' %}" class="item">Pegar contato</a>
 				<a href="/#report" class="item">Reportar</a>
 

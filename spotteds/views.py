@@ -1,6 +1,6 @@
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext as _
-from django.views.generic import DetailView
+from django.views.generic import DetailView, ListView
 from django.http import Http404
 from .models import Spotted
 from django.views.decorators.clickjacking import xframe_options_exempt
@@ -38,3 +38,16 @@ class ViewSpotted(DetailView):
             raise Http404(_("No %(verbose_name)s found matching the query") %
                           {'verbose_name': queryset.model._meta.verbose_name})
         return obj
+
+
+class ListSpotteds(ListView):
+    model = Spotted
+    paginate_by = 2
+    template_name = 'spotteds/list_spotteds.html'
+    context_object_name = 'spotteds'
+
+    def get_queryset(self):
+        search = self.request.GET.get('search', False)
+        if not search:
+            return self.model.objects.all()
+        return self.model.objects.filter(message__icontains=search)

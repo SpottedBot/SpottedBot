@@ -19,4 +19,5 @@ app_name = 'spotteds'
 
 urlpatterns = [
     path('view_spotted/<int:pk>/', views.ViewSpotted.as_view(), name='view_spotted'),
+    path('list_spotteds/', views.ListSpotteds.as_view(), name='list_spotteds'),
 ]
