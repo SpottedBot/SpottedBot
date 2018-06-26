@@ -42,7 +42,7 @@ class ViewSpotted(DetailView):
 
 class ListSpotteds(ListView):
     model = Spotted
-    paginate_by = 2
+    paginate_by = 10
     template_name = 'spotteds/list_spotteds.html'
     context_object_name = 'spotteds'
 
