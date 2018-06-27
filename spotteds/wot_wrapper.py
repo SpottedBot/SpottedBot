@@ -39,6 +39,9 @@ def is_WOT_safe(url):
     calls the api and checks for high levels of safety confidence
     """
     secret = settings.WOT_SECRET
+    # make sure that the last char is a '/'
+    if url[-1] != '/':
+        url += '/'
     payload = {'hosts': url, 'key': secret}
     response = requests.get("http://api.mywot.com/0.4/public_link_json2", params=payload)
 
@@ -50,12 +53,12 @@ def is_WOT_safe(url):
         try:
             if inside['0'][0] < 60 and inside['0'][1] > 20:
                 return False
-        except IndexError:
+        except (IndexError, KeyError):
             pass
         try:
             if inside['4'][0] < 60 and inside['4'][1] > 20:
                 return False
-        except IndexError:
+        except (IndexError, KeyError):
             pass
         return True
 
