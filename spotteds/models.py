@@ -193,3 +193,6 @@ class PendingSpotted(models.Model):
 
     def __str__(self):
         return "PendingSpotted #" + str(self.id)
+
+    class Meta:
+        ordering = ['-id']
