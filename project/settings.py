@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'chatbot',
 
     'captcha',
+    'maintenance_mode',
 ]
 
 if DEBUG:
@@ -70,6 +71,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'maintenance_mode.middleware.MaintenanceModeMiddleware',
 ]
 
 ROOT_URLCONF = 'project.urls'
@@ -167,6 +169,11 @@ STATICFILES_DIRS = (
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
 
+# Maintenance Mode
+MAINTENANCE_MODE = eval(os.environ.get('MAINTENANCE_MODE', 'None'))
+MAINTENANCE_MODE_TEMPLATE = 'main/503.html'
+MAINTENANCE_MODE_IGNORE_ADMIN_SITE = True
+MAINTENANCE_MODE_IGNORE_SUPERUSER = True
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

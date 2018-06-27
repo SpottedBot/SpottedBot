@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+
+<head>
+    <!-- Load project's staticfiles -->
+    {% load staticfiles %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="Spotted made better">
+    <link rel="icon" href="{% static 'main/img/favicon.png' %}">
+
+    <title>Spotted</title>
+
+    <!-- jQuery -->
+    <script
+    src="https://code.jquery.com/jquery-3.1.1.min.js"
+    integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+    <!-- jQuery Cookie -->
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+
+    <!-- Semantic-UI JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.js"></script>
+
+    <!-- Semantic-UI CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.css">
+
+    <!-- Material and Awesome Fonts and Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto" rel="stylesheet">
+
+    <!-- Local stylesheets -->
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/menu.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/responsive.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/colored_text.css' %}">
+    <!-- Google Analytics -->
+    <script type="text/javascript" src="{% static 'main/js/GA.js' %}"></script>
+
+</head>
+
+<body data-gr-c-s-loaded="true" class="pushable">
+    <!-- Page Contents -->
+    <div class="pusher">
+        <div class="ui vertical stripe">
+            <div class="ui center aligned container">
+                <h1 class="ui header">O Spotted volta daqui a pouco
+                    <div class="sub header">Estamos <s>em manutenção</s> pegando o crush e estaremos de volta em alguns <s>dias</s> minutos</div>
+                </h1>
+                <br>
+                <img class="ui centered medium image" src="{% static 'main/img/ducklove.jpg' %}">
+            </div>
+        </div>
+    </div>
+</body>
+</html>
