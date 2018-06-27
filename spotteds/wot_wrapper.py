@@ -53,13 +53,19 @@ def is_WOT_safe(url):
         try:
             if inside['0'][0] < 60 and inside['0'][1] > 20:
                 return False
-        except (IndexError, KeyError):
+        except IndexError:
             pass
+        except KeyError:
+            # Unknown sites are dangerous
+            return False
         try:
             if inside['4'][0] < 60 and inside['4'][1] > 20:
                 return False
-        except (IndexError, KeyError):
+        except IndexError:
             pass
+        except KeyError:
+            # Unknown sites are dangerous
+            return False
         return True
 
 
