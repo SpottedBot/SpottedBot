@@ -52,6 +52,10 @@ def ad_slot(request):
     return {"AD_SLOT": slotter()}
 
 
+def analytics_id(request):
+    return {"GOOGLE_ANALYTICS": settings.GOOGLE_ANALYTICS_ID}
+
+
 def enable_coinhive(request):
     dev_coin = settings.DEV_COINHIVE
     spotted_coin = settings.SPOTTED_COINHIVE or dev_coin

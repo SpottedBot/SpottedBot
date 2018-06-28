@@ -147,6 +147,12 @@ env = [
         'default': 0
     },
     {
+        'name': 'GOOGLE_ANALYTICS_ID',
+        'title': 'ID no Google Analytics',
+        'ask': True,
+        'required': False,
+    },
+    {
         'name': 'RECAPTCHA_PUBLIC_KEY',
         'title': 'Chave pública do reCaptcha',
         'ask': True,

@@ -39,8 +39,17 @@
     <link rel="stylesheet" type="text/css" href="{% static 'main/css/menu.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'main/css/responsive.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'main/css/colored_text.css' %}">
+
     <!-- Google Analytics -->
-    <script type="text/javascript" src="{% static 'main/js/GA.js' %}"></script>
+    {% include 'main/analytics/GA.html' %}
+    <script type="text/javascript">
+        ga('send', {
+            hitType: 'event',
+            eventCategory: 'HTTP Error',
+            eventAction: '503',
+            eventLabel: 'Maintenance'
+        });
+    </script>
 
 </head>
 

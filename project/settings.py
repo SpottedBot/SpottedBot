@@ -92,6 +92,7 @@ TEMPLATES = [
                 'main.context_processors.enable_recaptcha',
                 'main.context_processors.enable_ad_tag',
                 'main.context_processors.ad_slot',
+                'main.context_processors.analytics_id',
                 'main.context_processors.facebook_app_id',
                 'main.context_processors.enable_coinhive'
             ],
@@ -228,6 +229,9 @@ SPOTTED_API_SECRET = os.environ.get('SPOTTED_API_SECRET')
 
 # Celery stuff
 CELERY_BROKER_URL = str(os.environ.get('REDIS_URL'))
+
+# Google Analytics
+GOOGLE_ANALYTICS_ID = os.environ.get('GOOGLE_ANALYTICS_ID', False)
 
 # Adsense
 
