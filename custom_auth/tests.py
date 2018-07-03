@@ -15,6 +15,8 @@ class TestFacebookUser(TestCase):
             social_id='1234',
             expires=100,
             first_name='user',
+            last_name='doe',
+            scopes='',
             name='user joe',
             link='https://facebook.com'
         )
@@ -26,6 +28,8 @@ class TestFacebookUser(TestCase):
             social_id='1234',
             expires=100,
             first_name='user',
+            last_name='doe',
+            scopes='',
             name='user joe',
             link='https://facebook.com'
         )
@@ -37,6 +41,8 @@ class TestFacebookUser(TestCase):
             social_id='1234',
             expires=100,
             first_name='user',
+            last_name='doe',
+            scopes='',
             name='user joe',
             link='https://facebook.com'
         )
@@ -49,6 +55,8 @@ class TestFacebookUser(TestCase):
             social_id='1234',
             expires=100,
             first_name='user',
+            last_name='doe',
+            scopes='',
             name='user joe',
             link='https://facebook.com'
         )
@@ -57,12 +65,14 @@ class TestFacebookUser(TestCase):
             social_id='12345',
             expires=100,
             first_name='user',
+            last_name='doe',
+            scopes='',
             name='user joe',
             link='https://facebook.com'
         )
         self.assertEqual(FacebookUser.objects.filter(name='user joe').count(), 2)
-        self.assertTrue(User.objects.filter(username='user joe_0').exists())
-        self.assertTrue(User.objects.filter(username='user joe_1').exists())
+        self.assertTrue(User.objects.filter(username='user-joe_0').exists())
+        self.assertTrue(User.objects.filter(username='user-joe_1').exists())
 
     def test_update_user(self):
         FacebookUser.create_or_update(
@@ -70,6 +80,8 @@ class TestFacebookUser(TestCase):
             social_id='1234',
             expires=100,
             first_name='user',
+            last_name='doe',
+            scopes='',
             name='user joe',
             link='https://facebook.com'
         )
@@ -80,6 +92,8 @@ class TestFacebookUser(TestCase):
             social_id='1234',
             expires=100,
             first_name='user',
+            last_name='doe',
+            scopes='',
             name='user joes',
             link='https://facebook.com'
         )
