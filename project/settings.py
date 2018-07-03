@@ -198,12 +198,13 @@ ADMINS = [('Admin', str(os.environ.get('ADMIN_ACCOUNT'))), ]
 ENABLE_MOD_SHIFT = False
 
 # Facebook Stuff
-FACEBOOK_KEY = os.environ.get('FACEBOOK_KEY')
-FACEBOOK_SECRET = os.environ.get('FACEBOOK_SECRET')
+SOCIAL_FACEBOOK_KEY = os.environ.get('FACEBOOK_KEY')
+SOCIAL_FACEBOOK_SECRET = os.environ.get('FACEBOOK_SECRET')
+SOCIAL_SHOW_IN_ADMIN = eval(os.environ.get('SOCIAL_SHOW_IN_ADMIN'), 'False')
 FACEBOOK_PAGE_TOKEN = os.environ.get('FACEBOOK_PAGE_TOKEN')
 FACEBOOK_USE_CHATBOT = eval(os.environ.get('FACEBOOK_USE_CHATBOT', 'false').capitalize())
 FACEBOOK_VERIFY_CHATBOT = os.environ.get('FACEBOOK_VERIFY_CHATBOT', 'abc')
-FACEBOOK_PERMISSIONS = eval(os.environ.get('FACEBOOK_PERMISSIONS', '[]'))
+SOCIAL_FACEBOOK_PERMISSIONS = eval(os.environ.get('FACEBOOK_PERMISSIONS', '[]'))
 
 # Page Stuff
 INITIAL_COUNT = int(os.environ.get('INITIAL_COUNT', '0'))
