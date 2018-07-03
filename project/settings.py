@@ -200,7 +200,7 @@ ENABLE_MOD_SHIFT = False
 # Facebook Stuff
 SOCIAL_FACEBOOK_KEY = os.environ.get('FACEBOOK_KEY')
 SOCIAL_FACEBOOK_SECRET = os.environ.get('FACEBOOK_SECRET')
-SOCIAL_SHOW_IN_ADMIN = eval(os.environ.get('SOCIAL_SHOW_IN_ADMIN'), 'False')
+SOCIAL_SHOW_IN_ADMIN = eval(os.environ.get('SOCIAL_SHOW_IN_ADMIN', 'False'))
 FACEBOOK_PAGE_TOKEN = os.environ.get('FACEBOOK_PAGE_TOKEN')
 FACEBOOK_USE_CHATBOT = eval(os.environ.get('FACEBOOK_USE_CHATBOT', 'false').capitalize())
 FACEBOOK_VERIFY_CHATBOT = os.environ.get('FACEBOOK_VERIFY_CHATBOT', 'abc')
