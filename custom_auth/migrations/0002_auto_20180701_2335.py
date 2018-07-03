@@ -14,10 +14,5 @@ class Migration(migrations.Migration):
             model_name='facebookuser',
             name='scopes',
             field=models.CharField(default='[]', max_length=2000),
-        ),
-        migrations.AlterField(
-            model_name='facebookuser',
-            name='expires',
-            field=models.DateTimeField(),
-        ),
+        )
     ]
