@@ -48,9 +48,9 @@ def auth_url(request):
     kvps = {'client_id': app_id, 'redirect_uri': canvas_url}
 
     # Add 'next' as state if provided
-    next_param = f"next_url={quote(request.GET.get('next', False))}"
+    next_param = f"next_url={quote(request.GET.get('next', ''))}"
     # Add 'redirected' as state if provided
-    redirected_param = f"redirected={request.GET.get('redirected', False)}"
+    redirected_param = f"redirected={request.GET.get('redirected', '')}"
     if request.GET.get('next', False):
         kvps['state'] = next_param
         redirected_param = f',{redirected_param}'
