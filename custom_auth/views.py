@@ -1,4 +1,4 @@
-from django.shortcuts import reverse
+from django.conf import settings
 from django.views.generic import RedirectView
 from .facebook_methods import auth_url, login_successful, login_canceled, decode_state_data, code_already_used_url
 
@@ -20,7 +20,7 @@ class LoginResponse(RedirectView):
         next_url = state_data.get('next_url', False)
         if not code or redirected and int(redirected) >= self.max_code_redirects:
             self.request = login_canceled(self.request)
-            return reverse('index')
+            return settings.LOGIN_REDIRECT_URL
         else:
             response = login_successful(code, self.request)
             if response == 'auth code used':
@@ -29,4 +29,4 @@ class LoginResponse(RedirectView):
             self.request = response
         if next_url:
             return next_url
-        return reverse('index')
+        return settings.LOGIN_REDIRECT_URL

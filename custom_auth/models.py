@@ -1,7 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.text import slugify
 from django.utils import timezone
 import datetime
+import json
 
 # Create your models here.
 
@@ -32,9 +34,16 @@ class FacebookUser(models.Model):
     # Expiration time
     expires = models.IntegerField()
     first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=100, null=True)
     name = models.CharField(max_length=150)
     # Direct link to user's profile
     link = models.URLField(max_length=2000)
+    # Allowed scopes
+    scopes = models.CharField(max_length=2000, default='[]')
+
+    @property
+    def scope_list(self):
+        return json.loads(self.scopes)
 
     @property
     def is_expired(self):
@@ -58,7 +67,7 @@ class FacebookUser(models.Model):
         return self.hd_thumbnail
 
     @staticmethod
-    def create_or_update(social_id, access_token, expires, first_name, name, link):
+    def create_or_update(social_id, access_token, expires, first_name, last_name, name, link, scopes):
         """Create or Update a Facebook User.
 
         Receives a social_id and, if not yet saved, creates a new FacebookUser
@@ -72,12 +81,14 @@ class FacebookUser(models.Model):
             obj.access_token = access_token
             obj.expires = expires
             obj.first_name = first_name
+            obj.last_name = last_name
             obj.name = name
             obj.link = link
-
+            obj.scopes = json.dumps(scopes)
         else:
             def f_usname(name, n=0):
                 """Appends n to the end of the username, automatically adding 1 if exists."""
+                name = slugify(name)
                 if not User.objects.filter(username=name + '_' + str(n)).exists():
                     return name + '_' + str(n)
                 return f_usname(name, n + 1)
@@ -91,8 +102,14 @@ class FacebookUser(models.Model):
                 access_token=access_token,
                 expires=expires,
                 first_name=first_name,
+                last_name=last_name,
                 name=name,
-                link=link
+                link=link,
+                scopes=json.dumps(scopes),
             )
+        user = obj.user
+        user.first_name = first_name
+        user.last_name = last_name
+        user.save()
         obj.save()
         return obj

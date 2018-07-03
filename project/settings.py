@@ -203,7 +203,7 @@ FACEBOOK_SECRET = os.environ.get('FACEBOOK_SECRET')
 FACEBOOK_PAGE_TOKEN = os.environ.get('FACEBOOK_PAGE_TOKEN')
 FACEBOOK_USE_CHATBOT = eval(os.environ.get('FACEBOOK_USE_CHATBOT', 'false').capitalize())
 FACEBOOK_VERIFY_CHATBOT = os.environ.get('FACEBOOK_VERIFY_CHATBOT', 'abc')
-FACEBOOK_PERMISSIONS = []
+FACEBOOK_PERMISSIONS = eval(os.environ.get('FACEBOOK_PERMISSIONS', '[]'))
 
 # Page Stuff
 INITIAL_COUNT = int(os.environ.get('INITIAL_COUNT', '0'))

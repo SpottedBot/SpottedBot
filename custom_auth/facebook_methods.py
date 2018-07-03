@@ -1,13 +1,13 @@
 import facebook
 from django.conf import settings
 from django.shortcuts import reverse
-from urllib.parse import urlencode
+from urllib.parse import urlencode, quote, unquote
 from django.contrib.auth import login
 from django.contrib import messages
 
 
-app_id = settings.FACEBOOK_KEY
-app_secret = settings.FACEBOOK_SECRET
+app_id = settings.SOCIAL_FACEBOOK_KEY
+app_secret = settings.SOCIAL_FACEBOOK_SECRET
 
 
 def get_graph():
@@ -27,9 +27,9 @@ def canv_url(request):
     """
     # Check whether the last call was secure and use its protocol
     if request.is_secure():
-        return 'https://' + request.get_host() + reverse('custom_auth:facebook_login_response')
+        return 'https://' + request.get_host() + reverse('social_login:facebook_login_response')
     else:
-        return 'https://' + request.get_host() + reverse('custom_auth:facebook_login_response')
+        return 'https://' + request.get_host() + reverse('social_login:facebook_login_response')
 
 
 def auth_url(request):
@@ -40,7 +40,7 @@ def auth_url(request):
     canvas_url = canv_url(request)
 
     # Permissions set by user. Default is none
-    perms = settings.FACEBOOK_PERMISSIONS
+    perms = settings.SOCIAL_FACEBOOK_PERMISSIONS
 
     url = "https://www.facebook.com/dialog/oauth?"
 
@@ -48,7 +48,7 @@ def auth_url(request):
     kvps = {'client_id': app_id, 'redirect_uri': canvas_url}
 
     # Add 'next' as state if provided
-    next_param = f"next_url={request.GET.get('next', False)}"
+    next_param = f"next_url={quote(request.GET.get('next', False))}"
     # Add 'redirected' as state if provided
     redirected_param = f"redirected={request.GET.get('redirected', False)}"
     if request.GET.get('next', False):
@@ -91,27 +91,26 @@ def login_successful(code, request):
     # Extract token from token info
     access_token = token_info['access_token']
 
-    # Token may never expire, so set its expire time to something big if needed
-    try:
-        token_expires = token_info['expires_in']
-    except KeyError:
-        token_expires = 9999999
-
     # Debug the token, as per documentation
     debug = debug_token(access_token)['data']
 
     # Get the user's scope ID from debug data
     social_id = debug['user_id']
+    token_expires = debug.get('expires_at') - debug.get('issued_at')
+    if debug.get('expires_at') == 0:
+        token_expires = 99999999
+    scopes = debug.get('scopes', [])
 
     # Get some user info like name and url
-    extra_data = graph.get_object(str(social_id) + '/?fields=name,first_name,link')
+    extra_data = graph.get_object(str(social_id) + '/?fields=name,first_name,last_name,link')
     name = extra_data['name']
     first_name = extra_data['first_name']
+    last_name = extra_data['last_name']
     link = extra_data.get('link', '')
 
     # Call FacebookUser's method to create or update based on social_id, that returns an facebookuser object
     from .models import FacebookUser
-    new = FacebookUser.create_or_update(social_id, access_token, token_expires, first_name, name, link)
+    new = FacebookUser.create_or_update(social_id, access_token, token_expires, first_name, last_name, name, link, scopes)
 
     # Try to login the user
     if new.user.is_active:
@@ -138,7 +137,7 @@ def decode_state_data(state):
     data = {}
     for part in parts:
         p = part.split('=')
-        data[p[0]] = p[1]
+        data[p[0]] = unquote(p[1])
     return data
 
 
@@ -147,4 +146,4 @@ def code_already_used_url(next_url, redirected):
     if next_url:
         state['next'] = next_url
     state['redirected'] = int(redirected) + 1 if redirected else 0
-    return reverse('custom_auth:facebook_login') + '?' + urlencode(state)
+    return reverse('social_login:facebook_login') + '?' + urlencode(state)
