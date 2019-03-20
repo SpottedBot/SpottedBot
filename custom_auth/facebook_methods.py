@@ -15,7 +15,7 @@ def get_graph():
 
     returns a graph object containing an app token from the registered facebook app
     """
-    graph = facebook.GraphAPI(version='3.0')
+    graph = facebook.GraphAPI(version='3.1')
     graph.access_token = graph.get_app_access_token(app_id, app_secret)
     return graph
 

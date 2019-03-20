@@ -7,5 +7,5 @@ def page_graph():
 
     return graph object from the page token
     """
-    graph = facebook.GraphAPI(settings.FACEBOOK_PAGE_TOKEN)
+    graph = facebook.GraphAPI(settings.FACEBOOK_PAGE_TOKEN, version=3.1)
     return graph
