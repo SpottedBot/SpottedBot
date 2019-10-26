@@ -39,7 +39,9 @@ def api_process_new_post(instance):
                 instance.suggestion = response.json()['suggestion']
                 instance.api_id = response.json()['api_id']
                 instance.save()
-                instance.post_spotted()
+                # Only auto post if not anonymous
+                if instance.author is not None:
+                    instance.post_spotted()
 
                 return True
 

@@ -384,6 +384,7 @@
             target: "#refuse_button",
             on: "click",
             html  : '<h4 style="text-align: center">Tem certeza?</h4>\
+            <p style="text-align: center">Lembrando que <b>todos</b> os spotteds anônimos são moderados.</p>\
             <p style="text-align: center"><a href="{% url "custom_auth:facebook_login" %}">Ok, me inscreva</a></p>\
             <p style="text-align: center"><a href="#" style="color: grey;" onclick="refuse_confirm();"><small>Sim</small></a></p>'
         });
